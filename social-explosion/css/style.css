@@ -1,0 +1,110 @@
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:300,600,400);
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background: #eee;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-flex-wrap: wrap;
+      -ms-flex-wrap: wrap;
+          flex-wrap: wrap;
+}
+
+li {
+  position: relative;
+  margin: 20px;
+  padding: 0;
+  max-width: 200px;
+  min-width: 100px;
+  -webkit-box-flex: 1;
+  -webkit-flex: 1 100px;
+      -ms-flex: 1 100px;
+          flex: 1 100px;
+  height: 200px;
+  text-align: center;
+  border-radius: 3px;
+  border: 2px solid slategrey;
+  background: slategrey;
+  cursor: pointer;
+}
+li:before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 0;
+  height: 0;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  -webkit-transition: .5s ease all, 2s linear -webkit-transform, 0s linear top, 0s linear left;
+          transition: .5s ease all, 2s linear transform, 0s linear top, 0s linear left;
+  border-radius: 300px;
+  background: #fff;
+  z-index: 1;
+}
+li:hover:before {
+  content: '';
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  -webkit-transform: translate(0, 0);
+      -ms-transform: translate(0, 0);
+          transform: translate(0, 0);
+  border-radius: 0;
+  -webkit-transition: .5s ease all, .1s linear -webkit-transform, 0s linear top, 0s linear left;
+          transition: .5s ease all, .1s linear transform, 0s linear top, 0s linear left;
+}
+li:hover .item {
+  color: slategrey;
+}
+
+.item {
+  position: relative;
+  height: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  text-transform: uppercase;
+  color: #fff;
+  z-index: 10;
+}
+
+.fa {
+  font-size: 40px;
+  margin-bottom: 10px;
+}
