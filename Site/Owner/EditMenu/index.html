@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel='stylesheet prefetch' href='http://cdn.jsdelivr.net/foundation/5.3.3/css/foundation.css'>
+  <link rel='stylesheet prefetch' href='http://cdnjs.cloudflare.com/ajax/libs/prism/0.0.1/prism.min.css'>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+<div class="row">
+<!--header-->
+  <div class="small-12 columns">
+    <h2>Add items to the list</h2>
+  </div>
+<!--begin form-->
+  <div class="small-12 large-4 columns">   
+    <form id="item-form">
+        <!--Item form-->
+      <div class="row collapse">
+        <div class="small-3 columns"><span class="prefix">Item:</span></div>
+        <div class="small-9 columns">
+          <input id="item-input" type="text" placeholder="add item..." autofocus="autofocus"/>
+        </div>
+      </div>
+		<!--price form-->
+      <div class="row collapse">
+        <div class="small-3 columns"><span class="prefix">Price:</span></div>
+        <div class="small-9 columns">
+          <input id="item-price" type="number" placeholder="add price..."/>
+        </div>
+      </div>
+      	<!--form button-->
+      <div class="row">
+        <div class="small-12 columns">
+          <button id="add-item" type="submit" class="expand">Add Item</button>
+        </div>
+      </div>
+      <!--end of form-->
+    </form>
+  </div>
+<!--endof fourm contatiner-->
+
+  <div id="items-view" class="small-12 large-8 columns">
+    <table id="main" class="small-12">
+      <thead class="expand">
+        <tr>
+          <th>Item</th>
+          <th>Price</th>
+          <th>Action</th>
+        </tr>
+        <tbody id="table-body"></tbody>
+      </thead>
+    </table>
+  </div>
+  <div id="total-view" class="small-12 columns"></div>
+  <hr/>
+</div>
+<script id="itemCollection-template" type="text/template">
+  <table id="main" class="small-12">
+    <thead class="expand">
+      <tr>
+        <th>Item</th>
+        <th>Price</th>
+        <th>Action</th>
+      </tr>
+      <tbody id="table-body"></tbody>
+    </thead>
+  </table>
+</script>
+<script id="item-template" type="text/template">
+  <td id="name"></td>
+  <td id="price"></td>
+  <td>
+    <button id="delete" class="secondary tiny expand">Delete</button>
+  </td>
+</script>
+<script id="total-template" type="text/template">
+<!--compute total price for orders
+  <table id="total" class="right">
+	  <tbody>
+      <tr>
+        <th>Total:</th>
+        <th id="total-price"></th>
+      </tr>
+    </tbody>
+  </table>
+  -->
+</script>
+
+
+
+  <script src='http://codepen.io/assets/libs/fullpage/jquery.js'></script>
+  <script src='http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js'></script><script src='http://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone-min.js'></script><script src='http://cdnjs.cloudflare.com/ajax/libs/backbone.stickit/0.8.0/backbone.stickit.min.js'></script><script src='http://cdnjs.cloudflare.com/ajax/libs/prism/0.0.1/prism.min.js'></script><script src='http://cdnjs.cloudflare.com/ajax/libs/backbone-localstorage.js/1.1.13/backbone.localStorage-min.js'></script>
+  <script src="js/index.js"></script>
+
+</body>
+
+</html>
