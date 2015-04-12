@@ -11,15 +11,51 @@
 		<meta name="description" content="" />
 		<meta name="keywords" content="" />
 		<!--[if lte IE 8]><script src="css/ie/html5shiv.js"></script><![endif]-->
+		<script src="js/underscore.js"></script>
+    	<script src="http://www.parsecdn.com/js/parse-1.2.13.min.js"></script>
 		<script src="js/jquery.min.js"></script>
 		<script src="js/jquery.scrollex.min.js"></script>
 		<script src="js/jquery.scrolly.min.js"></script>
 		<script src="js/skel.min.js"></script>
 		<script src="js/init.js"></script>
+<<<<<<< HEAD
 		<script src="js/login_signup.js"></script>
 		<script src="js/underscore.js"></script>
 		 <script src="http://www.parsecdn.com/js/parse-1.2.13.min.js"></script>
 		
+=======
+		<script type="text/javascript">
+
+			function Login(){
+				console.log("inside login");
+				var username = document.getElementById("email").value;
+				var password = document.getElementById("password").value;
+				
+
+				Parse.User.logIn(username, password, {
+					success: function(user){
+						console.log("login success!");
+						console.log(username);
+						console.log(password);
+
+						document.getElementById("loginButton").innerHTML = "Login success!";
+
+						localStorage.setItem('user', username);
+						localStorage.setItem('pass', password);
+
+
+						setTimeout("location.href = 'user/index.html'", 3000); //timeout function to makesure the package gets there
+					},
+					error: function(user, error){
+						console.log("login failed... " + error.code + " " + error.message);
+						document.getElementById("loginButton").innerHTML = "Login failed: " + error.code + " " + error.message;
+						console.log(username);
+						console.log(password);
+					}
+				});
+			}
+		</script>
+>>>>>>> develop
 		<noscript>
 			<link rel="stylesheet" href="css/skel.css" />
 			<link rel="stylesheet" href="css/loginsignup.css" />
@@ -59,12 +95,12 @@
 						<form method="post" action="#">
 							<div class="row uniform">
 								<div class="6u 12u$(xsmall)"><input type="email" name="email" id="email" placeholder="Email" /></div>
-								<div class="6u$ 12u$(xsmall)"><input type="text" name="password" id="password" placeholder="Password" /></div>
+								<div class="6u$ 12u$(xsmall)"><input type="password" name="password" id="password" placeholder="Password" /></div>
 							</div>
 						</form>
 					</div>
 					<ul class="actions">
-								<li><a href="user/index.html" class="button special scrolly">Continue</a></li>
+								<li><a id="loginButton" href="#one" class="button special scrolly" onclick="JavaScript:Login()">Continue</a></li>
 					</ul>
 				</div>
 			</section>
