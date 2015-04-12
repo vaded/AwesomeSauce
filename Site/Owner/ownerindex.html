@@ -119,6 +119,12 @@
 				}
 			}
 
+			function logout(){
+				console.log("Entered Logout");
+				Parse.User.logOut();
+				var currentUser = Parse.User.current();
+			}
+
 			function employeeAddRemove(){
 				console.log("entered employee");
 				currentUser = Parse.User.current();
@@ -187,6 +193,10 @@
 				</div>
 
 				<div class="bottom">
+
+					<ul>
+						<li><a href="../index.html" onclick="JavaScript:logout()"><span>Logout</span></a></li>
+					</ul>
 
 					<!-- Social Icons -->
 					<!--	<ul class="icons">
