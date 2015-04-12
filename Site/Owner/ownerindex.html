@@ -19,18 +19,8 @@
 		<script src="js/init.js"></script>
 		<script src="js/menuObjects.js"></script>
 		<script src="js/underscore.js"></script>
-		<script src="js/backbone.js"></script>
-		<script src="js/uploadpic.js"></script>
 		<script src="http://www.parsecdn.com/js/parse-1.2.13.min.js"></script>
-<<<<<<< Updated upstream
 		<script> Parse.initialize("KOUvrLMv1oAp2DFoSJQpvl0VIqQKXOYk9HTtRVII", "xBi5mgy6McXhZtUwJXdyS20uVSl6N555lWJTaDyF"); </script>
-=======
-<<<<<<< Updated upstream
-=======
-		<script src="js/underscore-min.js"></script>
-     
->>>>>>> Stashed changes
->>>>>>> Stashed changes
 
 		<script type="text/javascript">
 			function parsePull(){
@@ -53,23 +43,21 @@
 				document.getElementById("updateInfo").onclick = function() {changeInfo()}; //May not need this check and see later
 
 				var query = new Parse.Query(Parse.User);
-				var slist;
+				var slist
 				query.contains("employee", currentUser.id)
 				query.find({
 					success: function(staff){
 						var slist;
 						console.log(staff.length);
-						if(staff.length != 0){
-							holder = staff[0].get("name") + " " + staff[0].get("employee").substr(staff[0].get("employee").indexOf(' ')+1) + "<br>";
-							for (var i = 1; i < staff.length; i++) {
-								var etitle = staff[i].get("employee").substr(staff[i].get("employee").indexOf(' ')+1);
-								slist = staff[i].get("name") + " " + etitle + "\n";
-								console.log(slist);
-								var holder = holder.concat(slist);
-							};
-							console.log(holder);
-							document.getElementById("emplisting").innerHTML = holder;
-						}
+						holder = staff[0].get("name") + " " + staff[0].get("employee").substr(staff[0].get("employee").indexOf(' ')+1) + "<br>";
+						for (var i = 1; i < staff.length; i++) {
+							var etitle = staff[i].get("employee").substr(staff[i].get("employee").indexOf(' ')+1);
+							slist = staff[i].get("name") + " " + etitle + "\n";
+							console.log(slist);
+							var holder = holder.concat(slist);
+						};
+						console.log(holder);
+						document.getElementById("emplisting").innerHTML = holder;
 					}
 				});
 
@@ -158,10 +146,6 @@
 
 		</script>
 
-<<<<<<< Updated upstream
-=======
->>>>>>> origin/develop
->>>>>>> Stashed changes
 		<noscript>
 			<link href="css/menuObjects.css" media="all" rel="stylesheet" type="text/css"/>
 			<link rel="stylesheet" href="css/skel.css" />
@@ -211,8 +195,7 @@
 				<div class="bottom">
 
 					<ul>
-						<li><a href="../index.html" onclick="JavaScript:logout()"><span>Logout</span></a></li>
-						<li><a href="../user/index.html"><span>Switch to Customer</span></a></li>
+						<li align="center";><a href="../index.html" onclick="JavaScript:logout()"><span>Logout   </span></a></li>
 					</ul>
 
 					<!-- Social Icons -->
@@ -338,23 +321,6 @@
 									</div>
 								</div>
 							</form>
-						
-							<script type="text/javascript">
-  								new Uploader({ el: "#upload" });
-							</script>
-							
-							<form id="upload">
-  								<div class="outer">
-   						 			<div>
-      								<h1>Share an image</h1>
-     									 <input type="text" name="title" placeholder="Untitled" />
-     									 <input type="file" />
-   									</div>
-    								<a href="#" class="upload">Pick an image</a>
-  								</div>
-							</form>
-							
-							
 
 						</div>
 					</section>
@@ -383,12 +349,12 @@
                         	<li value="person"> </li>
                         </ul>
 
-                        <p id="emplisting">You have no employees</p>
+                        <p id="emplisting">did it work</p>
                         <form method="post" action="#">
 								<div class="row uniform">
 									<div class="10u 12u$(xsmall)"><input type="email" name="search" id="demploy" placeholder="Enter Employee E-mail" />
 									<br>
-										<select id="tchoice">
+										<select width: 100%; text-align: center; id="tchoice">
 										  <option value="Kitchen Staff">Kitchen Staff</option>
 										  <option value="Front Desk Clerk">Front Desk Clerk</option>
 										  <option value="Manager">Manager</option>
