@@ -43,21 +43,22 @@
 				document.getElementById("updateInfo").onclick = function() {changeInfo()}; //May not need this check and see later
 
 				var query = new Parse.Query(Parse.User);
-				var slist
+				var slist;
 				query.contains("employee", currentUser.id)
 				query.find({
 					success: function(staff){
 						var slist;
 						console.log(staff.length);
-						holder = staff[0].get("name") + " " + staff[0].get("employee").substr(staff[0].get("employee").indexOf(' ')+1) + "<br>";
-						for (var i = 1; i < staff.length; i++) {
-							var etitle = staff[i].get("employee").substr(staff[i].get("employee").indexOf(' ')+1);
-							slist = staff[i].get("name") + " " + etitle + "\n";
-							console.log(slist);
-							var holder = holder.concat(slist);
-						};
-						console.log(holder);
-						document.getElementById("emplisting").innerHTML = holder;
+						if(staff.length != 0){
+							holder = staff[0].get("title") + ": " + staff[0].get("name") + ", " + staff[0].get("username") + "<br>";
+							for (var i = 1; i < staff.length; i++) {
+								slist = staff[i].get("title") + ": " + staff[i].get("name") + ", " + staff[i].get("username") + "<br>";
+								console.log(slist);
+								var holder = holder.concat(slist);
+							};
+							console.log(holder);
+							document.getElementById("emplisting").innerHTML = holder;
+						}
 					}
 				});
 
@@ -195,7 +196,8 @@
 				<div class="bottom">
 
 					<ul>
-						<li align="center";><a href="../index.html" onclick="JavaScript:logout()"><span>Logout   </span></a></li>
+						<li><a href="../index.html" onclick="JavaScript:logout()"><span>Logout</span></a></li>
+						<li><a href="../user/index.html"><span>Switch to Customer</span></a></li>
 					</ul>
 
 					<!-- Social Icons -->
@@ -349,15 +351,16 @@
                         	<li value="person"> </li>
                         </ul>
 
-                        <p id="emplisting">did it work</p>
+                        <p id="emplisting">You have no employees</p>
                         <form method="post" action="#">
 								<div class="row uniform">
 									<div class="10u 12u$(xsmall)"><input type="email" name="search" id="demploy" placeholder="Enter Employee E-mail" />
 									<br>
-										<select width: 100%; text-align: center; id="tchoice">
+										<select id="tchoice">
 										  <option value="Kitchen Staff">Kitchen Staff</option>
 										  <option value="Front Desk Clerk">Front Desk Clerk</option>
 										  <option value="Manager">Manager</option>
+										  <option value="Remove">Remove</option>
 										</select>
 										<br>
 									</div>

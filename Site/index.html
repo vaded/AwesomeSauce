@@ -37,13 +37,20 @@
 
 						//localStorage.setItem('user', username);
 						//localStorage.setItem('pass', password); no longerused
+						switch(title){
+							case "Owner": setTimeout("location.href = 'Owner/ownerindex.html'", 3000); break;
+							case "Kitchen Staff": setTimeout("location.href = 'Owner/kitchenindex.html'", 3000); break;
+							case "Front Desk Clerk": setTimeout("location.href = 'Owner/frontindex.html'", 3000); break;
+							case "Manager": setTimeout("location.href = 'Owner/managerindex.html'", 3000); break;
+							default: setTimeout("location.href = 'user/index.html'", 3000); break;
 
-						if(title == "Owner"){
-							setTimeout("location.href = 'Owner/ownerindex.html'", 3000);
 						}
+						/*if(title == "Owner"){
+							setTimeout("location.href = 'Owner/ownerindex.html'", 3000);
+						//}
 						else{
 							setTimeout("location.href = 'user/index.html'", 3000); //timeout function to makesure the package gets there
-						}
+						}*/
 					},
 					error: function(user, error){
 						console.log("login failed... " + error.code + " " + error.message);
@@ -75,7 +82,7 @@
 				</header>
 				<div class="container">
 					<ul class="actions">
-						<li><a id="registerButton" href="register.html" class="button special scrolly">Register</a></li>
+						<li><a href="register.html" class="button special scrolly">Register</a></li>
 						<li><a href="#one" class="button special scrolly">Login</a></li>
 					</ul>
 				</div>
