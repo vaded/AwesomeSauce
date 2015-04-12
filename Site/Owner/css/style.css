@@ -45,6 +45,8 @@ input[type="info"] {
     width: 67%;
 }
 
+
+
 	h1,h2,h3,h4,h5,h6
 	{
         font-family: FontAwesome;
@@ -841,3 +843,75 @@ button:disabled,
 			{
 				background-color: #e8edec;
 			}
+<<<<<<< Updated upstream
+=======
+			
+			
+/* line 171, ../../sass/styles.scss */
+#upload {
+  text-align: center;
+}
+/* line 174, ../../sass/styles.scss */
+#upload .outer {
+  text-align: center;
+  width: 400px;
+  margin: auto;
+}
+/* line 180, ../../sass/styles.scss */
+#upload h1 {
+  font-size: 35px;
+  margin-bottom: 25px;
+  margin-top: 50px;
+}
+/* line 186, ../../sass/styles.scss */
+#upload input[type=text] {
+  width: 400px;
+  font-size: 18px;
+  border: 2px solid black;
+  padding: 3px;
+  margin-bottom: 15px;
+}
+/* line 194, ../../sass/styles.scss */
+#upload input[type=file] {
+  display: none;
+}
+/* line 198, ../../sass/styles.scss */
+#upload .upload {
+  font-size: 35px;
+  background: #577487;
+  padding: 25px 40px;
+  color: white;
+  text-decoration: none;
+  margin: 0 auto 55px auto;
+  display: block;
+  width: 320px;
+  text-align: center;
+  border: 2px solid black;
+}
+/* line 210, ../../sass/styles.scss */
+#upload .upload:hover {
+  background: #6f8ea2;
+}
+/* line 214, ../../sass/styles.scss */
+#upload .upload img {
+  position: relative;
+  top: 10px;
+}
+
+/* line 221, ../../sass/styles.scss */
+#image_list {
+  margin-top: 25px;
+}
+/* line 223, ../../sass/styles.scss */
+#image_list div {
+  float: left;
+  margin: 0 15px 15px 0;
+}
+
+/* line 229, ../../sass/styles.scss */
+#flash {
+  padding: 15px;
+  font-size: 15px;
+  background: #ededdf;
+}
+>>>>>>> Stashed changes

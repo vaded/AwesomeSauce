@@ -336,6 +336,7 @@ $(function() {
       var password = this.$("#login-password").val();
       
       Parse.User.logIn(username, password, {
+     
         success: function(user) {
           new ManageMenuitemsView();
           self.undelegateEvents();
@@ -347,7 +348,7 @@ $(function() {
           self.$(".login-form button").removeAttr("disabled");
         }
       });
-
+		
       this.$(".login-form button").attr("disabled", "disabled");
 
       return false;
