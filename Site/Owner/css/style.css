@@ -167,7 +167,8 @@ input[type="info"] {
 			article > .container > :last-child
 			{
 				margin-bottom: 0;
-			}
+			
+}
 
 			section:last-child,
 			{
@@ -310,13 +311,14 @@ input[type="info"] {
 			form textarea
 			{
 				position: relative;
+				margin-left: 33%;
 				-webkit-appearance: none;
 				display: block;
 				border: 0;
 				outline: 0;
 				background: #fff;
 				background: rgba(255,255,255,0.75);
-				width: 116%;
+				width: 53%;
 				border-radius: 1.35em;
 				padding: 0px 0em 0.5em 0em;
 				box-shadow: inset 0 0.1em 0.1em 0 rgba(0,0,0,0.05);
@@ -413,12 +415,14 @@ button,
     height: 3em;
     letter-spacing: 0.05em;
     line-height: 3.15em;
-    padding: 0 2em;
+    padding: 0px 2em;
     text-align: center;
     text-decoration: none;
     text-transform: uppercase;
     white-space: nowrap;
 }
+
+a.button.special.scrolly {}
 
 input[type="submit"]:hover,
 input[type="reset"]:hover,
