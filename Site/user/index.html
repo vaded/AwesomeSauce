@@ -17,6 +17,72 @@
 		<script src="js/skel.min.js"></script>
 		<script src="js/skel-layers.min.js"></script>
 		<script src="js/init.js"></script>
+		<script src="http://www.parsecdn.com/js/parse-1.2.13.min.js"></script>
+		<script> Parse.initialize("KOUvrLMv1oAp2DFoSJQpvl0VIqQKXOYk9HTtRVII", "xBi5mgy6McXhZtUwJXdyS20uVSl6N555lWJTaDyF"); </script>
+		<script type="text/javascript">
+			function parsePull(){
+				console.log("made it inside of the pull");
+
+				var username = localStorage.getItem('user');//retrieval of user email
+				var	password = localStorage.getItem('pass');//retrieval of login pasword
+				console.log(username);
+				console.log(password);
+				
+				Parse.User.logIn(username, password, {
+					success: function(user){
+						var currentUser = Parse.User.current();
+						document.getElementById("name").innerHTML = Parse.User.current().get("name"); //users name to appear in toolbar
+						document.getElementById("title").innerHTML = Parse.User.current().get("title"); // users tile to appear in toolbar
+
+						document.getElementById("namei").placeholder = Parse.User.current().get("name"); //sets user name in info form at bottom
+						document.getElementById("emaili").placeholder = Parse.User.current().getUsername(); //sets user email in info form at bottom
+						document.getElementById("addressi").placeholder = Parse.User.current().get("address"); //sets user address in info form at bottom
+						document.getElementById("phonei").placeholder = Parse.User.current().get("phone"); //sets user phone in form at bottom
+						document.getElementById("namei").value = Parse.User.current().get("name"); //sets user name in info form at bottom
+						document.getElementById("emaili").value = Parse.User.current().getUsername(); //sets user email in info form at bottom
+						document.getElementById("addressi").value = Parse.User.current().get("address"); //sets user address in info form at bottom
+						document.getElementById("phonei").value = Parse.User.current().get("phone"); //sets user phone in form at bottom
+
+						document.getElementById("updateInfo").onclick = function() {changeInfo()};
+
+						console.log(currentUser);
+						console.log(Parse.User.current().get("name"));
+						
+					},
+					error: function(user, error){
+						console.log("there was an error " + error.code + " " + error.message);
+					}
+				});
+			}
+			function changeInfo(){ //function to change username using info from bottom form
+				console.log("Its getting into change Info");
+				var currentUser = Parse.User.current();
+				console.log(currentUser);
+				if(currentUser){
+					console.log(document.getElementById("emaili").value);
+					currentUser.set("username", document.getElementById("emaili").value);
+					currentUser.set("name", document.getElementById("namei").value);
+					currentUser.set("address", document.getElementById("addressi").value);
+					currentUser.set("phone", document.getElementById("phonei").value);
+					currentUser.set("title", "Customer");
+					currentUser.save(null, {
+						success: function(user) {
+							console.log("Information has been updated");
+						},
+						error: function(error) {
+							console.log("Information failed to update: " + error.code + " " + error.message);
+						}
+					});
+				}
+				else{
+					console.log("currentUser not found");
+				}
+			}
+
+			function logout(){
+				
+			}
+		</script>
 		<noscript>
 			<link rel="stylesheet" href="css/skel.css" />
 			<link rel="stylesheet" href="css/style.css" />
@@ -25,7 +91,7 @@
 		<!--[if lte IE 9]><link rel="stylesheet" href="css/ie/v9.css" /><![endif]-->
 		<!--[if lte IE 8]><link rel="stylesheet" href="css/ie/v8.css" /><![endif]-->
 	</head>
-	<body>
+	<body onload="parsePull()">
 
 		<!-- Header -->
 			<div id="header" class="skel-layers-fixed">
@@ -35,8 +101,8 @@
 					<!-- Logo -->
 						<div id="logo">
 							<span class="image avatar48"><img src="images/avatar.jpg" alt="" /></span>
-							<h1 id="title">Jane Doe</h1>
-							<p>Customer</p>
+							<h1 id="name">Jane Doe</h1>
+							<p id="title">Customer</p>
 						</div>
 
 					<!-- Nav -->
@@ -99,7 +165,7 @@
 							</header>
 							
 							<footer>
-								<a href="#portfolio" class="button scrolly">Search</a>
+								<a href="#" class="button scrolly" onclick="JavaScript:parsePull()">Search</a> <!--href was #portfolio-->
 							</footer>
 
 						</div>
@@ -188,16 +254,16 @@
 
 							<p>Update your information here or submit your restaurant to Awesome Sauce!</p>
 							
-							<form method="post" action="#">
+							<form onSubmit="JavaScript: changeInfo()">
 								<div class="row 50%">
-									<div class="6u"><input type="info" name="name" placeholder="Name" /></div>
-									<div class="6u"><input type="info" name="email" placeholder="Email" /></div>
-									<div class="6u"><input type="info" name="address" placeholder="Address" /></div>
-									<div class="6u"><input type="info" name="phone" placeholder="Phone Number" /></div>
+									<div class="6u"><input type="info" id="namei"name="name" placeholder="Name" /></div>
+									<div class="6u"><input type="info" id="emaili" name="email" placeholder="Email" /></div>
+									<div class="6u"><input type="info" id="addressi" name="address" placeholder="Address" /></div>
+									<div class="6u"><input type="info" id="phonei" name="phone" placeholder="Phone Number" /></div>
 								</div>
 								<div class="row">
 									<div class="12u">
-										<input type="submit" value="Update Information" />
+										<input type="button" id="updateInfo" value="Update Information" />
 									</div>
 									<div class="12u">
 										<input type="submit" value="Register Restaurant" />
