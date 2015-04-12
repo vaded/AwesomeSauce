@@ -16,6 +16,7 @@ loginTest();
 //integral part of the system and it adds data to the database
 function registerTest(){
 	document.getElementById("registerButton").click();
+	wait(3000);
 	document.getElementById("name").value = "Nick Renaldo";
 	document.getElementById("email").value = "nickyr@gmail.com";	
 	document.getElementById("address").value = "123 this street";
