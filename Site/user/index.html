@@ -38,7 +38,7 @@
 
 				document.getElementById("updateInfo").onclick = function() {changeInfo()}; //May not need this check and see later
 
-				checkOwner();
+				checkEmploy();
 
 				console.log(currentUser);
 				console.log(Parse.User.current().get("name"));
@@ -101,12 +101,23 @@
 				}
 			}
 
-			function checkOwner(){
+			function checkEmploy(){
 				console.log("entered owner check");
 				var currentTitle = Parse.User.current().get("title"); 
-				if(currentTitle == "Owner"){
-					document.getElementById("ownerswap").innerHTML = "Switch to Owner";
-					document.getElementById("ownerswap").href = "../Owner/ownerindex.html";
+				switch(currentTitle){
+					case "Owner": { document.getElementById("ownerswap").innerHTML = "Switch to Owner";
+						document.getElementById("ownerswap").href = "../Owner/ownerindex.html";
+					}; break;
+					case "Kitchen Staff": {document.getElementById("ownerswap").innerHTML = "Switch to Kitchen Staff";
+						document.getElementById("ownerswap").href = "../Owner/kitchenindex.html";
+					}; break;
+					case "Front Desk Clerk": {document.getElementById("ownerswap").innerHTML = "Switch to Front Desk Clerk";
+						document.getElementById("ownerswap").href = "../Owner/frontindex.html";
+					}; break;
+					case "Manager": {document.getElementById("ownerswap").innerHTML = "Switch to Manager";
+						document.getElementById("ownerswap").href = "../Owner/managerindex.html";
+					}; break;
+					default: console.log("defaulting"); break;
 				}
 			}
 		</script>
