@@ -17,14 +17,6 @@
 		<script src="js/skel.min.js"></script>
 		<script src="js/skel-layers.min.js"></script>
 		<script src="js/init.js"></script>
-<<<<<<< HEAD:Site/user/userindex.html
-		
-		<script src="http://www.parsecdn.com/js/parse-1.2.13.min.js"></script>
-	
-		<script src="js/underscore.js"></script>
-		 <script src="js/cart.js"></script>
-		
-=======
 		<script src="http://www.parsecdn.com/js/parse-1.2.13.min.js"></script>
 		<script> Parse.initialize("KOUvrLMv1oAp2DFoSJQpvl0VIqQKXOYk9HTtRVII", "xBi5mgy6McXhZtUwJXdyS20uVSl6N555lWJTaDyF"); </script>
 		<script type="text/javascript">
@@ -91,17 +83,13 @@
 				
 			}
 		</script>
->>>>>>> develop:Site/user/index.html
 		<noscript>
 			<link rel="stylesheet" href="css/skel.css" />
 			<link rel="stylesheet" href="css/style.css" />
 			<link rel="stylesheet" href="css/style-wide.css" />
-			<link rel="stylesheet" href="css/jsonstore.css" type="text/css">
 		</noscript>
 		<!--[if lte IE 9]><link rel="stylesheet" href="css/ie/v9.css" /><![endif]-->
 		<!--[if lte IE 8]><link rel="stylesheet" href="css/ie/v8.css" /><![endif]-->
-		
-	
 	</head>
 	<body onload="parsePull()">
 
@@ -119,7 +107,20 @@
 
 					<!-- Nav -->
 						<nav id="nav">
-						
+							<!--
+							
+								Prologue's nav expects links in one of two formats:
+								
+								1. Hash link (scrolls to a different section within the page)
+								
+								   <li><a href="#foobar" id="foobar-link" class="icon fa-whatever-icon-you-want skel-layers-ignoreHref"><span class="label">Foobar</span></a></li>
+
+								2. Standard link (sends the user to another page/site)
+
+								   <li><a href="http://foobar.tld" id="foobar-link" class="icon fa-whatever-icon-you-want"><span class="label">Foobar</span></a></li>
+							
+							-->
+
 							<form method="post" action="#">
 								<div class="row uniform">
 									<div class="10u 12u$(xsmall)"><input type="email" name="search" id="search" placeholder="Search Restaurants" /></div>
@@ -128,18 +129,28 @@
 
 							<ul>
 								<li><a href="#top" id="top-link" class="skel-layers-ignoreHref"><span class="icon fa-home">Awesome Restaurants!</span></a></li>
-								<li><a href="#menu" id="portfolio-link" class="skel-layers-ignoreHref"><span class="icon fa-th">Menu</span></a></li>
+								<li><a href="#portfolio" id="portfolio-link" class="skel-layers-ignoreHref"><span class="icon fa-th">Menu</span></a></li>
 								<li><a href="#about" id="about-link" class="skel-layers-ignoreHref"><span class="icon fa-user">Orders</span></a></li>
 								<li><a href="#contact" id="contact-link" class="skel-layers-ignoreHref"><span class="icon fa-envelope">User Info</span></a></li>
 							</ul>
 						</nav>
 						
 				</div>
+				
+				<div class="bottom">
 
-<div class="bottom">
-</div>
+					<!-- Social Icons -->
+					<!--	<ul class="icons">
+							<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+							<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+							<li><a href="#" class="icon fa-github"><span class="label">Github</span></a></li>
+							<li><a href="#" class="icon fa-dribbble"><span class="label">Dribbble</span></a></li>
+							<li><a href="#" class="icon fa-envelope"><span class="label">Email</span></a></li>
+						</ul>-->
+				
+				</div>
 			
-</div>
+			</div>
 
 		<!-- Main -->
 			<div id="main">
@@ -154,36 +165,70 @@
 							</header>
 							
 							<footer>
-<<<<<<< HEAD:Site/user/userindex.html
-								<a href="#menu" class="button scrolly">Search</a>
-=======
 								<a href="#" class="button scrolly" onclick="JavaScript:parsePull()">Search</a> <!--href was #portfolio-->
->>>>>>> develop:Site/user/index.html
 							</footer>
 
 						</div>
 					</section>
 					
-				<!-- menu -->
-					<section id="menu" class="two">
+				<!-- Portfolio -->
+					<section id="portfolio" class="two">
+						<div class="container">
+					
+							<header>
+								<h2>Menu</h2>
+							</header>
+							
+							<p>Build your order!</p>
 						
-		 <div id="container">
-            <div id="header">
-                <h1> The Store</h1>
-                <div class="cart-info">
-                </div>
-            </div>
-            <div id="mainstore"> </div>
-        </div>
-		
-		
-		
-		
-    </section>
-    <script type="text/template" id="stats-template">
-    </script>
-    
-    
+							<div class="row">
+								<div class="4u">
+									<article class="item">
+										<a href="#" class="image fit"><img src="images/pic02.jpg" alt="" /></a>
+										<header>
+											<h3>food</h3>
+										</header>
+									</article>
+									<article class="item">
+										<a href="#" class="image fit"><img src="images/pic03.jpg" alt="" /></a>
+										<header>
+											<h3>food</h3>
+										</header>
+									</article>
+								</div>
+								<div class="4u">
+									<article class="item">
+										<a href="#" class="image fit"><img src="images/pic04.jpg" alt="" /></a>
+										<header>
+											<h3>food</h3>
+										</header>
+									</article>
+									<article class="item">
+										<a href="#" class="image fit"><img src="images/pic05.jpg" alt="" /></a>
+										<header>
+											<h3>food</h3>
+										</header>
+									</article>
+								</div>
+								<div class="4u">
+									<article class="item">
+										<a href="#" class="image fit"><img src="images/pic06.jpg" alt="" /></a>
+										<header>
+											<h3>food</h3>
+										</header>
+									</article>
+									<article class="item">
+										<a href="#" class="image fit"><img src="images/pic07.jpg" alt="" /></a>
+										<header>
+											<h3>food</h3>
+										</header>
+									</article>
+								</div>
+							</div>
+
+						</div>
+					</section>
+
 				<!-- About Me -->
 					<section id="about" class="three">
 						<div class="container">
@@ -194,6 +239,7 @@
 
 							<a href="#" class="image featured"><img src="images/pic08.jpg" alt="" /></a>
 							
+							<p>Looks like no orders have been placed yet!</p>
 
 						</div>
 					</section>
@@ -239,53 +285,6 @@
 					</ul>
 				
 			</div>
-				<script id="store_index_template" type="text/x-underscore-tmplate">
-          <h4>Product Catalog</h4>
-          <ul>
-            <% for(i=0,l=products.length;i<l;++i) { p = products[i]; %>
-            <li class="item">
-              <div class="item-image">
-                <a href="#item/<%= p.id %>">
-                  <img alt="<%= p.title %>" src="<%= p.image %>" />
-                </a>
-              </div>
-              <div class="item-artist"><%= p.artist %></div>
-              <div class="item-title"><%= p.title %></div>
-              <div class="item-price">$<%= p.price %></div>
-            </li>
-            <% } %>
-          </ul>
-        </script>
-        <script id="store_item_template" type="text/x-underscore-template">
-          <div class="item-detail">
-            <div class="item-image">
-              <img alt="<%= title %>" src="<%= large_image %>" />
-            </div>
-          </div>
-          <div class="item-info">
-            <div class="item-artist"><%= artist %></div>
-            <div class="item-title"><%= title %></div>
-            <div class="item-price">$<%= price %></div>
-            <form action="#/cart" method="post">
-              <p>
-                <label>Quantity:</label>
-                <input class="uqf" name="quantity" size="2" type="text" value="1" />
-              </p>
-              <p>
-                <input class="uq" type="submit" value="Add to Cart" />
-              </p>
-            </form>
-            <div class="item-link">
-              <a href="<%= url %>">Buy this item on Amazon</a>
-            </div>
-            <div class="back-link">
-              <a href="#">&laquo; Back to Items</a>
-            </div>
-          </div>
-        </script>
-        <script id="store_cart_template" type="text/x-underscore-template">
-          <p>Items: <%= count %> ($<%= cost %>)</p>
-        </script>
 
 	</body>
 </html>
