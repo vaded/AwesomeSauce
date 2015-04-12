@@ -38,6 +38,8 @@
 
 				document.getElementById("updateInfo").onclick = function() {changeInfo()}; //May not need this check and see later
 
+				checkOwner();
+
 				console.log(currentUser);
 				console.log(Parse.User.current().get("name"));
 			}
@@ -95,7 +97,16 @@
 						error: function(error){
 							console.log("Registration failed: " + error.code + " " + error.message);
 						}
-					})
+					});
+				}
+			}
+
+			function checkOwner(){
+				console.log("entered owner check");
+				var currentTitle = Parse.User.current().get("title"); 
+				if(currentTitle == "Owner"){
+					document.getElementById("ownerswap").innerHTML = "Switch to Owner";
+					document.getElementById("ownerswap").href = "../Owner/ownerindex.html";
 				}
 			}
 		</script>
@@ -154,8 +165,9 @@
 				</div>
 				
 				<div class="bottom">
-					<ul>
+					<ul id="endbuttons">
 						<li><a href="../index.html" onclick="JavaScript:logout()"><span>Logout</span></a></li>
+						<li><a id="ownerswap" href="#"><span></span></a></li>
 					</ul>
 
 					<!-- Social Icons -->
