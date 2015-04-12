@@ -1,0 +1,148 @@
+body {
+				background-attachment: fixed;
+				background-image: url('http://placehold.it/240x160');
+				background-repeat: no-repeat;
+				background-size: cover;
+				padding: 3.0em 0 1.5em;
+			}
+
+			#flyer {
+				background-color: #fff;
+				padding: 0 15px;
+			}
+
+				#flyer > footer {
+					background-color: #eff1f7;
+					background-image: -webkit-linear-gradient(top, rgba(222, 222, 222, 1.00) 0px, rgba(222, 222, 222, 0.00) 5px, transparent);
+					border-top: 1px solid #dfdee1;
+					margin: 0 -15px;
+					padding: 15px;
+				}
+
+			section {
+				margin-bottom: 15px;
+			}
+
+			.edit {
+				padding: 1.0em;
+			}
+
+				.edit form {
+					border-radius: 5px;
+					border: 1px solid #d4d3d2;
+					padding: 1.0em 1.0em 0;
+				}
+
+					.edit form footer.form-group {
+						background-image: -webkit-linear-gradient(top, #f2f2f2, #e6e6e6);
+						border-bottom-left-radius: 5px;
+						border-bottom-right-radius: 5px;
+						border-top: 1px solid #f1eff1;
+						margin: 0 -1.0em;
+						padding: 0.5em;
+					}
+
+					.edit form footer.form-group button.btn-link {
+						color: #b94a48;
+					}
+
+						.edit form footer.form-group button.btn-link:hover,
+						.edit form footer.form-group button.btn-link:focus {
+							text-decoration: none;
+						}
+
+			.preview {
+				cursor: pointer;
+				padding: 1.0em 0;
+				position: relative;
+			}
+
+				.preview:hover > button.close {
+					display: inline-block;
+				}
+
+				.preview > button.close {
+					background-color: rgba(0, 0, 0, 0.50);
+					border-radius: 5px;
+					display: none;
+					font-size: 21px;
+					padding: 3px 9px;
+					position: absolute;
+					right: 15px;
+					top: 10px;
+					z-index: 100;
+				}
+
+			#sortable .dashed {
+				cursor: move;
+			}
+
+			.dashed {
+				background-image: linear-gradient(transparent, transparent 4px, rgba(255, 255, 255, 0.25) 5px);
+				background-size: 5px 5px;
+				border: 3px dashed rgba(0, 0, 0, 0.10);
+				padding: 25px;
+			}
+
+				.dashed:hover {
+					background-color: rgba(255, 255, 0, 0.10);
+				}
+
+			.widget {
+				background-color: #fff;
+				border-radius: 10px;
+				border: 2px solid #e3e3e3;
+				cursor: pointer;
+				margin: 0 -5px;
+				padding: 10px 5px;
+				text-align: center;
+			}
+
+				.widget:hover {
+					background-color: #f4fbfb;
+					border-color: #8ea0a8;
+				}
+
+				.widget.disabled {
+					cursor: auto;
+					opacity: 0.4;
+				}
+
+				.widget small {
+					color: #7e8081;
+					font-weight: bold;
+				}
+
+			#header .preview {
+				background: #222629;
+				margin: 0 -15px;
+				padding: 10px;
+				text-align: center;
+			}
+
+				#header .preview h1,
+				#header .preview h3 {
+					color: rgba(255, 255, 255, 0.90);
+					text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.30);
+					text-transform: uppercase;
+          font-family: sans-serif;
+          font-weight: 300;
+				}
+
+				#header .preview h3 {
+					color: rgba(255, 255, 255, 0.90);
+				}
+
+			section .contacts {
+				background-color: #222629;
+				border: 1px solid #dbd9d7;
+				margin-top: 1em;
+				padding: 10px;
+        font-family: sans-serif;
+				font-size: 0.85em;
+			}
+
+			section .contacts > div {
+				display: inline-block;
+				width: 48%;
+			}
