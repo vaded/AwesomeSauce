@@ -1,0 +1,218 @@
+<!DOCTYPE HTML>
+<!--
+	Prologue by HTML5 UP
+	html5up.net | @n33co
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Awesome Sauce</title>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="description" content="" />
+		<meta name="keywords" content="" />
+		<!--[if lte IE 8]><script src="css/ie/html5shiv.js"></script><![endif]-->
+		<script src="js/jquery.min.js"></script>
+		<script src="js/jquery.scrolly.min.js"></script>
+		<script src="js/jquery.scrollzer.min.js"></script>
+		<script src="js/skel.min.js"></script>
+		<script src="js/skel-layers.min.js"></script>
+		<script src="js/init.js"></script>
+		
+		<script src="http://www.parsecdn.com/js/parse-1.2.13.min.js"></script>
+	
+		<script src="js/underscore.js"></script>
+		 <script src="js/cart.js"></script>
+		
+		<noscript>
+			<link rel="stylesheet" href="css/skel.css" />
+			<link rel="stylesheet" href="css/style.css" />
+			<link rel="stylesheet" href="css/style-wide.css" />
+			<link rel="stylesheet" href="css/jsonstore.css" type="text/css">
+		</noscript>
+		<!--[if lte IE 9]><link rel="stylesheet" href="css/ie/v9.css" /><![endif]-->
+		<!--[if lte IE 8]><link rel="stylesheet" href="css/ie/v8.css" /><![endif]-->
+		
+	
+	</head>
+	<body>
+
+		<!-- Header -->
+			<div id="header" class="skel-layers-fixed">
+
+				<div class="top">
+
+					<!-- Logo -->
+						<div id="logo">
+							<span class="image avatar48"><img src="images/avatar.jpg" alt="" /></span>
+							<h1 id="title">Jane Doe</h1>
+							<p>Customer</p>
+						</div>
+
+					<!-- Nav -->
+						<nav id="nav">
+						
+							<form method="post" action="#">
+								<div class="row uniform">
+									<div class="10u 12u$(xsmall)"><input type="email" name="search" id="search" placeholder="Search Restaurants" /></div>
+								</div>
+							</form>
+
+							<ul>
+								<li><a href="#top" id="top-link" class="skel-layers-ignoreHref"><span class="icon fa-home">Awesome Restaurants!</span></a></li>
+								<li><a href="#menu" id="portfolio-link" class="skel-layers-ignoreHref"><span class="icon fa-th">Menu</span></a></li>
+								<li><a href="#about" id="about-link" class="skel-layers-ignoreHref"><span class="icon fa-user">Orders</span></a></li>
+								<li><a href="#contact" id="contact-link" class="skel-layers-ignoreHref"><span class="icon fa-envelope">User Info</span></a></li>
+							</ul>
+						</nav>
+						
+				</div>
+
+<div class="bottom">
+</div>
+			
+</div>
+
+		<!-- Main -->
+			<div id="main">
+
+				<!-- Intro -->
+					<section id="top" class="one dark cover">
+						<div class="container">
+
+							<header>
+								<h2 class="alt">Looking for something to eat?</h2>
+								<p>We can point you in the right direction.</p>
+							</header>
+							
+							<footer>
+								<a href="#menu" class="button scrolly">Search</a>
+							</footer>
+
+						</div>
+					</section>
+					
+				<!-- menu -->
+					<section id="menu" class="two">
+						
+		 <div id="container">
+            <div id="header">
+                <h1> The Store</h1>
+                <div class="cart-info">
+                </div>
+            </div>
+            <div id="mainstore"> </div>
+        </div>
+		
+		
+		
+		
+    </section>
+    <script type="text/template" id="stats-template">
+    </script>
+    
+    
+				<!-- About Me -->
+					<section id="about" class="three">
+						<div class="container">
+
+							<header>
+								<h2>Current Orders</h2>
+							</header>
+
+							<a href="#" class="image featured"><img src="images/pic08.jpg" alt="" /></a>
+							
+
+						</div>
+					</section>
+			
+				<!-- Contact -->
+					<section id="contact" class="four">
+						<div class="container">
+
+							<header>
+								<h2>User Info</h2>
+							</header>
+
+							<p>Update your information here or submit your restaurant to Awesome Sauce!</p>
+							
+							<form method="post" action="#">
+								<div class="row 50%">
+									<div class="6u"><input type="info" name="name" placeholder="Name" /></div>
+									<div class="6u"><input type="info" name="email" placeholder="Email" /></div>
+									<div class="6u"><input type="info" name="address" placeholder="Address" /></div>
+									<div class="6u"><input type="info" name="phone" placeholder="Phone Number" /></div>
+								</div>
+								<div class="row">
+									<div class="12u">
+										<input type="submit" value="Update Information" />
+									</div>
+									<div class="12u">
+										<input type="submit" value="Register Restaurant" />
+									</div>
+								</div>
+							</form>
+
+						</div>
+					</section>
+			
+			</div>
+
+		<!-- Footer -->
+			<div id="footer">
+				
+				<!-- Copyright -->
+					<ul class="copyright">
+						<li>&copy; Powered by Awesome Sauce Systems</li><li>
+					</ul>
+				
+			</div>
+				<script id="store_index_template" type="text/x-underscore-tmplate">
+          <h4>Product Catalog</h4>
+          <ul>
+            <% for(i=0,l=products.length;i<l;++i) { p = products[i]; %>
+            <li class="item">
+              <div class="item-image">
+                <a href="#item/<%= p.id %>">
+                  <img alt="<%= p.title %>" src="<%= p.image %>" />
+                </a>
+              </div>
+              <div class="item-artist"><%= p.artist %></div>
+              <div class="item-title"><%= p.title %></div>
+              <div class="item-price">$<%= p.price %></div>
+            </li>
+            <% } %>
+          </ul>
+        </script>
+        <script id="store_item_template" type="text/x-underscore-template">
+          <div class="item-detail">
+            <div class="item-image">
+              <img alt="<%= title %>" src="<%= large_image %>" />
+            </div>
+          </div>
+          <div class="item-info">
+            <div class="item-artist"><%= artist %></div>
+            <div class="item-title"><%= title %></div>
+            <div class="item-price">$<%= price %></div>
+            <form action="#/cart" method="post">
+              <p>
+                <label>Quantity:</label>
+                <input class="uqf" name="quantity" size="2" type="text" value="1" />
+              </p>
+              <p>
+                <input class="uq" type="submit" value="Add to Cart" />
+              </p>
+            </form>
+            <div class="item-link">
+              <a href="<%= url %>">Buy this item on Amazon</a>
+            </div>
+            <div class="back-link">
+              <a href="#">&laquo; Back to Items</a>
+            </div>
+          </div>
+        </script>
+        <script id="store_cart_template" type="text/x-underscore-template">
+          <p>Items: <%= count %> ($<%= cost %>)</p>
+        </script>
+
+	</body>
+</html>

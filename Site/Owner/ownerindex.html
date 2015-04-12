@@ -17,7 +17,11 @@
 		<script src="js/skel.min.js"></script>
 		<script src="js/skel-layers.min.js"></script>
 		<script src="js/init.js"></script>
+		<script src="js/menuObjects.js"></script>
+		<script src="js/underscore.js"></script>
+		<script src="http://www.parsecdn.com/js/parse-1.2.13.min.js"></script>
 		<noscript>
+			<link href="css/menuObjects.css" media="all" rel="stylesheet" type="text/css"/>
 			<link rel="stylesheet" href="css/skel.css" />
 			<link rel="stylesheet" href="css/style.css" />
 			<link rel="stylesheet" href="css/style-wide.css" />
@@ -35,42 +39,33 @@
 					<!-- Logo -->
 						<div id="logo">
 							<span class="image avatar48"><img src="images/avatar.jpg" alt="" /></span>
-							<h1 id="title">Jane Doe</h1>
-							<p>Customer</p>
+							<h1 id="title">Dr. Jane Doe</h1>
+							<p>Owner</p>
 						</div>
 
 					<!-- Nav -->
 						<nav id="nav">
-							<!--
 							
-								Prologue's nav expects links in one of two formats:
-								
-								1. Hash link (scrolls to a different section within the page)
-								
-								   <li><a href="#foobar" id="foobar-link" class="icon fa-whatever-icon-you-want skel-layers-ignoreHref"><span class="label">Foobar</span></a></li>
-
-								2. Standard link (sends the user to another page/site)
-
-								   <li><a href="http://foobar.tld" id="foobar-link" class="icon fa-whatever-icon-you-want"><span class="label">Foobar</span></a></li>
 							
-							-->
+<!--search bar
 
 							<form method="post" action="#">
 								<div class="row uniform">
 									<div class="10u 12u$(xsmall)"><input type="email" name="search" id="search" placeholder="Search Restaurants" /></div>
 								</div>
 							</form>
-
+-->
+<!--side bar links -->
 							<ul>
-								<li><a href="#top" id="top-link" class="skel-layers-ignoreHref"><span class="icon fa-home">Awesome Restaurants!</span></a></li>
-								<li><a href="#portfolio" id="portfolio-link" class="skel-layers-ignoreHref"><span class="icon fa-th">Menu</span></a></li>
-								<li><a href="#about" id="about-link" class="skel-layers-ignoreHref"><span class="icon fa-user">Orders</span></a></li>
+                                <li><a href="#orders" id="about-link" class="skel-layers-ignoreHref"><span class="icon fa-user">Orders</span></a></li>
+								<li><a href="#menu" id="portfolio-link" class="skel-layers-ignoreHref"><span class="icon fa-th">Menu</span></a></li>
 								<li><a href="#contact" id="contact-link" class="skel-layers-ignoreHref"><span class="icon fa-envelope">User Info</span></a></li>
+                                <li><a href="#top" id="top-link" class="skel-layers-ignoreHref"><span class="icon fa-home">Restruant Name </span></a></li>
 							</ul>
 						</nav>
-						
+                
 				</div>
-				
+
 				<div class="bottom">
 
 					<!-- Social Icons -->
@@ -85,98 +80,90 @@
 				</div>
 			
 			</div>
+<!--end navi-->
 
 		<!-- Main -->
 			<div id="main">
-
-				<!-- Intro -->
-					<section id="top" class="one dark cover">
-						<div class="container">
-
-							<header>
-								<h2 class="alt">Looking for something to eat?</h2>
-								<p>We can point you in the right direction.</p>
-							</header>
-							
-							<footer>
-								<a href="#portfolio" class="button scrolly">Search</a>
-							</footer>
-
-						</div>
-					</section>
+                
+                <!-- current_orders -->
+                <section id="orders" class="three">
+                    <div class="container">
+                        
+                        <header>
+                            <h2>Current Orders</h2>
+                        </header>
+                        
+                        <a href="#" class="image featured"><img src="images/pic08.jpg" alt="" /></a>
+                        
+                        <p>Looks like no orders have been placed yet!</p>
+                        
+                    </div>
+                </section>
+                
 					
-				<!-- Portfolio -->
-					<section id="portfolio" class="two">
+				<!-- menu -->
+					<section id="menu" class="two">
 						<div class="container">
 					
 							<header>
 								<h2>Menu</h2>
 							</header>
-							
-							<p>Build your order!</p>
-						
-							<div class="row">
-								<div class="4u">
-									<article class="item">
-										<a href="#" class="image fit"><img src="images/pic02.jpg" alt="" /></a>
-										<header>
-											<h3>food</h3>
-										</header>
-									</article>
-									<article class="item">
-										<a href="#" class="image fit"><img src="images/pic03.jpg" alt="" /></a>
-										<header>
-											<h3>food</h3>
-										</header>
-									</article>
-								</div>
-								<div class="4u">
-									<article class="item">
-										<a href="#" class="image fit"><img src="images/pic04.jpg" alt="" /></a>
-										<header>
-											<h3>food</h3>
-										</header>
-									</article>
-									<article class="item">
-										<a href="#" class="image fit"><img src="images/pic05.jpg" alt="" /></a>
-										<header>
-											<h3>food</h3>
-										</header>
-									</article>
-								</div>
-								<div class="4u">
-									<article class="item">
-										<a href="#" class="image fit"><img src="images/pic06.jpg" alt="" /></a>
-										<header>
-											<h3>food</h3>
-										</header>
-									</article>
-									<article class="item">
-										<a href="#" class="image fit"><img src="images/pic07.jpg" alt="" /></a>
-										<header>
-											<h3>food</h3>
-										</header>
-									</article>
-								</div>
-							</div>
+							<div id="menuitemapp">
+      							<div class="content">
+      							</div>
+    						</div>
+	 <script type="text/template" id="manage-menuitems-template">
 
-						</div>
+      <div class="section">
+       
+<!------begin lists-->
+        <div id="main">
+          
+          <ul id="menu">
+          	<img src='images/spinner.gif' class='spinner' />
+          </ul>
+        </div>
+<!------menu item stats-->
+    	<div id="menuitem-stats">
+    	</div>
+    </div>
+    </script>
+    
+    <script type="text/template" id="item-template">
+      
+<!------begin view-->
+		<div class="row">
+			<div class="4u">
+		<article class="item">
+		<a href="#" class="image fit"><img src="images/pic02.jpg" alt="" /></a>
+		<li class="<%= status ? 'active' : '' %>">
+		<div class="view">
+		<header><h3>
+	  		<label class="menuitem-content"><%= _.escape(content) %></label>
+            <label class="menuitem-price"><%= _.escape(price) %></label>
+            <label class="menuitem-descript"><%= _.escape(description) %></label>
+        </h3> </header>
+        </div>
+        </li>
+        </article>
+	</div>
+	</div>
+
+    </script>
+    <script type="text/template" id="stats-template">
+    </script>
+
+	<script type="text/javascript">
+// Popup window code
+	function newPopup(url) {
+							popupWindow = window.open( url,'popUpWindow','height=700,width=800,left=10,top=10,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no,status=yes')
+							}
+	</script>
+	
+	<a href="menuedit.html" class="button special scrolly"> Edit Menu</a>
+	</div>
 					</section>
 
-				<!-- About Me -->
-					<section id="about" class="three">
-						<div class="container">
-
-							<header>
-								<h2>Current Orders</h2>
-							</header>
-
-							<a href="#" class="image featured"><img src="images/pic08.jpg" alt="" /></a>
-							
-							<p>Looks like no orders have been placed yet!</p>
-
-						</div>
-					</section>
 			
 				<!-- Contact -->
 					<section id="contact" class="four">
@@ -207,6 +194,19 @@
 
 						</div>
 					</section>
+                    
+                    <!-- Intro -->
+                    <section id="top" class="one dark cover">
+                        <div class="container">
+                            
+                            <header>
+                                <h2>Stats</h2>
+                                <p>Stats for Your menu</p>
+                            </header>
+                            
+                            
+                        </div>
+                    </section>
 			
 			</div>
 

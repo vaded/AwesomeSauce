@@ -1,21 +1,78 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
+    	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="description" content="" />
+		<meta name="keywords" content="" />
     <title>Menu Creation</title>
-    <link href="css/menuObjects.css" media="all" rel="stylesheet" type="text/css"/>
-    <link href="css/itemObjects.css" media="all" rel="stylesheet" type="text/css"/>
+    <link href="EditMenu/css/menuObjects.css" media="all" rel="stylesheet" type="text/css"/>
+    <link href="EditMenu/css/itemObjects.css" media="all" rel="stylesheet" type="text/css"/>
+    <link href="css/skel.css" media="all" rel="stylesheet" type="text/css"/>
+    <link href="css/style.css" media="all" rel="stylesheet" type="text/css"/>
+    <link href="css/style-wide.css" media="all" rel="stylesheet" type="text/css"/>
+
     <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
     <script src="http://www.parsecdn.com/js/parse-1.2.13.min.js"></script>
-    <script src="js/menuObjects.js"></script>
-    <script src="js/underscore.js"></script>
+    <script src="EditMenu/js/menuObjects.js"></script>
+    <script src="EditMenu/js/underscore.js"></script>
     
+    <script src="js/jquery.min.js"></script>
+	<script src="js/jquery.scrolly.min.js"></script>
+	<script src="js/jquery.scrollzer.min.js"></script>
+	<script src="js/skel.min.js"></script>
+	<script src="js/skel-layers.min.js"></script>
+	<script src="js/init.js"></script>
+		
   </head>
 
   <body>
+<div id="header" class="skel-layers-fixed">
 
+				<div class="top">
+
+					<!-- Logo -->
+						<div id="logo">
+							<span class="image avatar48"><img src="images/avatar.jpg" alt="" /></span>
+							<h1 id="title">Dr. Jane Doe</h1>
+							<p>Owner</p>
+						</div>
+
+					<!-- Nav -->
+						<nav id="nav">
+							<!--
+							
+								Prologue's nav expects links in one of two formats:
+								
+								1. Hash link (scrolls to a different section within the page)
+								
+								   <li><a href="#foobar" id="foobar-link" class="icon fa-whatever-icon-you-want skel-layers-ignoreHref"><span class="label">Foobar</span></a></li>
+
+								2. Standard link (sends the user to another page/site)
+
+								   <li><a href="http://foobar.tld" id="foobar-link" class="icon fa-whatever-icon-you-want"><span class="label">Foobar</span></a></li>
+							
+<!--search bar
+
+							<form method="post" action="#">
+								<div class="row uniform">
+									<div class="10u 12u$(xsmall)"><input type="email" name="search" id="search" placeholder="Search Restaurants" /></div>
+								</div>
+							</form>
+-->
+<!--side bar links -->
+						<ul>
+                                <li><a href="ownerindex.html#orders" id="about-link" lass="skel-layers-ignoreHref"><span class="icon fa-user">Orders</span></a></li>
+								<li><a href="ownerindex.html#menu" id="portfolio-link" class="skel-layers-ignoreHref"><span class="icon fa-th">Menu</span></a></li>
+								<li><a href="ownerindex.html#contact" id="contact-link" class="skel-layers-ignoreHref"><span class="icon fa-envelope">User Info</span></a></li>
+                                <li><a href="ownerindex.html#top" id="top-link" class="skel-layers-ignoreHref"><span class="icon fa-home">Restruant Name </span></a></li>
+							</ul>
+						</nav>
+                
+				</div>
+				</div>
     <!--Ingredient App Interface -->
-
+<div id="main">
+<section>
     <div id="menuitemapp">
       <div class="title">
         <h1>Menu Creation</h1>
@@ -23,16 +80,34 @@
       <div class="content">
       </div>
     </div>
+</section>
+</div>
 
-    <div id="credits">
-      Powered by <a href="https://www.parse.com">Parse</a> using the <a href="https://www.parse.com/docs/js_guide">JavaScript SDK</a>.<br /><br />
-      Learn how we built it in the <a href='https://parse.com/tutorials/todo-app-with-javascript '>tutorial</a>.
-    </div>
-     
+  <script type="text/template" id="stats-template">
+      <div id="footermenu">
+		<span id="menuitem-count">
+			<strong><%= activeStatus %></strong><%= activeStatus == 1 ? ' item' : ' items' %> active
+		</span>
+		
+		<ul id="filters">
+	  		<li>
+	    	<a href="javascript:void(0)" id="all" class="selected">All</a>
+	  		</li>
+	  		<li>
+	   		<a href="javascript:void(0)" id="active">Active</a>
+	  		</li>
+	  		<li>
+	   		<a href="javascript:void(0)" id="inactivated">Inactive</a>
+	  		</li>
+		</ul>
+		
+		<span id="clear-inactive">Clear inactive (<%= status %>)</ul>
+      </div>
+    </script>
+
     <!-- Templates -->
 
     <script type="text/template" id="login-template">
-      <header id="header"></header>
       <div class="login">
         <form class="login-form">
           <h2>Log In</h2>
@@ -58,8 +133,8 @@
         Signed in as <%= Parse.User.current().escape("username") %> (<a href="#" class="log-out">Log out</a>)
       </div>
 <!------input-->
-      <div class="section">
-        <header id="header">
+      <div class="sectionmenu">
+        <header id="headermenu">
           <input id="new-menuitem-name" placeholder="Add Item Name Here" type="text"/>
           <input id="new-menuitem-price" placeholder="Price" type="number" step="any"/>
           <input id="new-menuitem-descript" placeholder="Description" type="text"/>
@@ -110,7 +185,7 @@
 			<script type="text/template" id="manage-ingredients-template">
 				
 <!------modal header-->
-				<header id="header">
+				<header id="headering">
           			<input id="new-ingredient-name" placeholder="Add Ingredient Name Here" type="text"/>
           			<input id="new-ingredient-price" placeholder="Price" type="number" step="any"/>
         		</header>
@@ -138,7 +213,7 @@
     		</script>
 <!------modal footer-->
     		<script type="text/template" id="istats-template">
-      		  <footer id="footer">
+      		  <footer id="footering">
 				<span id="ingredient-count">
 					<strong><%= activeStatus %></strong>
 					<%= activeStatus == 1 ? 'item' : 'items' %> active
@@ -161,26 +236,7 @@
 		</div>
 	</div>
 	
-    <script type="text/template" id="stats-template">
-      <footer id="footer">
-		<span id="menuitem-count">
-			<strong><%= activeStatus %></strong>
-			<%= activeStatus == 1 ? 'item' : 'items' %> active
-		</span>
-		<ul id="filters">
-	  		<li>
-	    	<a href="javascript:void(0)" id="all" class="selected">All</a>
-	  		</li>
-	  		<li>
-	   		<a href="javascript:void(0)" id="active">Active</a>
-	  		</li>
-	  		<li>
-	   		<a href="javascript:void(0)" id="inactivated">Inactive</a>
-	  		</li>
-		</ul>
-		<button id="clear-inactive">Clear inactive (<%= status %>)</button>
-      </footer>
-    </script>
+  
 
   </body>
 

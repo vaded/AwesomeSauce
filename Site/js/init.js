@@ -18,7 +18,13 @@
 	});
 
 	$(function() {
+	//begin parse
+	Parse.$ = jQuery;
 
+  // Initialize Parse with your Parse application javascript keys
+  Parse.initialize("aXmHuEt5s8gAoUUjEbck18M7xbrKDNFP60OdVGyr",
+                   "ESvCa0f5dbLZ21HIEfSqIrWmm5EHEEFPaWZW29je");
+                   
 		var	$window = $(window),
 			$body = $('body'),
 			$html = $('html');
