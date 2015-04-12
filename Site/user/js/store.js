@@ -31,18 +31,23 @@ Parse.$ = jQuery;
 
     var ItemCollection = Parse.Collection.extend({
         model:Item,
-        
+//input is from this model from MenuitemView
+//contains modal with item collection
 //searches cart for id of the item in question
         getOrCreateItemForMenuitem: function(menuitem) {
+        console.log(this);
             var i, 
             pid = menuitem.id,
             //searches through each object in cart
-            o = this.find(function(obj) { return (obj.menuitem.id == pid); });
-          console.log(this);
-          console.log(o);
-          console.log(pid);
-           
+            o = this.find(function(obj) {return (obj.get('menuitem').id == pid); });
+//console.log(this);
+ //         console.log(o);
+   //       console.log(pid);
+   
+     //returns object if found
+     //will be undefined first time
             if (o) { 
+            console.log(o);
                 return o;
             }
             i = new Item({'menuitem': menuitem, 'quantity': 0})
@@ -119,13 +124,14 @@ Parse.$ = jQuery;
             this.constructor.__super__.initialize.apply(this, [options]);
             
             this.itemcollection = options.itemcollection;
-            console.log(this.model);
+           
+            console.log(this.itemcollection);
             //searches itemcollection ie. this.cart for item
             this.item = this.itemcollection.getOrCreateItemForMenuitem(this.model);
             console.log(this.item);
             return this;
         },
-
+		
         events: {
             "keypress .uqf" : "updateOnEnter",
             "click .uq"     : "update",
@@ -142,6 +148,7 @@ Parse.$ = jQuery;
                 return this.update(e);
             }
         },
+        
 
         render: function() {
         	
@@ -220,11 +227,11 @@ Parse.$ = jQuery;
        
             //search through to find element == to clicked item through 
             menuitem = this.menuitems.find(function(p){ return p.id == objectId;});
-            		//console.log(menuitem);
+            console.log(menuitem);
             		
         //sets view to indexitem.objid OR creates new item view
             view = ((v = this.views)['item.' + objectId]) || (v['item.' + objectId] = (new MenuitemView({model: menuitem, itemcollection: this.cart}).render()))
-           
+           console.log(view);
            
             $.when(this.hideAllViews()).then(
                 function() { view.show(); });
