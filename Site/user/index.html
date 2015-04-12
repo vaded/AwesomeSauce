@@ -57,12 +57,13 @@
 			function changeInfo(){ //function to change username using info from bottom form
 				console.log("Its getting into change Info");
 				var currentUser = Parse.User.current();
-				console.log(currentUser.get("username"));
+				console.log(currentUser);
 				if(currentUser){
-					currentUser.set("username", document.getElementById("emaili"));
-					currentUser.set("name", document.getElementById("namei"));
-					currentUser.set("address", document.getElementById("addressi"));
-					currentUser.set("phone", document.getElementById("phonei"));
+					console.log(document.getElementById("emaili").value);
+					currentUser.set("username", document.getElementById("emaili").value);
+					currentUser.set("name", document.getElementById("namei").value);
+					currentUser.set("address", document.getElementById("addressi").value);
+					currentUser.set("phone", document.getElementById("phonei").value);
 					currentUser.set("title", "Customer");
 					currentUser.save(null, {
 						success: function(user) {
@@ -77,6 +78,10 @@
 					console.log("currentUser not found");
 				}
 			}
+
+			function logout(){
+				
+			}
 		</script>
 		<noscript>
 			<link rel="stylesheet" href="css/skel.css" />
@@ -86,7 +91,7 @@
 		<!--[if lte IE 9]><link rel="stylesheet" href="css/ie/v9.css" /><![endif]-->
 		<!--[if lte IE 8]><link rel="stylesheet" href="css/ie/v8.css" /><![endif]-->
 	</head>
-	<body>
+	<body onload="parsePull()">
 
 		<!-- Header -->
 			<div id="header" class="skel-layers-fixed">
@@ -251,10 +256,10 @@
 							
 							<form onSubmit="JavaScript: changeInfo()">
 								<div class="row 50%">
-									<div class="6u"><input type="text" id="namei"name="name" placeholder="Name" /></div>
-									<div class="6u"><input type="text" id="emaili" name="email" placeholder="Email" /></div>
-									<div class="6u"><input type="text" id="addressi" name="address" placeholder="Address" /></div>
-									<div class="6u"><input type="text" id="phonei" name="phone" placeholder="Phone Number" /></div>
+									<div class="6u"><input type="info" id="namei"name="name" placeholder="Name" /></div>
+									<div class="6u"><input type="info" id="emaili" name="email" placeholder="Email" /></div>
+									<div class="6u"><input type="info" id="addressi" name="address" placeholder="Address" /></div>
+									<div class="6u"><input type="info" id="phonei" name="phone" placeholder="Phone Number" /></div>
 								</div>
 								<div class="row">
 									<div class="12u">
