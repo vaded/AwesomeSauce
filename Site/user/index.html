@@ -82,6 +82,9 @@
 					currentUser.set("name", document.getElementById("namei").value);
 					currentUser.set("address", document.getElementById("addressi").value);
 					currentUser.set("phone", document.getElementById("phonei").value);
+					currentUser.set("restaurantname", Parse.User.current().get("name") + " Restaurant");
+					currentUser.set("url", Parse.User.current().get("username") + ".com");
+					currentUser.set("reviews", "This place rocks!");
 					currentUser.save(null, {
 						success: function(user){
 							console.log("User is now a Owner");

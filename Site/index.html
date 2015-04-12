@@ -33,12 +33,17 @@
 						console.log(password);
 
 						document.getElementById("loginButton").innerHTML = "Login success!";
+						var title = Parse.User.current().get("title");
 
-						localStorage.setItem('user', username);
-						localStorage.setItem('pass', password);
+						//localStorage.setItem('user', username);
+						//localStorage.setItem('pass', password); no longerused
 
-
-						setTimeout("location.href = 'user/index.html'", 3000); //timeout function to makesure the package gets there
+						if(title == "Owner"){
+							setTimeout("location.href = 'Owner/ownerindex.html'", 3000);
+						}
+						else{
+							setTimeout("location.href = 'user/index.html'", 3000); //timeout function to makesure the package gets there
+						}
 					},
 					error: function(user, error){
 						console.log("login failed... " + error.code + " " + error.message);
@@ -84,7 +89,7 @@
 						<header class="major">
 							<h2>Enter your login info</h2>
 						</header>
-						<form method="post" action="#" onSubmit="JavaScript:Login()">
+						<form method="post" action="#" onsubmit="JavaScript:Login()">
 							<div class="row uniform">
 								<div class="6u 12u$(xsmall)"><input type="email" name="email" id="email" placeholder="Email" /></div>
 								<div class="6u$ 12u$(xsmall)"><input type="password" name="password" id="password" placeholder="Password" /></div>
