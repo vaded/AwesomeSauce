@@ -14,14 +14,21 @@ loginTest();
 //the same user cannot be added twice. the email must be changed for each test or the 
 //parse entry must be deleted each time this test is run. it was chosen to because it is an 
 //integral part of the system and it adds data to the database
-function registerTest(){
-	document.getElementById("registerButton").click();
-	wait(3000);
-	document.getElementById("name").value = "Nick Renaldo";
-	document.getElementById("email").value = "nickyr@gmail.com";	
-	document.getElementById("address").value = "123 this street";
-	document.getElementById("1234567890").value = "1234567890";
-	document.getElementById("password").value = "partykid";
-	document.getElementById("signup-button").click();
-}
-registerTest();
+		function waiting(){ 
+				
+				document.documentURI = document.baseURI;
+				console.log(document.documentURI);
+				
+				document.getElementById("name").value = "Nick Renaldo";
+				document.getElementById("email").value = "nickyr@gmail.com";	
+				document.getElementById("address").value = "123 this street";
+				document.getElementById("phone").value = "1234567890";
+				document.getElementById("password").value = "partykid";
+				document.getElementById("signup-button").click();
+		}
+		function registerTest(){
+			document.getElementById("registerButton").click();
+			setTimeout(waiting(), 10000);
+		}
+		
+		registerTest();
