@@ -13,9 +13,13 @@
 
     <link rel="stylesheet" href="css/style.css">
 
+    <script src="http://www.parsecdn.com/js/parse-1.2.13.min.js"></script>
+	<script> Parse.initialize("KOUvrLMv1oAp2DFoSJQpvl0VIqQKXOYk9HTtRVII", "xBi5mgy6McXhZtUwJXdyS20uVSl6N555lWJTaDyF"); </script>
+
+
 </head>
 
-<body>
+<body onload="parsePull()">
 
 <div class="container">
 			<div class="row">
@@ -40,7 +44,7 @@
 							</div>-->
 							<div class="preview">
 								<h1>Restaurant Name</h1>
-								<h3 class="dashed" style="margin: 0; padding: 5px;">Owner Name</h3>
+								<h3 class="dashed" style="margin: 0; padding: 5px;" id="owner">Owner Name</h3>
 							</div>
 						</section>
 
@@ -187,7 +191,8 @@
 							<input type="text" id="bgchanger" placeholder="Change Background Add URL" />
 							<input type="button" onclick="changebackground();" value="Change!" />
 
-						</div>	
+						</div>
+						<input type="button" onclick="../ownerindex.html" value="Continue"/>
 					</div>
 				</div>
 			</div>
@@ -533,6 +538,15 @@
 function changebackground(){
     var url = document.getElementById('bgchanger').value;
     document.getElementsByTagName('body')[0].style.backgroundImage = "url('" + url + "')";
+}
+
+function parsePull(){
+	var currentUser = Parse.User.current();
+	document.getElementById("owner").innerHTML = currentUser.get("name");
+}
+
+function submitStorefront(){
+
 }
 
 </script>
