@@ -20,6 +20,133 @@
 		<script src="js/menuObjects.js"></script>
 		<script src="js/underscore.js"></script>
 		<script src="http://www.parsecdn.com/js/parse-1.2.13.min.js"></script>
+		<script> Parse.initialize("KOUvrLMv1oAp2DFoSJQpvl0VIqQKXOYk9HTtRVII", "xBi5mgy6McXhZtUwJXdyS20uVSl6N555lWJTaDyF"); </script>
+
+		<script type="text/javascript">
+			function parsePull(){
+				console.log("made it inside of the pull");
+
+				var currentUser = Parse.User.current();
+				document.getElementById("name").innerHTML = Parse.User.current().get("name"); //users name to appear in toolbar
+				document.getElementById("title").innerHTML = Parse.User.current().get("title"); // users tile to appear in toolbar
+				document.getElementById("restaurantTab").innerHTML = Parse.User.current().get("restaurantname"); //users restaurant name in side bar
+
+				document.getElementById("namei").placeholder = "Name"; //sets user name in info form at bottom
+				document.getElementById("emaili").placeholder = "E-Mail"; //sets user email in info form at bottom
+				document.getElementById("addressi").placeholder = "Address"; //sets user address in info form at bottom
+				document.getElementById("phonei").placeholder = "Phone Number"; //sets user phone in form at bottom
+				document.getElementById("namei").value = Parse.User.current().get("name"); //sets user name in info form at bottom
+				document.getElementById("emaili").value = Parse.User.current().getUsername(); //sets user email in info form at bottom
+				document.getElementById("addressi").value = Parse.User.current().get("address"); //sets user address in info form at bottom
+				document.getElementById("phonei").value = Parse.User.current().get("phone"); //sets user phone in form at bottom
+
+				document.getElementById("updateInfo").onclick = function() {changeInfo()}; //May not need this check and see later
+
+				var query = new Parse.Query(Parse.User);
+				var slist;
+				query.contains("employee", currentUser.id)
+				query.find({
+					success: function(staff){
+						var slist;
+						console.log(staff.length);
+						if(staff.length != 0){
+							holder = staff[0].get("title") + ": " + staff[0].get("name") + ", " + staff[0].get("username") + "<br>";
+							for (var i = 1; i < staff.length; i++) {
+								slist = staff[i].get("title") + ": " + staff[i].get("name") + ", " + staff[i].get("username") + "<br>";
+								console.log(slist);
+								var holder = holder.concat(slist);
+							};
+							console.log(holder);
+							document.getElementById("emplisting").innerHTML = holder;
+						}
+					}
+				});
+
+				console.log(currentUser);
+				console.log(Parse.User.current().get("name"));
+			}
+			function changeInfo(){ //function to change username using info from bottom form
+				console.log("Its getting into change Info");
+				var currentUser = Parse.User.current();
+				console.log(currentUser);
+				if(currentUser){
+					console.log(document.getElementById("emaili").value);
+					currentUser.set("username", document.getElementById("emaili").value);
+					currentUser.set("name", document.getElementById("namei").value);
+					currentUser.set("address", document.getElementById("addressi").value);
+					currentUser.set("phone", document.getElementById("phonei").value);
+					currentUser.set("title", "Customer");
+					currentUser.save(null, {
+						success: function(user) {
+							console.log("Information has been updated");
+							parsePull();
+						},
+						error: function(error) {
+							console.log("Information failed to update: " + error.code + " " + error.message);
+						}
+					});
+				}
+				else{
+					console.log("currentUser not found");
+				}
+			}
+
+			function logout(){
+				console.log("Entered Logout");
+				Parse.User.logOut();
+				var currentUser = Parse.User.current();
+			}
+
+			function registerRestaurant(){
+				console.log("entered registration");
+				var currentUser = Parse.User.current();
+				if(currentUser){
+					currentUser.set("title", "Owner");
+					currentUser.set("username", document.getElementById("emaili").value);
+					currentUser.set("name", document.getElementById("namei").value);
+					currentUser.set("address", document.getElementById("addressi").value);
+					currentUser.set("phone", document.getElementById("phonei").value);
+					currentUser.save(null, {
+						success: function(user){
+							console.log("User is now a Owner");
+							console.log(Parse.User.current().get("name"));
+							parsePull();
+							setTimeout("location.href = '../Owner/ownerindex.html'", 1500); //redirect to owner page
+						},
+						error: function(error){
+							console.log("Registration failed: " + error.code + " " + error.message);
+						}
+					});
+				}
+			}
+
+			function logout(){
+				console.log("Entered Logout");
+				Parse.User.logOut();
+				var currentUser = Parse.User.current();
+			}
+
+			function employeeAddRemove(){
+				console.log("entered employee");
+				currentUser = Parse.User.current();
+				var title = document.getElementById("tchoice").value;
+				var email = document.getElementById("demploy").value;
+				var ACL = currentUser.id;
+				console.log(ACL);
+				
+				Parse.Cloud.run('modifyUser', { username: email, title: title, ID: ACL }, {
+				  success: function(status) {
+				  	parsePull();
+				    console.log("it worked!");
+				  },
+				  error: function(error) {
+				    console.log("employee failed: " + error.code + " " + error.message);
+				  }
+				});
+			}
+
+		</script>
+
 		<noscript>
 			<link href="css/menuObjects.css" media="all" rel="stylesheet" type="text/css"/>
 			<link rel="stylesheet" href="css/skel.css" />
@@ -29,7 +156,7 @@
 		<!--[if lte IE 9]><link rel="stylesheet" href="css/ie/v9.css" /><![endif]-->
 		<!--[if lte IE 8]><link rel="stylesheet" href="css/ie/v8.css" /><![endif]-->
 	</head>
-	<body>
+	<body onload="parsePull()">
 
 		<!-- Header -->
 			<div id="header" class="skel-layers-fixed">
@@ -39,8 +166,8 @@
 					<!-- Logo -->
 						<div id="logo">
 							<span class="image avatar48"><img src="images/avatar.jpg" alt="" /></span>
-							<h1 id="title">Dr. Jane Doe</h1>
-							<p>Owner</p>
+							<h1 id="name">Dr. Jane Doe</h1>
+							<p id="title">Owner</p>
 						</div>
 
 					<!-- Nav -->
@@ -57,16 +184,21 @@
 -->
 <!--side bar links -->
 							<ul>
-                                <li><a href="#orders" id="about-link" class="skel-layers-ignoreHref"><span class="icon fa-user">Orders</span></a></li>
-								<li><a href="#menu" id="portfolio-link" class="skel-layers-ignoreHref"><span class="icon fa-th">Menu</span></a></li>
+                                <li><a href="#about" id="about-link" class="skel-layers-ignoreHref"><span class="icon fa-user">Orders</span></a></li>
+								<li><a href="#portfolio" id="portfolio-link" class="skel-layers-ignoreHref"><span class="icon fa-th">Menu</span></a></li>
 								<li><a href="#contact" id="contact-link" class="skel-layers-ignoreHref"><span class="icon fa-envelope">User Info</span></a></li>
-                                <li><a href="#top" id="top-link" class="skel-layers-ignoreHref"><span class="icon fa-home">Restruant Name </span></a></li>
+                                <li><a href="#top" id="top-link" class="skel-layers-ignoreHref"><span id="restaurantTab"class="icon fa-home">Restruant Name </span></a></li>
 							</ul>
 						</nav>
                 
 				</div>
 
 				<div class="bottom">
+
+					<ul>
+						<li><a href="../index.html" onclick="JavaScript:logout()"><span>Logout</span></a></li>
+						<li><a href="../user/index.html"><span>Switch to Customer</span></a></li>
+					</ul>
 
 					<!-- Social Icons -->
 					<!--	<ul class="icons">
@@ -86,7 +218,7 @@
 			<div id="main">
                 
                 <!-- current_orders -->
-                <section id="orders" class="three">
+                <section id="about" class="three">
                     <div class="container">
                         
                         <header>
@@ -102,7 +234,7 @@
                 
 					
 				<!-- menu -->
-					<section id="menu" class="two">
+					<section id="portfolio" class="two">
 						<div class="container">
 					
 							<header>
@@ -112,56 +244,56 @@
       							<div class="content">
       							</div>
     						</div>
-	 <script type="text/template" id="manage-menuitems-template">
+							 <script type="text/template" id="manage-menuitems-template">
 
-      <div class="section">
-       
-<!------begin lists-->
-        <div id="main">
-          
-          <ul id="menu">
-          	<img src='images/spinner.gif' class='spinner' />
-          </ul>
-        </div>
-<!------menu item stats-->
-    	<div id="menuitem-stats">
-    	</div>
-    </div>
-    </script>
-    
-    <script type="text/template" id="item-template">
-      
-<!------begin view-->
-		<div class="row">
-			<div class="4u">
-		<article class="item">
-		<a href="#" class="image fit"><img src="images/pic02.jpg" alt="" /></a>
-		<li class="<%= status ? 'active' : '' %>">
-		<div class="view">
-		<header><h3>
-	  		<label class="menuitem-content"><%= _.escape(content) %></label>
-            <label class="menuitem-price"><%= _.escape(price) %></label>
-            <label class="menuitem-descript"><%= _.escape(description) %></label>
-        </h3> </header>
-        </div>
-        </li>
-        </article>
-	</div>
-	</div>
+						      <div class="section">
+						       
+						<!------begin lists-->
+						        <div id="main">
+						          
+						          <ul id="menu">
+						          	<img src='images/spinner.gif' class='spinner' />
+						          </ul>
+						        </div>
+						<!------menu item stats-->
+						    	<div id="menuitem-stats">
+						    	</div>
+						    </div>
+						    </script>
+						    
+						    <script type="text/template" id="item-template">
+						      
+						<!------begin view-->
+								<div class="row">
+									<div class="4u">
+								<article class="item">
+								<a href="#" class="image fit"><img src="images/pic02.jpg" alt="" /></a>
+								<li class="<%= status ? 'active' : '' %>">
+								<div class="view">
+								<header><h3>
+							  		<label class="menuitem-content"><%= _.escape(content) %></label>
+						            <label class="menuitem-price"><%= _.escape(price) %></label>
+						            <label class="menuitem-descript"><%= _.escape(description) %></label>
+						        </h3> </header>
+						        </div>
+						        </li>
+						        </article>
+							</div>
+							</div>
 
-    </script>
-    <script type="text/template" id="stats-template">
-    </script>
+						    </script>
+						    <script type="text/template" id="stats-template">
+						    </script>
 
-	<script type="text/javascript">
-// Popup window code
-	function newPopup(url) {
-							popupWindow = window.open( url,'popUpWindow','height=700,width=800,left=10,top=10,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no,status=yes')
-							}
-	</script>
-	
-	<a href="menuedit.html" class="button special scrolly"> Edit Menu</a>
-	</div>
+							<script type="text/javascript">
+						// Popup window code
+							function newPopup(url) {
+													popupWindow = window.open( url,'popUpWindow','height=700,width=800,left=10,top=10,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no,status=yes')
+													}
+							</script>
+							
+							<a href="menuedit.html" class="button special scrolly"> Edit Menu</a>
+							</div>
 					</section>
 
 			
@@ -175,19 +307,19 @@
 
 							<p>Update your information here or submit your restaurant to Awesome Sauce!</p>
 							
-							<form method="post" action="#">
+							<form onSubmit="JavaScript: changeInfo()">
 								<div class="row 50%">
-									<div class="6u"><input type="info" name="name" placeholder="Name" /></div>
-									<div class="6u"><input type="info" name="email" placeholder="Email" /></div>
-									<div class="6u"><input type="info" name="address" placeholder="Address" /></div>
-									<div class="6u"><input type="info" name="phone" placeholder="Phone Number" /></div>
+									<div class="6u"><input type="info" id="namei"name="name" placeholder="Name" /></div>
+									<div class="6u"><input type="info" id="emaili" name="email" placeholder="Email" /></div>
+									<div class="6u"><input type="info" id="addressi" name="address" placeholder="Address" /></div>
+									<div class="6u"><input type="info" id="phonei" name="phone" placeholder="Phone Number" /></div>
 								</div>
 								<div class="row">
 									<div class="12u">
-										<input type="submit" value="Update Information" />
+										<input type="button" id="updateInfo" value="Update Information" />
 									</div>
 									<div class="12u">
-										<input type="submit" value="Register Restaurant" />
+										<input type="button" value="Register Restaurant" onclick="JavaScript:registerRestaurant()"/>
 									</div>
 								</div>
 							</form>
@@ -207,6 +339,41 @@
                             
                         </div>
                     </section>
+
+                    <section id="employee" class="three">
+                    <div id="employ" class="container">
+                        
+                        <header>
+                            <h2>Employees</h2>
+                        </header>
+                       	
+                        <ul>
+                        	<li value="person"> </li>
+                        </ul>
+
+                        <p id="emplisting">You have no employees</p>
+                        <form method="post" action="#">
+								<div class="row uniform">
+									<div class="10u 12u$(xsmall)"><input type="email" name="search" id="demploy" placeholder="Enter Employee E-mail" />
+									<br>
+										<select id="tchoice">
+										  <option value="Kitchen Staff">Kitchen Staff</option>
+										  <option value="Front Desk Clerk">Front Desk Clerk</option>
+										  <option value="Manager">Manager</option>
+										  <option value="Remove">Remove</option>
+										</select>
+										<br>
+									</div>
+									
+								</div>
+
+						</form>
+						
+                        <a  id="addEmployee" href="#employee" class="button special scrolly" onclick=
+                        "JavaScript:employeeAddRemove()"> Add/Remove Employee</a>
+
+                    </div>
+                	</section>
 			
 			</div>
 
