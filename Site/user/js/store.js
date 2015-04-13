@@ -37,7 +37,7 @@ Parse.$ = jQuery;
             var i, 
             pid = menuitem.id,
             //searches through each object in cart
-            o = this.find(function(obj) { return (obj.menuitem.id == pid); });
+            o = this.find(function(obj) { return (obj.get('menuitem').id == pid); });
           console.log(this);
           console.log(o);
           console.log(pid);

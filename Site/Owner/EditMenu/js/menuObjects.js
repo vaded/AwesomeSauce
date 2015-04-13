@@ -653,6 +653,7 @@ $(function() {
 	//sends error if not found in parse database
     logIn: function(e) {
       var self = this;
+      
       var username = this.$("#login-username").val();
       var password = this.$("#login-password").val();
       
@@ -668,7 +669,7 @@ $(function() {
           self.$(".login-form button").removeAttr("disabled");
         }
       });
-
+	
       this.$(".login-form button").attr("disabled", "disabled");
 
       return false;
