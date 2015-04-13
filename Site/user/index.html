@@ -92,7 +92,7 @@
 							console.log("User is now a Owner");
 							console.log(Parse.User.current().get("name"));
 							parsePull();
-							setTimeout("location.href = '../Owner/ownerindex.html'", 1500); //redirect to owner page
+							setTimeout("location.href = 'login-form/index.html'", 1500); //redirect to owner page
 						},
 						error: function(error){
 							console.log("Registration failed: " + error.code + " " + error.message);
