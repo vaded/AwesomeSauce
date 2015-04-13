@@ -233,7 +233,8 @@ Parse.$ = jQuery;
         	//console.log(this);
             $(this.el).html(_.template(this.template, {
                     'count': this.collection.getTotalCount(),
-                    'cost': this.collection.getTotalCost()
+                    'cost': this.collection.getTotalCost(),
+                    'calories': this.collection.getTotalCal()
                 })).animate({paddingTop: '30px'}).animate({paddingTop: '10px'});
         }
     });

@@ -192,7 +192,8 @@
         </script> 
             
         <script id="store_cart_template" type="text/x-underscore-template">
-	        Items: <%= count %> ($<%= cost %>)
+	        Items: <%= count %> ($<%= cost %>) <%=calories%>
+	      <%=  if ('calories'1000){alert("Are you sure you should eat that?");}%>
         </script>
 
 	<body onload="parsePull()">
