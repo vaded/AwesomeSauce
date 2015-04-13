@@ -91,6 +91,7 @@ $(function() {
       content: "please add a name",
       description: "item description here",
       price: 0.00,
+      calories: 0,
       status: true,
       menuitem : []
     },
@@ -105,7 +106,10 @@ $(function() {
         	this.set({"description": this.defaults.description});
         	}	
          if (!this.get("price")) {
-        	this.set({"price": this.defaults.price});
+        	this.set({"price": this.defaults.calories});
+        	}
+        if (!this.get("calories")) {
+        	this.set({"calories": this.defaults.calories});
         	}		
     },
 
@@ -502,6 +506,7 @@ $(function() {
       this.$el.html(_.template($("#manage-menuitems-template").html()));
       
       this.inputName = this.$("#new-menuitem-name");
+      this.inputCal = this.$("#new-menuitem-calories");
       this.inputPrice = this.$("#new-menuitem-price");
       this.inputDescript =this.$("#new-menuitem-descript");
       this.inputIngredientList = this.$("#new-menuitem-ingredientlist");
@@ -610,13 +615,14 @@ $(function() {
       this.menuitems.create({
         content: this.inputName.val(),
         price:   this.inputPrice.val(),
+        cal:   this.inputCal.val(),
         description: this.inputDescript.val(),
         order:   this.menuitems.nextOrder(),
         status:  true,
         user:    Parse.User.current(),
         ACL:     new Parse.ACL(Parse.User.current())
       });
-
+		this.inputCal.val('');
       this.inputName.val('');
       this.inputPrice.val('');
       this.inputDescript.val('');

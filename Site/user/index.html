@@ -19,6 +19,10 @@
 		<script src="js/init.js"></script>
 		<script src="http://www.parsecdn.com/js/parse-1.2.13.min.js"></script>
 		<script> Parse.initialize("KOUvrLMv1oAp2DFoSJQpvl0VIqQKXOYk9HTtRVII", "xBi5mgy6McXhZtUwJXdyS20uVSl6N555lWJTaDyF"); </script>
+		
+		
+		<link rel="stylesheet" href="css/jsonstore.css" type="text/css">
+		
 		<script type="text/javascript">
 			function parsePull(){
 				console.log("made it inside of the pull");
@@ -40,7 +44,6 @@
 
 				checkOwner();
 
-				console.log(currentUser);
 				console.log(Parse.User.current().get("name"));
 			}
 			function changeInfo(){ //function to change username using info from bottom form
@@ -110,14 +113,88 @@
 				}
 			}
 		</script>
+		
+		
 		<noscript>
 			<link rel="stylesheet" href="css/skel.css" />
 			<link rel="stylesheet" href="css/style.css" />
 			<link rel="stylesheet" href="css/style-wide.css" />
+		
 		</noscript>
 		<!--[if lte IE 9]><link rel="stylesheet" href="css/ie/v9.css" /><![endif]-->
 		<!--[if lte IE 8]><link rel="stylesheet" href="css/ie/v8.css" /><![endif]-->
 	</head>
+	    
+        <script id="store_index_template" type="text/x-underscore-tmplate">
+          <ul>
+            <% for(i=0,l=menuitems.length;i<l;++i) { p = menuitems[i]; %>
+            <li class="item">
+    <!--
+              <div class="item-image">
+                <a href="#item/<%= p.objectId %>">
+                  <img alt="<%= p.content %>" />
+                </a>
+              </div>
+	-->
+              <a href="#item/<%= p.objectId %>">
+            	<div class="content"><%= p.content %></div>
+              </a>
+              <div class="description"><%= p.description %></div>
+               <div class="status"><%= p.status %></div>
+              <div class="price">$<%= p.price %></div>
+              <div class="calories"><%= p.calories %></div>
+              
+            </li>
+            <% } %>
+          </ul>
+        </script>
+        
+    <script id="cart_index_template" type="text/x-underscore-tmplate">
+          <ul>
+            <% for(i=0,l=cart.length;i<l;++i) { t = cart[i]; %>
+            <li class="cartitem">
+              <div class="name"><%= t.content %></div>
+              <div class="status"><%= t.status %></div>
+              <div class ="calories"><%= t.calories%>
+              <div class="description"><%= t.description %></div>
+              <div class="price">$<%= t.price %></div>
+              
+            </li>
+            <% } %>
+    
+        
+        </script>
+         
+        
+        <script id="store_item_template" type="text/x-underscore-template">
+          <div class="item-detail">
+            
+          </div>
+          
+          <div class="item-info">
+            <div class="content"><%= content %></div>
+            <div class="price">$<%= price %></div>
+
+            <form action="#/cart" method="post">
+              <p>
+                <label>Quantity:</label>
+                <input class="uqf" name="quantity" size="2" type="text" value="1" />
+              </p>
+              <p>
+                <input class="uq" type="submit" value="Add to Cart" placeholder="add to cart" />
+              </p>
+            </form>
+          
+            <div class="back-link">
+              <a href="#">&laquo; Back to Items</a>
+            </div>
+          </div>
+        </script> 
+            
+        <script id="store_cart_template" type="text/x-underscore-template">
+	        Items: <%= count %> ($<%= cost %>)
+        </script>
+
 	<body onload="parsePull()">
 
 		<!-- Header -->
@@ -205,74 +282,22 @@
 				<!-- Portfolio -->
 					<section id="portfolio" class="two">
 						<div class="container">
-					
-							<header>
-								<h2>Menu</h2>
-							</header>
-							
-							<p>Build your order!</p>
-						
-							<div class="row">
-								<div class="4u">
-									<article class="item">
-										<a href="#" class="image fit"><img src="images/pic02.jpg" alt="" /></a>
-										<header>
-											<h3>food</h3>
-										</header>
-									</article>
-									<article class="item">
-										<a href="#" class="image fit"><img src="images/pic03.jpg" alt="" /></a>
-										<header>
-											<h3>food</h3>
-										</header>
-									</article>
-								</div>
-								<div class="4u">
-									<article class="item">
-										<a href="#" class="image fit"><img src="images/pic04.jpg" alt="" /></a>
-										<header>
-											<h3>food</h3>
-										</header>
-									</article>
-									<article class="item">
-										<a href="#" class="image fit"><img src="images/pic05.jpg" alt="" /></a>
-										<header>
-											<h3>food</h3>
-										</header>
-									</article>
-								</div>
-								<div class="4u">
-									<article class="item">
-										<a href="#" class="image fit"><img src="images/pic06.jpg" alt="" /></a>
-										<header>
-											<h3>food</h3>
-										</header>
-									</article>
-									<article class="item">
-										<a href="#" class="image fit"><img src="images/pic07.jpg" alt="" /></a>
-										<header>
-											<h3>food</h3>
-										</header>
-									</article>
-								</div>
-							</div>
-
-						</div>
+							<div id="container">
+            					<div id="headercart">
+                					<h1>Store Menu</h1>
+                					<div class="cart-info"></div>
+            					</div>
+           					    <div id="maincart"> </div>
+           					    <div id="maincartcheckout"> 
+           					  </div>
+       						</div>
+       						 
+       						 </div>
 					</section>
 
 				<!-- About Me -->
 					<section id="about" class="three">
-						<div class="container">
-
-							<header>
-								<h2>Current Orders</h2>
-							</header>
-
-							<a href="#" class="image featured"><img src="images/pic08.jpg" alt="" /></a>
-							
-							<p>Looks like no orders have been placed yet!</p>
-
-						</div>
+						
 					</section>
 			
 				<!-- Contact -->
@@ -316,6 +341,9 @@
 					</ul>
 				
 			</div>
-
+ <script src="http://www.parsecdn.com/js/parse-1.2.13.min.js"></script>
+         <script src="js/jquery-1.6.2.min.js" type="text/javascript"></script>
+        <script src="js/underscore.js" type="text/javascript"></script>
+        <script src="js/store.js" type="text/javascript"></script>
 	</body>
 </html>

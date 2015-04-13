@@ -26,6 +26,20 @@ Parse.$ = jQuery;
         price: function() {
             console.log(this.get('menuitem').get('content'), this.get('quantity'));
             return this.get('menuitem').get('price') * this.get('quantity');
+        },
+        calories: function() {
+            
+            return this.get('menuitem').get('calories') * this.get('quantity');
+        },
+        status: function() {
+            
+            return this.get('menuitem').get('status') ;
+        },
+        itemid: function() {
+            return this.get('menuitem').id;
+        },
+        itemstorage:function(){
+        	return this.get('menuitem');
         }
     });
 
@@ -38,10 +52,7 @@ Parse.$ = jQuery;
             pid = menuitem.id,
             //searches through each object in cart
             o = this.find(function(obj) { return (obj.get('menuitem').id == pid); });
-          console.log(this);
-          console.log(o);
-          console.log(pid);
-           
+     
             if (o) { 
                 return o;
             }
@@ -49,7 +60,7 @@ Parse.$ = jQuery;
             this.add(i, {silent: true})
             return i;
         },
-
+		
         getTotalCount: function() {
             return this.reduce(function(memo, obj) { 
                 return obj.get('quantity') + memo; }, 0);
@@ -58,12 +69,52 @@ Parse.$ = jQuery;
         getTotalCost: function() {
             return this.reduce(function(memo, obj) { 
                 return obj.price() + memo; }, 0);
+        },
+        
+        getTotalCal: function() {
+            return this.reduce(function(memo, obj) { 
+                return obj.calories() + memo; }, 0);
+        },
+        //if bool for any item is false 
+         getTotalStatus: function() {
+            return this.reduce(function(memo, obj) { 
+                return obj.status() + memo; }, 0);
         }
+        
     });
 
     var _BaseView = Parse.View.extend({
-        parent: $('#main'),
+        parent: $('#maincart'),
         className: 'viewport',
+
+        initialize: function() {
+            this.el = $(this.el);
+            this.el.hide();
+            this.parent.append(this.el);
+            return this;
+        },
+
+        hide: function() {
+            if (this.el.is(":visible") === false) {
+                return null;
+            }
+            promise = $.Deferred(_.bind(function(dfd) { 
+                this.el.fadeOut('fast', dfd.resolve)}, this));
+            return promise.promise();
+        },
+
+        show: function() {
+            if (this.el.is(':visible')) {
+                return;
+            }       
+            promise = $.Deferred(_.bind(function(dfd) { 
+                this.el.fadeIn('fast', dfd.resolve) }, this))
+            return promise.promise();
+        }
+    });
+    var _BaseViewCart = Parse.View.extend({
+        parent: $('#maincartcheckout'),
+        className: 'viewportcheckout',
 
         initialize: function() {
             this.el = $(this.el);
@@ -107,7 +158,24 @@ Parse.$ = jQuery;
             return this;
         }
     });
+	var CartitemListView = _BaseViewCart.extend({
+        id: 'cartitemlistview',
+        template: $("#cart_index_template").html(),
 
+        initialize: function(options) {
+            this.constructor.__super__.initialize.apply(this, [options])
+            this.collection.bind('reset', _.bind(this.render, this));
+        },
+
+        render: function() {
+            this.el.html(_.template(this.template, 
+                                    {'cart': this.collection.toJSON()
+                                    }))
+            return this;
+        }
+    });
+
+	
 
     var MenuitemView = _BaseView.extend({
         id: 'menuitemview',
@@ -119,7 +187,7 @@ Parse.$ = jQuery;
             this.constructor.__super__.initialize.apply(this, [options]);
             
             this.itemcollection = options.itemcollection;
-            console.log(this.model);
+           
             //searches itemcollection ie. this.cart for item
             this.item = this.itemcollection.getOrCreateItemForMenuitem(this.model);
             console.log(this.item);
@@ -169,6 +237,8 @@ Parse.$ = jQuery;
                 })).animate({paddingTop: '30px'}).animate({paddingTop: '10px'});
         }
     });
+    
+
 
     var ParseStore = Parse.Router.extend({
         views: {},
@@ -178,6 +248,7 @@ Parse.$ = jQuery;
         routes: {
             "": "index",
             "item/:objectId": "menuitem",
+           
         },
 
         initialize: function(data) {
@@ -185,14 +256,14 @@ Parse.$ = jQuery;
             this.cart = new ItemCollection();
         //create widget to show cart saved under collection attr
             new CartWidget({collection: this.cart});
-		
+
 		//initialize menuitems
             this.menuitems = new MenuitemCollection([]);
            // this.menuitems.query = new Parse.Query(Menuitem);
         //user will become restraunt id 
       		//this.menuitems.query.equalTo("user", Parse.User.current());
       		this.menuitems.fetch();
-
+console.log(this.cart);
         //show list of menuitems
             this.views = {
                 '_index': new MenuitemListView({collection: this.menuitems})
@@ -202,19 +273,26 @@ Parse.$ = jQuery;
                 .then(function() { window.location.hash = ''; });
             return this;
         },
-
         hideAllViews: function () {
             return _.select(
                 _.map(this.views, function(v) { return v.hide(); }), 
                 function (t) { return t != null });
         },
-
         index: function() {
             var view = this.views['_index'];
             $.when(this.hideAllViews()).then(
                 function() { return view.show(); });
         },
-//need to add addOne./ manage cart view
+        /*
+        cartitem: function() {
+            var cartitem, v, view;
+            		
+        //sets view to indexitem.objid OR creates new item view
+            view = (v['cart.' + Parse.User.current().id] = (new CartitemView({itemcollection: this.cart}).render()))
+           ;
+      //      $.when(this.hideAllViews()).then(
+        //        function() { view.show(); });
+        },*/
         menuitem: function(objectId) {
             var menuitem, v, view;
        
