@@ -1,9 +1,5 @@
 <!DOCTYPE HTML>
-<!--
-	Prologue by HTML5 UP
-	html5up.net | @n33co
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
+
 <html>
 	<head>
 		<title>Awesome Sauce</title>
@@ -125,10 +121,15 @@
 				console.log("entered search");
 				var query = new Parse.Query(Parse.User);
 				console.log(document.getElementById("search").value);
-				query.contains("restaurantname", document.getElementById("search").value);
+				query.equalTo("restaurantname", document.getElementById("search").value);
 				query.find({
 					success: function(result){
-						console.log("found the restaurant");
+						console.log("found the restaurant" + result[0]);
+						var storefront;
+						document.getElementById("firsthead").innerHTML = result[0].get("restaurantname");
+						document.getElementById("subtitle").innerHTML = result[0].get("restaurantdescription");
+						document.getElementById("restinfo").innerHTML = result[0].get("reviews") + " -Swoll Santa<br>" + result[0].get("restaurantaddress") + ", " + result[0].get("restaurantphone");
+
 					}, error: function(error){
 						console.log("restaurant not found");
 					}
@@ -217,9 +218,12 @@
 						<div class="container">
 
 							<header>
-								<h2 class="alt">Looking for something to eat?</h2>
-								<p>We can point you in the right direction.</p>
+								<h2 class="alt" id="firsthead">Looking for something to eat?</h2>
+								<p id="subtitle">We can point you in the right direction.</p>
 							</header>
+							<body>
+								<p id="restinfo"></p>
+							</body>
 							
 							<footer>
 								<a href="#" class="button scrolly" onclick="searchRestaurants()">Search</a> <!--href was #portfolio-->
