@@ -38,7 +38,7 @@
 
 				document.getElementById("updateInfo").onclick = function() {changeInfo()}; //May not need this check and see later
 
-				checkOwner();
+				checkEmploy();
 
 				console.log(currentUser);
 				console.log(Parse.User.current().get("name"));
@@ -92,7 +92,7 @@
 							console.log("User is now a Owner");
 							console.log(Parse.User.current().get("name"));
 							parsePull();
-							setTimeout("location.href = '../Owner/awesome-editing-pattern/index.html'", 1500); //redirect to owner page
+							setTimeout("location.href = 'login-form/index.html'", 1500); //redirect to owner page
 						},
 						error: function(error){
 							console.log("Registration failed: " + error.code + " " + error.message);
@@ -101,14 +101,40 @@
 				}
 			}
 
-			function checkOwner(){
+			function checkEmploy(){
 				console.log("entered owner check");
 				var currentTitle = Parse.User.current().get("title"); 
-				if(currentTitle == "Owner"){
-					document.getElementById("ownerswap").innerHTML = "Switch to Owner";
-					document.getElementById("ownerswap").href = "../Owner/ownerindex.html";
+				switch(currentTitle){
+					case "Owner": { document.getElementById("ownerswap").innerHTML = "Switch to Owner";
+						document.getElementById("ownerswap").href = "../Owner/ownerindex.html";
+					}; break;
+					case "Kitchen Staff": {document.getElementById("ownerswap").innerHTML = "Switch to Kitchen Staff";
+						document.getElementById("ownerswap").href = "../Owner/kitchenindex.html";
+					}; break;
+					case "Front Desk Clerk": {document.getElementById("ownerswap").innerHTML = "Switch to Front Desk Clerk";
+						document.getElementById("ownerswap").href = "../Owner/frontindex.html";
+					}; break;
+					case "Manager": {document.getElementById("ownerswap").innerHTML = "Switch to Manager";
+						document.getElementById("ownerswap").href = "../Owner/managerindex.html";
+					}; break;
+					default: console.log("defaulting"); break;
 				}
 			}
+
+			function searchRestaurants(){
+				console.log("entered search");
+				var query = new Parse.Query(Parse.User);
+				console.log(document.getElementById("search").value);
+				query.contains("restaurantname", document.getElementById("search").value);
+				query.find({
+					success: function(result){
+						console.log("found the restaurant");
+					}, error: function(error){
+						console.log("restaurant not found");
+					}
+				});
+			}
+
 		</script>
 		<noscript>
 			<link rel="stylesheet" href="css/skel.css" />
@@ -150,7 +176,7 @@
 
 							<form method="post" action="#">
 								<div class="row uniform">
-									<div class="10u 12u$(xsmall)"><input type="email" name="search" id="search" placeholder="Search Restaurants" /></div>
+									<div class="10u 12u$(xsmall)"><input type="text" name="search" id="search" placeholder="Search Restaurants" /></div>
 								</div>
 							</form>
 
@@ -196,7 +222,7 @@
 							</header>
 							
 							<footer>
-								<a href="#" class="button scrolly" onclick="JavaScript:currentCheck()">Search</a> <!--href was #portfolio-->
+								<a href="#" class="button scrolly" onclick="searchRestaurants()">Search</a> <!--href was #portfolio-->
 							</footer>
 
 						</div>
