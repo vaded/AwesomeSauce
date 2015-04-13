@@ -120,6 +120,21 @@
 					default: console.log("defaulting"); break;
 				}
 			}
+
+			function searchRestaurants(){
+				console.log("entered search");
+				var query = new Parse.Query(Parse.User);
+				console.log(document.getElementById("search").value);
+				query.contains("restaurantname", document.getElementById("search").value);
+				query.find({
+					success: function(result){
+						console.log("found the restaurant");
+					}, error: function(error){
+						console.log("restaurant not found");
+					}
+				});
+			}
+
 		</script>
 		<noscript>
 			<link rel="stylesheet" href="css/skel.css" />
@@ -161,7 +176,7 @@
 
 							<form method="post" action="#">
 								<div class="row uniform">
-									<div class="10u 12u$(xsmall)"><input type="email" name="search" id="search" placeholder="Search Restaurants" /></div>
+									<div class="10u 12u$(xsmall)"><input type="text" name="search" id="search" placeholder="Search Restaurants" /></div>
 								</div>
 							</form>
 
@@ -207,7 +222,7 @@
 							</header>
 							
 							<footer>
-								<a href="#" class="button scrolly" onclick="JavaScript:currentCheck()">Search</a> <!--href was #portfolio-->
+								<a href="#" class="button scrolly" onclick="searchRestaurants()">Search</a> <!--href was #portfolio-->
 							</footer>
 
 						</div>
