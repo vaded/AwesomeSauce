@@ -121,14 +121,35 @@
 				console.log("entered search");
 				var query = new Parse.Query(Parse.User);
 				console.log(document.getElementById("search").value);
-				query.equalTo("restaurantname", document.getElementById("search").value);
+				query.contains("restaurantname", document.getElementById("search").value);
+
 				query.find({
 					success: function(result){
-						console.log("found the restaurant" + result[0]);
-						var storefront;
-						document.getElementById("firsthead").innerHTML = result[0].get("restaurantname");
-						document.getElementById("subtitle").innerHTML = result[0].get("restaurantdescription");
-						document.getElementById("restinfo").innerHTML = result[0].get("reviews") + " -Swoll Santa<br>" + result[0].get("restaurantaddress") + ", " + result[0].get("restaurantphone");
+
+							var i = 0;                     //  set your counter to 1
+							document.getElementById("searchbutton").innerHTML = "Loading the list of restaurants...";
+
+							function myLoop () {           //  create a loop function
+							   setTimeout(function () {    //  call a 3s setTimeout when 
+								console.log("found the restaurant" + result.length);
+								var storefront;
+								document.getElementById("firsthead").innerHTML = result[i].get("restaurantname");
+								document.getElementById("subtitle").innerHTML = result[i].get("restaurantdescription");
+								document.getElementById("restinfo").innerHTML = result[i].get("reviews") + " -Swoll Santa<br>" + result[i].get("restaurantaddress") + ", " + result[i].get("restaurantphone");         //  your code here
+								document.getElementById("searchbutton").innerHTML = "What sounds good?";
+							      i++;                     //  increment the counter
+							      if (i < result.length) {            //  if the counter < 10, call the loop function
+							         myLoop();             //  ..  again which will trigger another 
+							      }   
+							      else{
+							      	document.getElementById("searchbutton").innerHTML = "Thats all!";
+							      }                     //  ..  setTimeout()
+							   }, 5000)
+							}
+							myLoop();
+							setTimeout(function(){ document.getElementById("searchbutton").innerHTML = "See something you like? Search It!";}, result.length*5000+5000);
+							
+							
 
 					}, error: function(error){
 						console.log("restaurant not found");
@@ -226,7 +247,7 @@
 							</body>
 							
 							<footer>
-								<a href="#" class="button scrolly" onclick="searchRestaurants()">Search</a> <!--href was #portfolio-->
+								<a href="#" class="button scrolly" onclick="searchRestaurants()" id="searchbutton">Search</a> <!--href was #portfolio-->
 							</footer>
 
 						</div>
