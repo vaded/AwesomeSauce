@@ -26,6 +26,20 @@ Parse.$ = jQuery;
         price: function() {
             console.log(this.get('menuitem').get('content'), this.get('quantity'));
             return this.get('menuitem').get('price') * this.get('quantity');
+        },
+        calories: function() {
+            
+            return this.get('menuitem').get('calories') * this.get('quantity');
+        },
+        status: function() {
+            
+            return this.get('menuitem').get('status') ;
+        },
+        itemid: function() {
+            return this.get('menuitem').id;
+        },
+        itemstorage:function(){
+        	return this.get('menuitem');
         }
     });
 
@@ -38,10 +52,7 @@ Parse.$ = jQuery;
             pid = menuitem.id,
             //searches through each object in cart
             o = this.find(function(obj) { return (obj.get('menuitem').id == pid); });
-          console.log(this);
-          console.log(o);
-          console.log(pid);
-           
+     
             if (o) { 
                 return o;
             }
@@ -49,7 +60,7 @@ Parse.$ = jQuery;
             this.add(i, {silent: true})
             return i;
         },
-
+		
         getTotalCount: function() {
             return this.reduce(function(memo, obj) { 
                 return obj.get('quantity') + memo; }, 0);
@@ -58,11 +69,22 @@ Parse.$ = jQuery;
         getTotalCost: function() {
             return this.reduce(function(memo, obj) { 
                 return obj.price() + memo; }, 0);
+        },
+        
+        getTotalCal: function() {
+            return this.reduce(function(memo, obj) { 
+                return obj.calories() + memo; }, 0);
+        },
+        //if bool for any item is false 
+         getTotalStatus: function() {
+            return this.reduce(function(memo, obj) { 
+                return obj.status() + memo; }, 0);
         }
+        
     });
 
     var _BaseView = Parse.View.extend({
-        parent: $('#main'),
+        parent: $('#maincart'),
         className: 'viewport',
 
         initialize: function() {
@@ -90,7 +112,7 @@ Parse.$ = jQuery;
             return promise.promise();
         }
     });
-
+    
 
 	var MenuitemListView = _BaseView.extend({
         id: 'menuitemlistview',
@@ -107,6 +129,7 @@ Parse.$ = jQuery;
             return this;
         }
     });
+    
 
 
     var MenuitemView = _BaseView.extend({
@@ -119,7 +142,7 @@ Parse.$ = jQuery;
             this.constructor.__super__.initialize.apply(this, [options]);
             
             this.itemcollection = options.itemcollection;
-            console.log(this.model);
+           
             //searches itemcollection ie. this.cart for item
             this.item = this.itemcollection.getOrCreateItemForMenuitem(this.model);
             console.log(this.item);
@@ -135,6 +158,7 @@ Parse.$ = jQuery;
             e.preventDefault();
             //console.log("itemupdate");
             this.item.update(parseInt(this.$('.uqf').val()));
+            console.log(this);
         },
         
         updateOnEnter: function(e) {
@@ -165,10 +189,38 @@ Parse.$ = jQuery;
         	//console.log(this);
             $(this.el).html(_.template(this.template, {
                     'count': this.collection.getTotalCount(),
-                    'cost': this.collection.getTotalCost()
+                    'cost': this.collection.getTotalCost(),
+                    'calories': this.collection.getTotalCal(),
+                    'message': "Are you really going to eat that?"
                 })).animate({paddingTop: '30px'}).animate({paddingTop: '10px'});
         }
     });
+    
+    var Checkout = Parse.View.extend({
+        el: $('.checkout'),
+        template: $('#checkout_template').html(),
+        
+        initialize: function() {
+        	_.bindAll(this, "render");
+            this.collection.bind('change', this.render);
+           // console.log(this);
+        },
+        
+        render: function() {
+        console.log(this.collection);
+            $(this.el).html(_.template(this.template, {
+            		
+            		'customer': Parse.User.current().id,
+                    'count': this.collection.getTotalCount(),
+                    'cost': this.collection.getTotalCost(),
+                    'calories': this.collection.getTotalCal(),
+                    'status': this.collection.getTotalStatus(),
+					'thiscart': this.collection.toJSON()
+                })).animate({paddingTop: '30px'}).animate({paddingTop: '10px'});
+        }
+    });
+    
+
 
     var ParseStore = Parse.Router.extend({
         views: {},
@@ -177,7 +229,8 @@ Parse.$ = jQuery;
 
         routes: {
             "": "index",
-            "item/:objectId": "menuitem",
+            "item/:objectId": "menuitem"
+           
         },
 
         initialize: function(data) {
@@ -185,7 +238,7 @@ Parse.$ = jQuery;
             this.cart = new ItemCollection();
         //create widget to show cart saved under collection attr
             new CartWidget({collection: this.cart});
-		
+			new Checkout({collection: this.cart});
 		//initialize menuitems
             this.menuitems = new MenuitemCollection([]);
            // this.menuitems.query = new Parse.Query(Menuitem);
@@ -202,19 +255,16 @@ Parse.$ = jQuery;
                 .then(function() { window.location.hash = ''; });
             return this;
         },
-
         hideAllViews: function () {
             return _.select(
                 _.map(this.views, function(v) { return v.hide(); }), 
                 function (t) { return t != null });
         },
-
         index: function() {
             var view = this.views['_index'];
             $.when(this.hideAllViews()).then(
                 function() { return view.show(); });
         },
-//need to add addOne./ manage cart view
         menuitem: function(objectId) {
             var menuitem, v, view;
        
@@ -227,7 +277,7 @@ Parse.$ = jQuery;
            
            
             $.when(this.hideAllViews()).then(
-                function() { view.show(); });
+               function() { view.show(); });
         }
     });
 

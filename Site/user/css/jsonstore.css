@@ -9,26 +9,56 @@ body {
   padding: 0px;
 }
 
-#header {
-  background: #C97E41;
+#headercart {
   margin: 0px;
   padding: 20px;
 }
-#header h1 {
-  font-family: Inconsolata, Monaco, Courier, mono;
-  color: #FFF;
-  margin: 0px;
-}
-#header .cart-info {
-  position: absolute;
-  top: 0px;
-  right: 0px;
-  text-align: right;
-  padding: 10px;
-  background: #714625;
+
+#headercart .cart-info {
+  position: relative;
+  width: 25%;
+  padding: 5px;
+  text-align: center;
+  background: #8ebebc;
   color: #FFF;
   font-size: 12px;
   font-weight: bold;
+}
+.checkout {
+  display: border;
+  float:left;
+  width: 250px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  text-align:center;
+  font-size: 12px;
+}
+.checkout li {
+  position: relative;
+  width: 100%;
+  padding: 5px;
+  text-align: center;
+  font-size: 12px;
+  font-weight: bold;
+}
+div:empty { display: none; }
+
+#cartitemlistview ul {
+    list-style: none;
+}
+
+.cartitem {
+  display: border;
+  float:left;
+  width: 250px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  text-align:center;
+  font-size: 12px;
 }
 
 #menuitemlistview ul {
