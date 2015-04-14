@@ -1,5 +1,9 @@
 <!DOCTYPE HTML>
-
+<!--
+	Prologue by HTML5 UP
+	html5up.net | @n33co
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
 <html>
 	<head>
 		<title>Awesome Sauce</title>
@@ -19,25 +23,36 @@
 			function parsePull(){
 				console.log("made it inside of the pull");
 
-				var currentUser = Parse.User.current();
-				document.getElementById("name").innerHTML = Parse.User.current().get("name"); //users name to appear in toolbar
-				document.getElementById("title").innerHTML = Parse.User.current().get("title"); // users tile to appear in toolbar
+				var username = localStorage.getItem('user');//retrieval of user email
+				var	password = localStorage.getItem('pass');//retrieval of login pasword
+				console.log(username);
+				console.log(password);
+				
+				Parse.User.logIn(username, password, {
+					success: function(user){
+						var currentUser = Parse.User.current();
+						document.getElementById("name").innerHTML = Parse.User.current().get("name"); //users name to appear in toolbar
+						document.getElementById("title").innerHTML = Parse.User.current().get("title"); // users tile to appear in toolbar
 
-				document.getElementById("namei").placeholder = "Name"; //sets user name in info form at bottom
-				document.getElementById("emaili").placeholder = "E-Mail"; //sets user email in info form at bottom
-				document.getElementById("addressi").placeholder = "Address"; //sets user address in info form at bottom
-				document.getElementById("phonei").placeholder = "Phone Number"; //sets user phone in form at bottom
-				document.getElementById("namei").value = Parse.User.current().get("name"); //sets user name in info form at bottom
-				document.getElementById("emaili").value = Parse.User.current().getUsername(); //sets user email in info form at bottom
-				document.getElementById("addressi").value = Parse.User.current().get("address"); //sets user address in info form at bottom
-				document.getElementById("phonei").value = Parse.User.current().get("phone"); //sets user phone in form at bottom
+						document.getElementById("namei").placeholder = Parse.User.current().get("name"); //sets user name in info form at bottom
+						document.getElementById("emaili").placeholder = Parse.User.current().getUsername(); //sets user email in info form at bottom
+						document.getElementById("addressi").placeholder = Parse.User.current().get("address"); //sets user address in info form at bottom
+						document.getElementById("phonei").placeholder = Parse.User.current().get("phone"); //sets user phone in form at bottom
+						document.getElementById("namei").value = Parse.User.current().get("name"); //sets user name in info form at bottom
+						document.getElementById("emaili").value = Parse.User.current().getUsername(); //sets user email in info form at bottom
+						document.getElementById("addressi").value = Parse.User.current().get("address"); //sets user address in info form at bottom
+						document.getElementById("phonei").value = Parse.User.current().get("phone"); //sets user phone in form at bottom
 
-				document.getElementById("updateInfo").onclick = function() {changeInfo()}; //May not need this check and see later
+						document.getElementById("updateInfo").onclick = function() {changeInfo()};
 
-				checkEmploy();
-
-				console.log(currentUser);
-				console.log(Parse.User.current().get("name"));
+						console.log(currentUser);
+						console.log(Parse.User.current().get("name"));
+						
+					},
+					error: function(user, error){
+						console.log("there was an error " + error.code + " " + error.message);
+					}
+				});
 			}
 			function changeInfo(){ //function to change username using info from bottom form
 				console.log("Its getting into change Info");
@@ -53,7 +68,6 @@
 					currentUser.save(null, {
 						success: function(user) {
 							console.log("Information has been updated");
-							parsePull();
 						},
 						error: function(error) {
 							console.log("Information failed to update: " + error.code + " " + error.message);
@@ -66,6 +80,7 @@
 			}
 
 			function logout(){
+<<<<<<< HEAD
 				console.log("Entered Logout");
 				Parse.User.logOut();
 				var currentUser = Parse.User.current();
@@ -155,8 +170,10 @@
 						console.log("restaurant not found");
 					}
 				});
+=======
+				
+>>>>>>> origin/master
 			}
-
 		</script>
 		<noscript>
 			<link rel="stylesheet" href="css/skel.css" />
@@ -198,7 +215,7 @@
 
 							<form method="post" action="#">
 								<div class="row uniform">
-									<div class="10u 12u$(xsmall)"><input type="text" name="search" id="search" placeholder="Search Restaurants" /></div>
+									<div class="10u 12u$(xsmall)"><input type="email" name="search" id="search" placeholder="Search Restaurants" /></div>
 								</div>
 							</form>
 
@@ -213,10 +230,6 @@
 				</div>
 				
 				<div class="bottom">
-					<ul id="endbuttons">
-						<li><a href="../index.html" onclick="JavaScript:logout()"><span>Logout</span></a></li>
-						<li><a id="ownerswap" href="#"><span></span></a></li>
-					</ul>
 
 					<!-- Social Icons -->
 					<!--	<ul class="icons">
@@ -239,15 +252,16 @@
 						<div class="container">
 
 							<header>
-								<h2 class="alt" id="firsthead">Looking for something to eat?</h2>
-								<p id="subtitle">We can point you in the right direction.</p>
+								<h2 class="alt">Looking for something to eat?</h2>
+								<p>We can point you in the right direction.</p>
 							</header>
-							<body>
-								<p id="restinfo"></p>
-							</body>
 							
 							<footer>
+<<<<<<< HEAD
 								<a href="#" class="button scrolly" onclick="searchRestaurants()" id="searchbutton">Search</a> <!--href was #portfolio-->
+=======
+								<a href="#" class="button scrolly" onclick="JavaScript:parsePull()">Search</a> <!--href was #portfolio-->
+>>>>>>> origin/master
 							</footer>
 
 						</div>
@@ -348,7 +362,7 @@
 										<input type="button" id="updateInfo" value="Update Information" />
 									</div>
 									<div class="12u">
-										<input type="button" value="Register Restaurant" onclick="JavaScript:registerRestaurant()"/>
+										<input type="submit" value="Register Restaurant" />
 									</div>
 								</div>
 							</form>
