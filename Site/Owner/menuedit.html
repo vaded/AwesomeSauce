@@ -40,12 +40,16 @@
 
 				<div class="top">
 
+<<<<<<< HEAD
 					<!-- Logo -->
 						<div id="logo">
 							<span class="image avatar48"><img src="images/avatar.jpg" alt="" /></span>
 							<h1 id="name">Dr. Jane Doe</h1>
 							<p id="title">Owner</p>
 						</div>
+=======
+
+>>>>>>> chelsey-dev
 
 					<!-- Nav -->
 						<nav id="nav">
@@ -116,7 +120,7 @@
     </script>
 
     <!-- Templates -->
-
+<!--
     <script type="text/template" id="login-template">
       <div class="login">
         <form class="login-form">
@@ -136,17 +140,19 @@
         </form>
       </div>
     </script>
-
+-->
     <script type="text/template" id="manage-menuitems-template">
-<!------user id header-->
+<!--
       <div id="user-info">
         Signed in as <%= Parse.User.current().escape("username") %> (<a href="#" class="log-out">Log out</a>)
       </div>
+-->
 <!------input-->
       <div class="sectionmenu">
         <header id="headermenu">
           <input id="new-menuitem-name" placeholder="Add Item Name Here" type="text"/>
           <input id="new-menuitem-price" placeholder="Price" type="number" step="any"/>
+          <input id="new-menuitem-calories" placeholder="Calories" type="number" step="any"/>
           <input id="new-menuitem-descript" placeholder="Description" type="text"/>
         </header>
 <!------begin lists-->
@@ -173,8 +179,11 @@
 	  		<label class="menuitem-content"><%= _.escape(content) %></label>
             <label class="menuitem-price"><%= _.escape(price) %></label>
             <label class="menuitem-descript"><%= _.escape(description) %></label>
+             <button class="menuitem-destroy"></button>
+            <br>
+            <label class="menuitem-calories"><%= _.escape(calories) %></label>
             <a href="#openModal"><button class="edit-ingredients" id ="editIngredients">Edit Ingredients</button></a>
-            <button class="menuitem-destroy"></button>
+           
 		</div>
 <!------end of view-->
 		<input class="edit" value="<%= _.escape(content) %>">
@@ -216,6 +225,7 @@
 	  					<input class="toggle" type="checkbox" <%= status ? 'checked="checked"' : '' %>>
 	  					<label class="ingredient-content"><%= _.escape(content) %></label>
             			<label class="ingredient-price"><%= _.escape(price) %></label>
+            			
             			<button class="ingredient-destroy"></button>
 					</div>
 					<input class="edit" value="<%= _.escape(content) %>">

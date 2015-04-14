@@ -91,6 +91,7 @@ $(function() {
       content: "please add a name",
       description: "item description here",
       price: 0.00,
+      calories: 1,
       status: true,
       menuitem : []
     },
@@ -106,6 +107,9 @@ $(function() {
         	}	
          if (!this.get("price")) {
         	this.set({"price": this.defaults.price});
+        	}
+        if (!this.get("calories")) {
+        	this.set({"calories": this.defaults.calories});
         	}		
     },
 
@@ -502,11 +506,12 @@ $(function() {
       this.$el.html(_.template($("#manage-menuitems-template").html()));
       
       this.inputName = this.$("#new-menuitem-name");
+      this.inputCal = this.$("#new-menuitem-calories");
       this.inputPrice = this.$("#new-menuitem-price");
       this.inputDescript =this.$("#new-menuitem-descript");
       this.inputIngredientList = this.$("#new-menuitem-ingredientlist");
       this.allCheckbox = this.$("#toggle-all")[0];
-
+//console.log(this);
       // Create our collection of Menuitems
       this.menuitems = new Menu;
 
@@ -610,13 +615,14 @@ $(function() {
       this.menuitems.create({
         content: this.inputName.val(),
         price:   this.inputPrice.val(),
+        calories:   this.inputCal.val(),
         description: this.inputDescript.val(),
         order:   this.menuitems.nextOrder(),
         status:  true,
         user:    Parse.User.current(),
         ACL:     new Parse.ACL(Parse.User.current())
       });
-
+		this.inputCal.val('');
       this.inputName.val('');
       this.inputPrice.val('');
       this.inputDescript.val('');
