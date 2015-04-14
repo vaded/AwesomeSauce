@@ -25,7 +25,8 @@ body {
   font-weight: bold;
 }
 .checkout {
-  display: border;
+
+  display: block;
   float:left;
   width: 250px;
   margin-right: 10px;

@@ -145,7 +145,7 @@ Parse.$ = jQuery;
            
             //searches itemcollection ie. this.cart for item
             this.item = this.itemcollection.getOrCreateItemForMenuitem(this.model);
-            console.log(this.item);
+            //console.log(this.item);
             return this;
         },
 
@@ -207,7 +207,7 @@ Parse.$ = jQuery;
         },
         
         render: function() {
-        console.log(this.collection);
+        console.log(this.itemcollection);
             $(this.el).html(_.template(this.template, {
             		
             		'customer': Parse.User.current().id,
