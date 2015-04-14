@@ -147,24 +147,10 @@
             </li>
             <% } %>
           </ul>
-        </script>
-        
-    <script id="cart_index_template" type="text/x-underscore-tmplate">
-          <ul>
-            <% for(i=0,l=cart.length;i<l;++i) { t = cart[i]; %>
-            <li class="cartitem">
-              <div class="name"><%= t.content %></div>
-              <div class="status"><%= t.status %></div>
-              <div class ="calories"><%= t.calories%>
-              <div class="description"><%= t.description %></div>
-              <div class="price">$<%= t.price %></div>
-              
-            </li>
-            <% } %>
-    
-        
-        </script>
          
+        </script>
+
+    
         
         <script id="store_item_template" type="text/x-underscore-template">
           <div class="item-detail">
@@ -173,7 +159,10 @@
           
           <div class="item-info">
             <div class="content"><%= content %></div>
+            <div class="description"><%= description %></div>
+            <div class="calories"><%= calories %></div>
             <div class="price">$<%= price %></div>
+            <div class="status"><%= status %></div>
 
             <form action="#/cart" method="post">
               <p>
@@ -191,9 +180,48 @@
           </div>
         </script> 
             
-        <script id="store_cart_template" type="text/x-underscore-template">
-	        Items: <%= count %> ($<%= cost %>) <%=calories%>
-	      <%=  if ('calories'1000){alert("Are you sure you should eat that?");}%>
+        <script id="store_cart_template" type="text/javascript">
+	        Items: <%= count %> ($<%= cost %>) <%= calories %> 
+	        <%= parseInt(calories) >= 1000 ?   'Are you really going to all that?' :'Smart Choice' %>    
+        </script>
+        
+        <script id="checkout_template" type="text/javascript">
+	      <Parse.User.current().name%>
+	      Totals: <%= count %> ($<%= cost %>) <%= calories %> 
+	      
+			 <ul>
+            <% for(i=0,l=thiscart.length;i<l;++i) { p = thiscart[i]; %>
+            <li class="cartitem">
+              <div class="contentcart">Item Name:<%= p.content %></div>
+              <div class="descriptioncart">Description<%= p.description %></div>
+               <div class="statuscart"><%= p.status %></div>
+              <div class="pricecart">$<%= p.price %></div>
+              <div class="caloriescart"><%= p.calories %></div>
+              
+            </li>
+            <% } %>
+          </ul>
+              
+              
+        
+	       <button>Checkout</button>  
+        </script>
+        
+        <script id="cart_index_template" type="text/x-underscore-tmplate">
+        cart should be here
+          <ul>
+            <% for(i=0,l=cart.length;i<l;++i) { p = cart[i].itemstorage(); %>
+            <li class="cartitem">
+              <div class="content"><%= p.content %></div>
+              <div class="description"><%= p.description %></div>
+               <div class="status"><%= p.status %></div>
+              <div class="price">$<%= p.price %></div>
+              <div class="calories"><%= p.calories %></div>
+              
+            </li>
+            <% } %>
+          </ul>
+         
         </script>
 
 	<body onload="parsePull()">
@@ -289,11 +317,12 @@
                 					<div class="cart-info"></div>
             					</div>
            					    <div id="maincart"> </div>
-           					    <div id="maincartcheckout"> 
-           					  </div>
-       						</div>
-       						 
-       						 </div>
+           					 </div>
+       					   </div>
+       					   <div id="container">
+       					   <div class ="checkout"> </div> 
+       					   </div>
+       					</div>
 					</section>
 
 				<!-- About Me -->

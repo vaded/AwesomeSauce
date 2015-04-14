@@ -91,7 +91,7 @@ $(function() {
       content: "please add a name",
       description: "item description here",
       price: 0.00,
-      calories: 0,
+      calories: 1,
       status: true,
       menuitem : []
     },
@@ -106,7 +106,7 @@ $(function() {
         	this.set({"description": this.defaults.description});
         	}	
          if (!this.get("price")) {
-        	this.set({"price": this.defaults.calories});
+        	this.set({"price": this.defaults.price});
         	}
         if (!this.get("calories")) {
         	this.set({"calories": this.defaults.calories});
@@ -511,7 +511,7 @@ $(function() {
       this.inputDescript =this.$("#new-menuitem-descript");
       this.inputIngredientList = this.$("#new-menuitem-ingredientlist");
       this.allCheckbox = this.$("#toggle-all")[0];
-
+//console.log(this);
       // Create our collection of Menuitems
       this.menuitems = new Menu;
 
@@ -615,7 +615,7 @@ $(function() {
       this.menuitems.create({
         content: this.inputName.val(),
         price:   this.inputPrice.val(),
-        cal:   this.inputCal.val(),
+        calories:   this.inputCal.val(),
         description: this.inputDescript.val(),
         order:   this.menuitems.nextOrder(),
         status:  true,

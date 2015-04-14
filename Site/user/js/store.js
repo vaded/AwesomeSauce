@@ -112,36 +112,7 @@ Parse.$ = jQuery;
             return promise.promise();
         }
     });
-    var _BaseViewCart = Parse.View.extend({
-        parent: $('#maincartcheckout'),
-        className: 'viewportcheckout',
-
-        initialize: function() {
-            this.el = $(this.el);
-            this.el.hide();
-            this.parent.append(this.el);
-            return this;
-        },
-
-        hide: function() {
-            if (this.el.is(":visible") === false) {
-                return null;
-            }
-            promise = $.Deferred(_.bind(function(dfd) { 
-                this.el.fadeOut('fast', dfd.resolve)}, this));
-            return promise.promise();
-        },
-
-        show: function() {
-            if (this.el.is(':visible')) {
-                return;
-            }       
-            promise = $.Deferred(_.bind(function(dfd) { 
-                this.el.fadeIn('fast', dfd.resolve) }, this))
-            return promise.promise();
-        }
-    });
-
+    
 
 	var MenuitemListView = _BaseView.extend({
         id: 'menuitemlistview',
@@ -158,24 +129,8 @@ Parse.$ = jQuery;
             return this;
         }
     });
-	var CartitemListView = _BaseViewCart.extend({
-        id: 'cartitemlistview',
-        template: $("#cart_index_template").html(),
+    
 
-        initialize: function(options) {
-            this.constructor.__super__.initialize.apply(this, [options])
-            this.collection.bind('reset', _.bind(this.render, this));
-        },
-
-        render: function() {
-            this.el.html(_.template(this.template, 
-                                    {'cart': this.collection.toJSON()
-                                    }))
-            return this;
-        }
-    });
-
-	
 
     var MenuitemView = _BaseView.extend({
         id: 'menuitemview',
@@ -203,6 +158,7 @@ Parse.$ = jQuery;
             e.preventDefault();
             //console.log("itemupdate");
             this.item.update(parseInt(this.$('.uqf').val()));
+            console.log(this);
         },
         
         updateOnEnter: function(e) {
@@ -234,7 +190,32 @@ Parse.$ = jQuery;
             $(this.el).html(_.template(this.template, {
                     'count': this.collection.getTotalCount(),
                     'cost': this.collection.getTotalCost(),
-                    'calories': this.collection.getTotalCal()
+                    'calories': this.collection.getTotalCal(),
+                    'message': "Are you really going to eat that?"
+                })).animate({paddingTop: '30px'}).animate({paddingTop: '10px'});
+        }
+    });
+    
+    var Checkout = Parse.View.extend({
+        el: $('.checkout'),
+        template: $('#checkout_template').html(),
+        
+        initialize: function() {
+        	_.bindAll(this, "render");
+            this.collection.bind('change', this.render);
+           // console.log(this);
+        },
+        
+        render: function() {
+        console.log(this.collection);
+            $(this.el).html(_.template(this.template, {
+            		
+            		'customer': Parse.User.current().id,
+                    'count': this.collection.getTotalCount(),
+                    'cost': this.collection.getTotalCost(),
+                    'calories': this.collection.getTotalCal(),
+                    'status': this.collection.getTotalStatus(),
+					'thiscart': this.collection.toJSON()
                 })).animate({paddingTop: '30px'}).animate({paddingTop: '10px'});
         }
     });
@@ -248,7 +229,7 @@ Parse.$ = jQuery;
 
         routes: {
             "": "index",
-            "item/:objectId": "menuitem",
+            "item/:objectId": "menuitem"
            
         },
 
@@ -257,14 +238,14 @@ Parse.$ = jQuery;
             this.cart = new ItemCollection();
         //create widget to show cart saved under collection attr
             new CartWidget({collection: this.cart});
-
+			new Checkout({collection: this.cart});
 		//initialize menuitems
             this.menuitems = new MenuitemCollection([]);
            // this.menuitems.query = new Parse.Query(Menuitem);
         //user will become restraunt id 
       		//this.menuitems.query.equalTo("user", Parse.User.current());
       		this.menuitems.fetch();
-console.log(this.cart);
+
         //show list of menuitems
             this.views = {
                 '_index': new MenuitemListView({collection: this.menuitems})
@@ -284,16 +265,6 @@ console.log(this.cart);
             $.when(this.hideAllViews()).then(
                 function() { return view.show(); });
         },
-        /*
-        cartitem: function() {
-            var cartitem, v, view;
-            		
-        //sets view to indexitem.objid OR creates new item view
-            view = (v['cart.' + Parse.User.current().id] = (new CartitemView({itemcollection: this.cart}).render()))
-           ;
-      //      $.when(this.hideAllViews()).then(
-        //        function() { view.show(); });
-        },*/
         menuitem: function(objectId) {
             var menuitem, v, view;
        
@@ -306,7 +277,7 @@ console.log(this.cart);
            
            
             $.when(this.hideAllViews()).then(
-                function() { view.show(); });
+               function() { view.show(); });
         }
     });
 

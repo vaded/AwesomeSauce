@@ -133,8 +133,8 @@
         <header id="headermenu">
           <input id="new-menuitem-name" placeholder="Add Item Name Here" type="text"/>
           <input id="new-menuitem-price" placeholder="Price" type="number" step="any"/>
+          <input id="new-menuitem-calories" placeholder="Calories" type="number" step="any"/>
           <input id="new-menuitem-descript" placeholder="Description" type="text"/>
-          <input id="new-menuitem-calories" placeholder="Calories" type="number"/>
         </header>
 <!------begin lists-->
         <div id="main">
@@ -160,9 +160,11 @@
 	  		<label class="menuitem-content"><%= _.escape(content) %></label>
             <label class="menuitem-price"><%= _.escape(price) %></label>
             <label class="menuitem-descript"><%= _.escape(description) %></label>
+             <button class="menuitem-destroy"></button>
+            <br>
             <label class="menuitem-calories"><%= _.escape(calories) %></label>
             <a href="#openModal"><button class="edit-ingredients" id ="editIngredients">Edit Ingredients</button></a>
-            <button class="menuitem-destroy"></button>
+           
 		</div>
 <!------end of view-->
 		<input class="edit" value="<%= _.escape(content) %>">
@@ -204,6 +206,7 @@
 	  					<input class="toggle" type="checkbox" <%= status ? 'checked="checked"' : '' %>>
 	  					<label class="ingredient-content"><%= _.escape(content) %></label>
             			<label class="ingredient-price"><%= _.escape(price) %></label>
+            			
             			<button class="ingredient-destroy"></button>
 					</div>
 					<input class="edit" value="<%= _.escape(content) %>">
