@@ -122,6 +122,7 @@
 			<link rel="stylesheet" href="css/style.css" />
 			<link rel="stylesheet" href="css/style-wide.css" />
 			<link rel="stylesheet" href="css/cartpayment.css">
+			 <link rel="stylesheet" href="css/stylecomment.css">
 		</noscript>
 		<!--[if lte IE 9]><link rel="stylesheet" href="css/ie/v9.css" /><![endif]-->
 		<!--[if lte IE 8]><link rel="stylesheet" href="css/ie/v8.css" /><![endif]-->
@@ -298,8 +299,9 @@
             					</div>
            					    <div id="maincart"> </div>
            					 </div>
+
        					 </div>
-       					
+       					</div>
 					</section>
 
 				<!-- Itemcart and payment -->
@@ -420,7 +422,20 @@
     });
 </script>
 						<div class="loadingmodal"></div>
-						
+						           					   <div id="form-main">
+  <div id="form-div">
+    <form class="form" id="form1">
+
+      <p class="text">
+        <textarea name="text" class="validate[required,length[6,300]] feedback-input" id="comment" placeholder="sent a comment to the owner here!"></textarea>
+      </p>
+
+      <div class="submit">
+        <input type="submit" value="SEND" id="button-blue"/>
+        <div class="ease"></div>
+      </div>
+    </form>
+    </div>
 </section>
 			
 				<!-- Contact -->
