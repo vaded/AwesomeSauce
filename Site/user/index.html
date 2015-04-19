@@ -52,7 +52,6 @@
 
 						document.getElementById("updateInfo").onclick = function() {changeInfo()};
 
-<<<<<<< HEAD
 						console.log(currentUser);
 						console.log(Parse.User.current().get("name"));
 						
@@ -61,10 +60,9 @@
 						console.log("there was an error " + error.code + " " + error.message);
 					}
 				});
-=======
-				console.log(Parse.User.current().get("name"));
->>>>>>> chelsey-dev
+			console.log(Parse.User.current().get("name"));
 			}
+        
 			function changeInfo(){ //function to change username using info from bottom form
 				console.log("Its getting into change Info");
 				var currentUser = Parse.User.current();
@@ -91,8 +89,7 @@
 			}
 
 			function logout(){
-<<<<<<< HEAD
-				console.log("Entered Logout");
+                console.log("Entered Logout");
 				Parse.User.logOut();
 				var currentUser = Parse.User.current();
 			}
@@ -181,9 +178,6 @@
 						console.log("restaurant not found");
 					}
 				});
-=======
-				
->>>>>>> origin/master
 			}
 		</script>
 		
@@ -267,9 +261,19 @@
           </ul>
            Totals: <%= count %> ($<%= cost %>) <%= calories %> 
         </script>
-       
-       
-
+    	<!--hide/show sections-->
+    	<script type="text/javascript" language="JavaScript">
+		function HideContent(d) {
+			document.getElementById(d).style.display = "none";
+		}
+		function ShowContent(d) {
+			document.getElementById(d).style.display = "block";
+		}
+		function ReverseDisplay(d) {
+			if(document.getElementById(d).style.display == "none") { document.getElementById(d).style.display = "block"; }
+			else { document.getElementById(d).style.display = "none"; }
+		}
+		</script>
 
 	<body onload="parsePull()">
 
@@ -345,11 +349,9 @@
 							</header>
 							
 							<footer>
-<<<<<<< HEAD
+
 								<a href="#" class="button scrolly" onclick="searchRestaurants()" id="searchbutton">Search</a> <!--href was #portfolio-->
-=======
-								<a href="#" class="button scrolly" onclick="JavaScript:parsePull()">Search</a> <!--href was #portfolio-->
->>>>>>> origin/master
+
 							</footer>
 
 						</div>
@@ -362,6 +364,7 @@
 								<h2>Menu</h2>
 							</header>
 						<div id="container">
+						
             					<div id="headercart">
                 					<h1>Store Menu</h1>
                 					<div class="cart-info"></div>
@@ -369,6 +372,7 @@
            					    <div id="maincart"> </div>
            					 </div>
        					 </div>
+       					
        					
 					</section>
 
@@ -378,121 +382,46 @@
 						   <header>
 								<h2>Shopping Cart</h2>
 							</header>
-       					   	<div class ="checkout">
-       					   	</div> 
+       					   	<div class="checkout"></div> 
+       					</div>
+       					
+       					 <div class="container">
+       					   	<form>
+       					   <input type="radio" name="payment" value="Cash" checked onClick="ReverseDisplay('card'); ShowContent('cashOrder');">Cash
+       					   <input type="radio" name="payment" value="Card" onClick="ShowContent('card'); ReverseDisplay('cashOrder');">Card
+						   <textarea class="12u" rows="2" cols="50" placeholder="Leave A Comment"></textarea>
+       					   <input type="button" class="12u" id="cashOrder" style="display:block;" value="Pay With Cash"/>
+       					   </form>
 						</div>
 					</section>
 					
-					<section id="pay" class="two">
-<div class="container">				
-<div class="form-signin checkout_payment_option selected mondidojs">
-    <div class="container-bb">
-                <form id="mondidopayform" action="https://api.mondido.com/v1/transactions?extend=stored_card">
+					<section id="card" class="two" style="display:none;">
+					<div class="container">
+					<form>
+					<div class="row 50%">
+					<h2>Card Payment</h2>		
+					<div class="6u">				
+                    <input type="info" name="card_holder" placeholder="Name On Card">
+					</div>
+					<div class="6u">	
+                     <input type="info"  data-encrypted-attribute="card_number"  placeholder="Card Number">
+                     </div>
+                     <div class="6u">	
+                     	<input type="info"  placeholder="CVV" data-encrypted-attribute="card_cvv" style="width:20%;" placeholder="000">
                     
-                        <div id="addCard">
-                            <div class="panel">
-                                <h2>Card Payment</h2>
-                                <div class="8u">
-                                    <label>Card Holder Name</label>
-                                    <input type="text" class="form-control" name="card_holder" style="width:100%;" placeholder="Firstname Lastname">
-                                </div>
-                            </div>
-                            <div class="panel">
-                                <div class="8u">
-                                    <label>Card Number</label>
-                                    <input type="text" class="form-control" data-encrypted-attribute="card_number" style="width:100%;" placeholder="4111111111111111">
-                                </div>
-                                <div class="row 33%">   
-                                <div class="3u">
-                                    <label>CVV</label>
-                                    <input type="text" class="form-control" data-encrypted-attribute="card_cvv" style="width:90%;" placeholder="000">
-                                </div>
-                                <div class="3u">
-                                    <label>Month</label>
-                                    <input type="text" name="expMM" class="form-control" maxlength="2" style="width:90%;" placeholder="01">
-                                </div>
-                                <div class="3u">
-                                    <label>Year</label>
-                                    <input type="text" name="expYY" class="form-control" maxlength="2" style="width:90%;" placeholder="15">
-                                </div>
-                            </div>
-                                <div class="stripes bottom"> </div>
-                                <div style="margin:10px 0;">
-                                <input type="checkbox" name="store_card" value="true"/> Store Card (<span class="storeCardInfo">What is this</span>)
-                            </div>
-                                <div class="clear">
-                        	</div>
+                     	<input type="info" name="expMM" maxlength="2" style="width:20%;" placeholder="MM">
 
-                            <input type="submit" value="Finish Payment" class="btn_blue fullsize btn-primary mondidocheckout">
-                            <div>
-                                <div id="credit-card-list">
-                                    <img alt="Mastercard" class="card_mastercard card_icon" src="https://raw.githubusercontent.com/Mondido/mondido-js/master/images/mastercard.png">
-                                    <img alt="Visa" class="card_visa card_icon" src="https://raw.githubusercontent.com/Mondido/mondido-js/master/images/visa.png">
-                                    <img alt="Amex"  class="card_amex card_icon" src="https://raw.githubusercontent.com/Mondido/mondido-js/master/images/amex.png">
-                                    <img alt="Discover" class="card_discover card_icon" src="https://raw.githubusercontent.com/Mondido/mondido-js/master/images/discover.png">
-                                    <img alt="Maestro" class="card_maestro  card_icon" src="https://raw.githubusercontent.com/Mondido/mondido-js/master/images/maestro.png">
-                                </div>
-                            </div>
-                        </div>
-                        <!-- order data -->
-                        <input type="hidden" data-encrypted-attribute="card_type" value="" />
-                        <input type="hidden" data-encrypted-attribute="card_expiry" value=""/>
-                        <input type="hidden" name="amount" value="1.00" />
-                        <input type="hidden" name="currency" value="USD" />
-                        <input type="hidden" name="test" value="true" />
-                        <input type="hidden" name="metadata" value='{"products":[{"id":"1","name":"Nice Shoe","price":"1.00","qty":"1","url":"https://mysite.com/product/1"}],"user":{"email":"jd@email.com"}}' />
-                        <input type="hidden" name="webhook" value='{"trigger":"payment","email":"info@mondido.com"}' />
-                        <input type="hidden" name="merchant_id" value="3" />
-                        <input type="hidden" name="payment_ref" value="12" />
-                        <input type="hidden" name="hash" value="" />
+                      	<input type="info" name="expYY"  maxlength="2" style="width:20%;" placeholder="YY">
+                     </div>
+                     
+                      <div class="12u" >
+                     <input type="button" id="cardOrder" value="Pay with Card"/>  
+                     </div>  
                     </div>
-                    
-                </form>
-    </div>
-</div>
-</div>
+                     </form>
+                     </div>                      
+					</section>
 
-						</div>
-						<script>
-    var onSuccess = function (transaction) {
-        $('body').removeClass("loading");
-        alert('Thank you for the payment!, look in the debug console for details');
-        if(console){
-            console.log(transaction);
-        }
-    };
-    var onError = function (error) {
-        $('body').removeClass("loading");
-        var desc = "";
-        if (error != null) {
-            desc = error.description;
-        }
-        alert('Sorry, payment failed; '+desc);
-        if(console){
-            console.log(error);
-        }
-    };
-    $('#mondidopayform').mondido({ type: "ajax", success: onSuccess, error: onError });
-    $('#mondidopayform').on('submit', function(){
-        $('body').addClass("loading");
-    });
-
-    var payment_ref = Math.floor((Math.random() * 10000) + 1); //random payment reference
-    var secret = "$2a$10$k/wS5qecZLyMmqo0e8GV9."; // ssshhh, this is the secret.
-    var merchant_id = "3";
-    var hash = md5(merchant_id+payment_ref+"1.00"+secret);
-
-    $('input[name="payment_ref"]').val(payment_ref);
-    $('input[name="hash"]').val(hash);
-
-      $('.storeCardInfo').on('click', function(){
-        alert('Click to store card information for future transactions')
-    });
-</script>
-						<div class="loadingmodal"></div>
-						
-</section>
-			
 				<!-- Contact -->
 					<section id="contact" class="four">
 						<div class="container">

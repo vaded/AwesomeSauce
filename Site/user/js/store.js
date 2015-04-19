@@ -207,11 +207,11 @@ Parse.$ = jQuery;
         },
         
         render: function() {
-<<<<<<< HEAD
+
         console.log(this.collection);
-=======
+
         console.log(this.itemcollection);
->>>>>>> chelsey-dev
+
             $(this.el).html(_.template(this.template, {
             		
             		'customer': Parse.User.current().id,

@@ -25,16 +25,12 @@ body {
   font-weight: bold;
 }
 .checkout {
-<<<<<<< HEAD
-  display: border;
-=======
-
+  position: relative;
+    display: border;
   display: block;
->>>>>>> chelsey-dev
   float:left;
-  width: 250px;
-  margin-right: 10px;
-  margin-bottom: 10px;
+  width: 100%;
+ 
   padding: 10px;
   border: 1px solid #ccc;
   text-align:center;
