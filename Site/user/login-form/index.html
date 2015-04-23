@@ -1,0 +1,61 @@
+<html>
+
+<head>
+
+  <script src="http://www.parsecdn.com/js/parse-1.2.13.min.js"></script>
+  <script> Parse.initialize("KOUvrLMv1oAp2DFoSJQpvl0VIqQKXOYk9HTtRVII", "xBi5mgy6McXhZtUwJXdyS20uVSl6N555lWJTaDyF"); </script>
+  <script type="text/javascript">
+    function submit(){
+      var currentUser = Parse.User.current();
+      console.log(currentUser.get("name"));
+      currentUser.set("restaurantname", document.getElementById("name").value);
+      currentUser.set("restaurantaddress", document.getElementById("address").value);
+      currentUser.set("restaurantphone", document.getElementById("phone").value);
+      currentUser.set("restaurantemail", document.getElementById("email").value);
+      currentUser.set("restaurantdescription", document.getElementById("description").value);
+      currentUser.set("username", Parse.User.current().get("username"));
+      currentUser.set("address", Parse.User.current().get("address"));
+      currentUser.set("name", Parse.User.current().get("name"));
+      currentUser.set("phone", Parse.User.current().get("phone"));
+      currentUser.set("title", Parse.User.current().get("title"));
+      currentUser.set("reviews", Parse.User.current().get("reviews"));
+      currentUser.save(null, {
+        success:function(user){
+          console.log("it worked");
+          setTimeout("location.href = '../../Owner/ownerindex.html'", 1000); 
+        }
+      })
+    }
+  </script>
+
+  <meta charset="UTF-8">
+
+  <title>Awesome Sauce</title>
+
+    <link rel="stylesheet" href="formcss/formstyle.css">
+
+</head>
+
+<body>
+
+  <span><a onclick="JavaScript:submit()" class="button" id="toggle-login">Restaurant Info</a></span>
+
+<div id="login">
+  <div id="triangle"></div>
+  <h1>Restaurant Info</h1>
+  <form>
+    <input type="name" placeholder="Restaurant Name" id="name"/>
+    <input type="address" placeholder="Street Address" id="address"/>
+    <input type="address" placeholder="Phone Number" id="phone"/>
+    <input type="email" placeholder="Email" id="email" />
+    <input type="description" placeholder="Description" id="description" />
+  </form>
+</div>
+
+  <script src='http://codepen.io/assets/libs/fullpage/jquery.js'></script>
+
+  <script src="js/index.js"></script>
+
+</body>
+
+</html>

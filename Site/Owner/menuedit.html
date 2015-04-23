@@ -22,14 +22,30 @@
 	<script src="js/skel.min.js"></script>
 	<script src="js/skel-layers.min.js"></script>
 	<script src="js/init.js"></script>
+  <script type="text/javascript">
+      function parsePull(){
+        console.log("made it inside of the pull");
+
+        var currentUser = Parse.User.current();
+        document.getElementById("name").innerHTML = Parse.User.current().get("name"); //users name to appear in toolbar
+        document.getElementById("title").innerHTML = Parse.User.current().get("title"); // users tile to appear in toolbar
+        document.getElementById("restaurantTab").innerHTML = Parse.User.current().get("restaurantname"); //users restaurant name in side bar
+      }
+  </script>
 		
   </head>
 
-  <body>
+  <body onload="parsePull()">
 <div id="header" class="skel-layers-fixed">
 
 				<div class="top">
 
+					<!-- Logo -->
+						<div id="logo">
+							<span class="image avatar48"><img src="images/avatar.jpg" alt="" /></span>
+							<h1 id="name">Dr. Jane Doe</h1>
+							<p id="title">Owner</p>
+						</div>
 
 
 					<!-- Nav -->
@@ -59,7 +75,7 @@
                                 <li><a href="ownerindex.html#orders" id="about-link" lass="skel-layers-ignoreHref"><span class="icon fa-user">Orders</span></a></li>
 								<li><a href="ownerindex.html#menu" id="portfolio-link" class="skel-layers-ignoreHref"><span class="icon fa-th">Menu</span></a></li>
 								<li><a href="ownerindex.html#contact" id="contact-link" class="skel-layers-ignoreHref"><span class="icon fa-envelope">User Info</span></a></li>
-                                <li><a href="ownerindex.html#top" id="top-link" class="skel-layers-ignoreHref"><span class="icon fa-home">Restruant Name </span></a></li>
+                                <li><a href="ownerindex.html#top" id="top-link" class="skel-layers-ignoreHref"><span class="icon fa-home" id="restaurantTab">Restruant Name </span></a></li>
 							</ul>
 						</nav>
                 

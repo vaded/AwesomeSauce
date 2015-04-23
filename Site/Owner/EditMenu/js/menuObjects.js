@@ -377,14 +377,15 @@ $(function() {
     createOnEnter: function(e) {
       var self = this;
       if (e.keyCode != 13) return;
-
+		var acl= new Parse.ACL();
+		acl.setPublicReadAccess(true);
       this.ingredients.create({
         content: this.inputName.val(),
         price:   this.inputPrice.val(),
         order:   this.ingredients.nextOrder(),
         status:  true,
         user:    Parse.User.current(),
-        ACL:     new Parse.ACL(Parse.User.current())
+        ACL:     acl
       });
 
       this.inputName.val('');
@@ -611,7 +612,8 @@ $(function() {
     createOnEnter: function(e) {
       var self = this;
       if (e.keyCode != 13) return;
-
+		var acl= new Parse.ACL();
+		acl.setPublicReadAccess(true);
       this.menuitems.create({
         content: this.inputName.val(),
         price:   this.inputPrice.val(),
@@ -620,7 +622,7 @@ $(function() {
         order:   this.menuitems.nextOrder(),
         status:  true,
         user:    Parse.User.current(),
-        ACL:     new Parse.ACL(Parse.User.current())
+        ACL:     acl
       });
 		this.inputCal.val('');
       this.inputName.val('');

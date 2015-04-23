@@ -17,15 +17,16 @@
 		<script src="js/skel.min.js"></script>
 		<script src="js/skel-layers.min.js"></script>
 		<script src="js/init.js"></script>
-		        <script src="https://api.mondido.com/v1/mondido.js?rnd=1&merchant_id=3"> </script>
+		<script src="https://api.mondido.com/v1/mondido.js?rnd=1&merchant_id=3"> </script>
     	<script src="https://s3-eu-west-1.amazonaws.com/mondido/www/js/validator.js"> </script>
     	<script src="https://blueimp.github.io/JavaScript-MD5/js/md5.js"></script>
 		<script src="http://www.parsecdn.com/js/parse-1.2.13.min.js"></script>
+		
 		<script> Parse.initialize("KOUvrLMv1oAp2DFoSJQpvl0VIqQKXOYk9HTtRVII", "xBi5mgy6McXhZtUwJXdyS20uVSl6N555lWJTaDyF"); </script>
 		
 		
 		<link rel="stylesheet" href="css/jsonstore.css" type="text/css">
-		
+		<link rel="stylesheet" href="css/order.css" type="text/css">
 		<script type="text/javascript">
 			function parsePull(){
 				console.log("made it inside of the pull");
@@ -45,14 +46,15 @@
 
 				document.getElementById("updateInfo").onclick = function() {changeInfo()}; //May not need this check and see later
 
-				checkOwner();
+				checkEmploy();
 
 				console.log(Parse.User.current().get("name"));
 			}
+			
 			function changeInfo(){ //function to change username using info from bottom form
 				console.log("Its getting into change Info");
 				var currentUser = Parse.User.current();
-				console.log(currentUser);
+				//console.log(currentUser);
 				if(currentUser){
 					console.log(document.getElementById("emaili").value);
 					currentUser.set("username", document.getElementById("emaili").value);
@@ -107,15 +109,182 @@
 				}
 			}
 
-			function checkOwner(){
+			function checkEmploy(){
 				console.log("entered owner check");
 				var currentTitle = Parse.User.current().get("title"); 
-				if(currentTitle == "Owner"){
-					document.getElementById("ownerswap").innerHTML = "Switch to Owner";
-					document.getElementById("ownerswap").href = "../Owner/ownerindex.html";
+				switch(currentTitle){
+					case "Owner": { document.getElementById("ownerswap").innerHTML = "Switch to Owner";
+						document.getElementById("ownerswap").href = "../Owner/ownerindex.html";
+					}; break;
+					case "Kitchen Staff": {document.getElementById("ownerswap").innerHTML = "Switch to Kitchen Staff";
+						document.getElementById("ownerswap").href = "../Owner/kitchenindex.html";
+					}; break;
+					case "Front Desk Clerk": {document.getElementById("ownerswap").innerHTML = "Switch to Front Desk Clerk";
+						document.getElementById("ownerswap").href = "../Owner/frontindex.html";
+					}; break;
+					case "Manager": {document.getElementById("ownerswap").innerHTML = "Switch to Manager";
+						document.getElementById("ownerswap").href = "../Owner/managerindex.html";
+					}; break;
+					default: console.log("defaulting"); break;
 				}
 			}
+
+			function searchRestaurants(){
+				//console.log("entered search");
+				var query = new Parse.Query(Parse.User);
+				//console.log(document.getElementById("search").value);
+				query.contains("restaurantname", document.getElementById("search").value);
+
+				query.find({
+					success: function(result){
+
+							var i = 0;                     //  set your counter to 1
+							document.getElementById("searchbutton").innerHTML = "Loading the list of restaurants...";
+							document.getElementById("getmenubutton").style.display="inline-block";
+							function myLoop () {           //  create a loop function
+							   setTimeout(function () {    //  call a 3s setTimeout when 
+								//console.log("found the restaurant" + result.length);
+								var storefront;
+								
+								document.getElementById("ownerId").innerHTML= result[i].id;
+								
+								document.getElementById("firsthead").innerHTML = result[i].get("restaurantname");
+								document.getElementById("subtitle").innerHTML = result[i].get("restaurantdescription");
+								document.getElementById("restinfo").innerHTML = result[i].get("reviews") + " -Swoll Santa<br>" + result[i].get("restaurantaddress") + ", " + result[i].get("restaurantphone");         //  your code here
+								
+								document.getElementById("searchbutton").innerHTML = "What sounds good?";
+							      i++;                     //  increment the counter
+							      if (i < result.length) {            //  if the counter < 10, call the loop function
+							         myLoop();             //  ..  again which will trigger another 
+							      }   
+							      else{
+							      	document.getElementById("searchbutton").innerHTML = "Thats all!";
+							      }                     //  ..  setTimeout()
+							   }, 5000)
+							}
+							myLoop();
+							setTimeout(function(){ document.getElementById("searchbutton").innerHTML = "See something you like? Search It!";}, result.length*5000+5000);
+							
+							
+
+					}, error: function(error){
+						console.log("restaurant not found");
+					}
+				});
+			}
+			
+			function saveOrder(){
+				var Order = Parse.Object.extend("Order");
+				customerOrder= new Order();
+				var orderstring="";
+				
+				
+				var orderItems =document.getElementsByClassName("idcart");
+				var orderItemsQ =document.getElementsByClassName("quantitycart");
+				var radios = document.getElementsByName('payment');
+				var i;
+				//get order string with item id's and quantities
+				for (i = 0; i < orderItems.length; i++) {
+   				 	orderstring=orderstring.concat(orderItems[i].innerHTML);
+   				 	orderstring=orderstring.concat(orderItemsQ[i].innerHTML);
+				}
+				//set checked radio
+				for (var i = 0, length = radios.length; i < length; i++) {
+    				if (radios[i].checked) {
+       				 	customerOrder.set("radios", radios[i].value);
+       			 	break;
+    				}
+				}
+				customerOrder.set("orderstring",orderstring);
+				customerOrder.set("itemcount",document.getElementById("orderItemCount").innerHTML);
+				customerOrder.set("cost",document.getElementById("orderCost").innerHTML);
+				customerOrder.set("calories",document.getElementById("orderCalories").innerHTML);
+				customerOrder.set("customerid",Parse.User.current());
+				console.log(Parse.User.current());
+				
+				customerOrder.set("ownerId",document.getElementById("currentownerId").innerHTML);
+				
+				customerOrder.set("status","Pending");
+				if (customerOrder.get("radios")=="Split" || customerOrder.get("radios")=="Card" ){
+					customerOrder.set("tip",document.getElementById("tipamount").innerHTML);
+					customerOrder.set("ordertotal",document.getElementById("orderTotal").innerHTML);
+					customerOrder.set("cardholder",document.getElementById("card_holder").innerHTML);
+					customerOrder.set("cardnumber",document.getElementById("card_number").innerHTML);
+					customerOrder.set("cvv",document.getElementById("cvv").innerHTML);
+					customerOrder.set("expMM",document.getElementById("expMM").innerHTML);
+					customerOrder.set("expYY",document.getElementById("expYY").innerHTML);
+				}
+				else{
+					customerOrder.set("cardholder"," ");
+					customerOrder.set("cardnumber"," ");
+					customerOrder.set("cvv"," ");
+					customerOrder.set("expMM"," ");
+					customerOrder.set("expYY"," ");
+					customerOrder.set("tip"," ");
+					customerOrder.set("ordertotal"," ");
+				
+				}
+				customerOrder.save(null, {
+  					success: function(order) {
+  						//send order id
+				    	alert('New object created with objectId: ' + order.id);
+  					},
+  					error: function(order, error) {
+					    alert('Failed to create new object, with error code: ' + error.message);
+  					}
+				});
+			}
+			
+			function tipCalculate (slider){
+				var bill = document.getElementById('orderCost').innerHTML;
+				
+  				var tip = document.getElementById('tipamount');
+  				var slideval = document.getElementById('slideval');
+  				var prcnt = slider * .01;
+ 		 		if (bill == null || bill == '') {
+    				tip.innerHTML = 'Please enter an amount';
+    				return false;
+  				}
+  				if(isNaN(bill)) {
+    				tip.innerHTML = 'Please enter a number';
+    				return false;
+  				}
+  				if(bill >= 0){
+    				tip.innerHTML = '$' + (bill * prcnt) .toFixed(2);
+  					slideval.innerHTML = slider + '%';
+  					var billTotal = document.getElementById('orderTotal');
+  					console.log(billTotal);
+  					billTotal.innerHTML= '$' + (bill *(1+prcnt)) .toFixed(2);
+  					console.log(billTotal.innerHTML);
+  				}
+			}
+			
+			function HideContent(d) {
+			document.getElementById(d).style.display = "none";
+		}
+			
+			function ShowContent(d) {
+			document.getElementById(d).style.display = "block";
+		}
+			
+			function ReverseDisplay(d) {
+			if(document.getElementById(d).style.display == "none") { document.getElementById(d).style.display = "block"; }
+			else { document.getElementById(d).style.display = "none"; }
+		}
+		
+			function Cancel(order){
+				order.set("orderstring","Cancelled");
+			}
 		</script>
+	
+		<script>
+								 function getOwner(){
+								 x=document.getElementById("ownerId").innerHTML;
+								 document.getElementById("currentownerId").innerHTML=x;
+								 
+								 StoreView(x);
+								 }
+								</script>
 		
 		<noscript>
 			<link rel="stylesheet" href="css/skel.css" />
@@ -127,7 +296,7 @@
 		<!--[if lte IE 9]><link rel="stylesheet" href="css/ie/v9.css" /><![endif]-->
 		<!--[if lte IE 8]><link rel="stylesheet" href="css/ie/v8.css" /><![endif]-->
 	</head>
-	    
+<!--template views-->	    
         <script id="store_index_template" type="text/x-underscore-tmplate">
           <ul>
             <% for(i=0,l=menuitems.length;i<l;++i) { p = menuitems[i]; %>
@@ -150,7 +319,7 @@
             </li>
             <% } %>
           </ul>
-         
+
         </script>
 
         <script id="store_item_template" type="text/x-underscore-template">
@@ -183,7 +352,7 @@
             
         <script id="store_cart_template" type="text/javascript">
 	        Items: <%= count %> ($<%= cost %>) <%= calories %> 
-	        <%= parseInt(calories) >= 1000 ?   'Are you really going to all that?' :'Smart Choice' %>    
+	        <%= parseInt(calories) >= 1000 ?   'Warning Over 1000 Calories' :'Smart Choice' %>    
         </script>
         
         <script id="checkout_template" type="text/javascript">
@@ -191,15 +360,45 @@
 			 <ul>
             <% for(i=0,l=thiscart.length;i<l;++i) { p = thiscart[i]; %>
             <li class="cartitem">
-              <div class="idcart">Item Id <%= p.menuitem.objectId %> :</div>
-               <div class="quantitycart">Quantity : <%= p.quantity%></div>
+              <div class="idcart" style="display:none"><%= p.menuitem.objectId %></div>
+              <div class="idname"><%= p.itemname%> :</div>
+              <label>Quantity</label>
+              <div class="quantitycart"> <%= p.quantity%></div>
             </li>
             <% } %>
           </ul>
-           Totals: <%= count %> ($<%= cost %>) <%= calories %> 
+          <div id="orderCalories" style="display:none"><%= calories %> </div>
+          <div id="orderItemCount" style="display:none"><%= count %> </div>
+          <label>Order Total : </label>
+          <div id="orderCost"><%= cost %></div>
+          <label>Tip amount $</label>
+          <span id="tipamount">0.00</span><br>
+          <label>Total Cost: </label>
+          <span id="orderTotal"><%=cost%></span>
+         
+          
         </script>
        
-       
+		 <script id="orderlist_index_template" type="text/x-underscore-tmplate">
+          <ul>
+            <% for(i=0,l=orderlist.length;i<l;++i) { p = orderlist[i]; %>
+            <li class="order">
+            	<label>Order Number: </label>
+            	<div id="ordernumber"><%=p.id%></div><br>
+            	<label>Restraunt id: </label>
+            	<div id="orderlistowner"><%= p.owner %></div><br>
+            	<label>Order Date: </label>
+            	<div id="orderdate"><%= p.createdAt %></div><br>
+            	<label>Order Status: </label>
+            	<div id="orderdate"><%= p.status %></div><br>
+            	<button onclick="Cancel(p)"> Cancel this order</button>
+              <%= console.log(p)%>
+              
+            </li>
+            <% } %>
+          </ul>
+
+        </script>
 
 
 	<body onload="parsePull()">
@@ -270,174 +469,111 @@
 		<!-- Main -->
 			<div id="main">
 
-				<!-- Intro -->
+				<!-- Search/Intro -->
 					<section id="top" class="one dark cover">
 						<div class="container">
 
 							<header>
-								<h2 class="alt">Looking for something to eat?</h2>
-								<p>We can point you in the right direction.</p>
+								<h2 class="alt" id="firsthead">Looking for something to eat?</h2>
+								<p id="subtitle">We can point you in the right direction.</p>
+								<p id="ownerId" style="display:none"></p>
+								<p id="currentownerId" style="display:none"></p>
 							</header>
+							<body>
+								<p id="restinfo"></p>
+							</body>
 							
 							<footer>
-								<a href="#" class="button scrolly" onclick="JavaScript:currentCheck()">Search</a> <!--href was #portfolio-->
+								
+								<a href="#portfolio" class="button scrolly" onclick="getOwner()" id="getmenubutton" style="display:none">Get This Menu</a>
+								<a href ="#" class="button scrolly" onclick="searchRestaurants()" id="searchbutton">Search</a> <!--href was #portfolio-->
 							</footer>
 
 						</div>
 					</section>
 					
-				<!-- Portfolio -->
+				<!-- Menu -->
 					<section id="portfolio" class="two">
 						<div class="container">
-						<header>
+							<header>
 								<h2>Menu</h2>
 							</header>
-						<div id="container">
+							<div id="container">
             					<div id="headercart">
-                					<h1>Store Menu</h1>
                 					<div class="cart-info"></div>
             					</div>
-           					    <div id="maincart"> </div>
-           					 </div>
+           					    <div id="maincart">
+           					    </div>
+           					</div>
+           					
+       				 	</div>
+       				
+				</section>
 
-       					 </div>
-       					</div>
-					</section>
-
-				<!-- Itemcart and payment -->
+				<!-- Shopping cart  -->
 					<section id="about" class="three">
 						<div class="container">
 						   <header>
 								<h2>Shopping Cart</h2>
 							</header>
-       					   	<div class ="checkout">
-       					   	</div> 
+       					   	<div class="checkout"></div> 
+       					</div>
+       					
+       					 <div class="container">
+       					   	<form onSubmit="JavaScript: saveOrder()">
+       					   	<div class="checkout"></div> 
+       					   	
+       					    <input type="radio" name="payment" value="Cash" checked onClick="HideContent('card')">Cash
+       					    <input type="radio" name="payment" value="Card" onClick="ShowContent('card')">Card
+       					    <input type="radio" name="payment" value="Split" onClick="ShowContent('card')">Split Payment
+						    
+						  
+ 							<br>                          
+						    <textarea class="12u" rows="2" cols="50" placeholder="Leave A Comment"></textarea>
+       					   <input type="button" class="12u" onclick="saveOrder()" id="orderbutton" style="display:block;" value="Pay"/>
+       					   </form>
 						</div>
 					</section>
-					
-					<section id="pay" class="two">
-<div class="container">				
-<div class="form-signin checkout_payment_option selected mondidojs">
-    <div class="container-bb">
-                <form id="mondidopayform" action="https://api.mondido.com/v1/transactions?extend=stored_card">
+				<!--Card payment -->	
+					<section id="card" class="two" style="display:none;">
+					<div class="container">
+					<h2>Card Payment</h2>	
+					<span>Care to leave A Tip?</span>
+  					<input type="range" min="0" max="100" value="0" step="1" onchange="tipCalculate(this.value)" class="range-style">
+  					<span id="slideval">0%</span>
+					<form>
+					<div class="row 50%">
+					<div class="6u">				
+                    <input type="info" id="card_holder" placeholder="Name On Card">
+					</div>
+					<div class="6u">	
+                     <input type="info" id="card_number" data-encrypted-attribute="card_number"  placeholder="Card Number">
+                     </div>
+                     <div class="6u">	
+                     	<input type="info" id="cvv" placeholder="CVV" data-encrypted-attribute="card_cvv" style="width:20%;" placeholder="000">
                     
-                        <div id="addCard">
-                            <div class="panel">
-                                <h2>Card Payment</h2>
-                                <div class="8u">
-                                    <label>Card Holder Name</label>
-                                    <input type="text" class="form-control" name="card_holder" style="width:100%;" placeholder="Firstname Lastname">
-                                </div>
-                            </div>
-                            <div class="panel">
-                                <div class="8u">
-                                    <label>Card Number</label>
-                                    <input type="text" class="form-control" data-encrypted-attribute="card_number" style="width:100%;" placeholder="4111111111111111">
-                                </div>
-                                <div class="row 33%">   
-                                <div class="3u">
-                                    <label>CVV</label>
-                                    <input type="text" class="form-control" data-encrypted-attribute="card_cvv" style="width:90%;" placeholder="000">
-                                </div>
-                                <div class="3u">
-                                    <label>Month</label>
-                                    <input type="text" name="expMM" class="form-control" maxlength="2" style="width:90%;" placeholder="01">
-                                </div>
-                                <div class="3u">
-                                    <label>Year</label>
-                                    <input type="text" name="expYY" class="form-control" maxlength="2" style="width:90%;" placeholder="15">
-                                </div>
-                            </div>
-                                <div class="stripes bottom"> </div>
-                                <div style="margin:10px 0;">
-                                <input type="checkbox" name="store_card" value="true"/> Store Card (<span class="storeCardInfo">What is this</span>)
-                            </div>
-                                <div class="clear">
-                        	</div>
+                     	<input type="info" id="expMM" name="expMM" maxlength="2" style="width:20%;" placeholder="MM">
 
-                            <input type="submit" value="Finish Payment" class="btn_blue fullsize btn-primary mondidocheckout">
-                            <div>
-                                <div id="credit-card-list">
-                                    <img alt="Mastercard" class="card_mastercard card_icon" src="https://raw.githubusercontent.com/Mondido/mondido-js/master/images/mastercard.png">
-                                    <img alt="Visa" class="card_visa card_icon" src="https://raw.githubusercontent.com/Mondido/mondido-js/master/images/visa.png">
-                                    <img alt="Amex"  class="card_amex card_icon" src="https://raw.githubusercontent.com/Mondido/mondido-js/master/images/amex.png">
-                                    <img alt="Discover" class="card_discover card_icon" src="https://raw.githubusercontent.com/Mondido/mondido-js/master/images/discover.png">
-                                    <img alt="Maestro" class="card_maestro  card_icon" src="https://raw.githubusercontent.com/Mondido/mondido-js/master/images/maestro.png">
-                                </div>
-                            </div>
-                        </div>
-                        <!-- order data -->
-                        <input type="hidden" data-encrypted-attribute="card_type" value="" />
-                        <input type="hidden" data-encrypted-attribute="card_expiry" value=""/>
-                        <input type="hidden" name="amount" value="1.00" />
-                        <input type="hidden" name="currency" value="USD" />
-                        <input type="hidden" name="test" value="true" />
-                        <input type="hidden" name="metadata" value='{"products":[{"id":"1","name":"Nice Shoe","price":"1.00","qty":"1","url":"https://mysite.com/product/1"}],"user":{"email":"jd@email.com"}}' />
-                        <input type="hidden" name="webhook" value='{"trigger":"payment","email":"info@mondido.com"}' />
-                        <input type="hidden" name="merchant_id" value="3" />
-                        <input type="hidden" name="payment_ref" value="12" />
-                        <input type="hidden" name="hash" value="" />
+                      	<input type="info" id="expYY" name="expYY"  maxlength="2" style="width:20%;" placeholder="YY">
+                     </div>
+                     
+                      <div class="12u" >
+                     <input type="button" id="cardOrder" value="Pay with Card"/>  
+                     </div>  
                     </div>
-                    
-                </form>
-    </div>
-</div>
-</div>
-
+                     </form>
+                     </div>                      
+					</section>
+				<!--Order History and Order Cancelation-->
+					<section id="myorders" class ="three">
+						<div class="container">
+						<h2> Order History</h2>
+						
+						<div id= "ordercontainer"> 
 						</div>
-						<script>
-    var onSuccess = function (transaction) {
-        $('body').removeClass("loading");
-        alert('Thank you for the payment!, look in the debug console for details');
-        if(console){
-            console.log(transaction);
-        }
-    };
-    var onError = function (error) {
-        $('body').removeClass("loading");
-        var desc = "";
-        if (error != null) {
-            desc = error.description;
-        }
-        alert('Sorry, payment failed; '+desc);
-        if(console){
-            console.log(error);
-        }
-    };
-    $('#mondidopayform').mondido({ type: "ajax", success: onSuccess, error: onError });
-    $('#mondidopayform').on('submit', function(){
-        $('body').addClass("loading");
-    });
-
-    var payment_ref = Math.floor((Math.random() * 10000) + 1); //random payment reference
-    var secret = "$2a$10$k/wS5qecZLyMmqo0e8GV9."; // ssshhh, this is the secret.
-    var merchant_id = "3";
-    var hash = md5(merchant_id+payment_ref+"1.00"+secret);
-
-    $('input[name="payment_ref"]').val(payment_ref);
-    $('input[name="hash"]').val(hash);
-
-      $('.storeCardInfo').on('click', function(){
-        alert('Click to store card information for future transactions')
-    });
-</script>
-						<div class="loadingmodal"></div>
-						           					   <div id="form-main">
-  <div id="form-div">
-    <form class="form" id="form1">
-
-      <p class="text">
-        <textarea name="text" class="validate[required,length[6,300]] feedback-input" id="comment" placeholder="sent a comment to the owner here!"></textarea>
-      </p>
-
-      <div class="submit">
-        <input type="submit" value="SEND" id="button-blue"/>
-        <div class="ease"></div>
-      </div>
-    </form>
-    </div>
-</section>
-			
+					
+					</div>
+					</section>
 				<!-- Contact -->
 					<section id="contact" class="four">
 						<div class="container">
@@ -460,7 +596,8 @@
 										<input type="button" id="updateInfo" value="Update Information" />
 									</div>
 									<div class="12u">
-										<input type="button" value="Register Restaurant" onclick="JavaScript:registerRestaurant()"/>
+										<a href="login-form/index.html">
+										<input type="button" value="Register Restaurant"/></a>
 									</div>
 								</div>
 							</form>
@@ -468,9 +605,9 @@
 						</div>
 					</section>
 			
-			</div>
+					</div>
 
-		<!-- Footer -->
+			<!-- Footer -->
 			<div id="footer">
 				
 				<!-- Copyright -->
@@ -480,9 +617,10 @@
 				
 			</div>
  		<script src="http://www.parsecdn.com/js/parse-1.2.13.min.js"></script>
-         <script src="js/jquery-1.6.2.min.js" type="text/javascript"></script>
+        <script src="js/jquery-1.6.2.min.js" type="text/javascript"></script>
         <script src="js/underscore.js" type="text/javascript"></script>
         <script src="js/store.js" type="text/javascript"></script>
+        <script src="js/orders.js" type="text/javascript"></script>
         <script src="js/cartpayment.js" type="text/javascript"></script>
 
    	 
