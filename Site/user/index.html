@@ -227,7 +227,7 @@
 				customerOrder.save(null, {
   					success: function(order) {
   						//send order id
-				    	alert('New object created with objectId: ' + order.id);
+				    	//alert('New object created with objectId: ' + order.id);
   					},
   					error: function(order, error) {
 					    alert('Failed to create new object, with error code: ' + error.message);
@@ -281,7 +281,7 @@
 		 function getOwner(){
 		 x=document.getElementById("ownerId").innerHTML;
 		 document.getElementById("currentownerId").innerHTML=x;
-		 
+		 console.log("its in get owner");
 		 StoreView(x);
 		 }
 		</script>

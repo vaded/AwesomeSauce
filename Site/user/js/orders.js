@@ -83,7 +83,7 @@ var OrderRouter = Parse.Router.extend({
     
  $(document).ready(function() {
  	new OrderRouter;
-  	Parse.history.start();
+  	//Parse.history.start();
   	
   	});
 });
