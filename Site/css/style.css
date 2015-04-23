@@ -1164,7 +1164,9 @@
 
 			#header .container .button {
 				min-width: 12em;
-			}
+			
+				margin-top: 5%;
+}
 
 /* Footer */
 
