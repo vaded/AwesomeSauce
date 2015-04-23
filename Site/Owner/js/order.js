@@ -65,8 +65,10 @@ var OrderRouter = Parse.Router.extend({
 
       // Setup the query for the collection to look for menuitems from the current user
       this.orderlist.query = new Parse.Query(Order);
+      
     if(Parse.User.current().get("title")=="Owner"){
-    	this.orderlist.query.equalTo("ownerId", Parse.User.current());
+    	console.log(this.orderlist);
+    	this.orderlist.query.equalTo("ownerId", Parse.User.current().id);
     }
     else{
       this.orderlist.query.equalTo("ownerId", Parse.User.current().get("employee"));
