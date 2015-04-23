@@ -523,9 +523,9 @@
 								<h2>Shopping Cart</h2>
 							</header>
 							<form action="">
-								<input type="radio" name="deliveryPickup" value="pickup">Pickup
-								<input type="radio" name="deliveryPickup" value="delivery">Delivery<br>
-								<input type="text" class="6u" name="pickupTime" width="50" placeholder="Enter Pickup Time">
+								<input type="radio" id="pickup" name="deliveryPickup" value="pickup" checked onClick="ShowContent('pickupTime')">Pickup
+								<input type="radio" id="delivery" name="deliveryPickup" value="delivery" onClick="HideContent('pickupTime')">Delivery<br>
+								<input type="text" id="pickupTime" name="pickupTime" placeholder="Enter Pickup Time">
 								
 							</form>
        					   	<div class="checkout"></div> 

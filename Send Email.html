@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.2.js">
+</script>
+<script>
+
+function sendMail() {
+    $.ajax({
+      type: 'POST',
+      url: 'https://mandrillapp.com/api/1.0/messages/send.json',
+      data: {
+        'key': 'IE51G4RwdI07hi2eykE2qw',
+        'message': {
+          'from_email': 'AwesomeSauce@Saucey.com',
+          'to': [
+              {
+                'email': 'tatgauthier@gmail.com',
+                'name': 'RECIPIENT NAME (OPTIONAL)',
+                'type': 'to'
+              }
+            ],
+          'autotext': 'true',
+          'subject': 'Your order is ready!',
+          'html': 'come and get it'
+        }
+      }
+     }).done(function(response) {
+       console.log(response); 
+     });
+};
+</script>
+
+<html>
+<body>
+
+<button onclick="sendMail(); return false">Send</button>
+
+</body>
+</html>
+
+
