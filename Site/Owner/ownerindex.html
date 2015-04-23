@@ -20,6 +20,7 @@
 		<script src="js/menuObjects.js"></script>
 		<script src="js/underscore.js"></script>
 		<script src="http://www.parsecdn.com/js/parse-1.2.13.min.js"></script>
+		<script src="js/order.js"></script>
 		<script> Parse.initialize("KOUvrLMv1oAp2DFoSJQpvl0VIqQKXOYk9HTtRVII", "xBi5mgy6McXhZtUwJXdyS20uVSl6N555lWJTaDyF"); </script>
 
 		<script type="text/javascript">
@@ -149,6 +150,7 @@
 
 		<noscript>
 			<link href="css/menuObjects.css" media="all" rel="stylesheet" type="text/css"/>
+			<link href="css/order.css" media="all" rel="stylesheet" type="text/css"/>
 			<link rel="stylesheet" href="css/skel.css" />
 			<link rel="stylesheet" href="css/style.css" />
 			<link rel="stylesheet" href="css/style-wide.css" />
@@ -156,6 +158,27 @@
 		<!--[if lte IE 9]><link rel="stylesheet" href="css/ie/v9.css" /><![endif]-->
 		<!--[if lte IE 8]><link rel="stylesheet" href="css/ie/v8.css" /><![endif]-->
 	</head>
+	<script id="orderlist_index_template" type="text/x-underscore-tmplate">
+          <ul>
+            <% for(i=0,l=orderlist.length;i<l;++i) { p = orderlist[i]; %>
+            <li class="order">
+            	<label>Order Number: </label>
+            	<div id="ordernumber"><%=p.id%></div><br>
+            	<label>Restraunt id: </label>
+            	<div id="orderlistowner"><%= p.owner %></div><br>
+            	<label>Order Date: </label>
+            	<div id="orderdate"><%= p.createdAt %></div><br>
+            	<label>Order Status: </label>
+            	<div id="orderdate"><%= p.status %></div><br>
+            	<button onclick="Cancel(p)"> Cancel this order</button>
+              <%= console.log(p)%>
+              
+            </li>
+            <% } %>
+          </ul>
+
+        </script>
+
 	<body onload="parsePull()">
 
 		<!-- Header -->
@@ -220,14 +243,11 @@
                 <!-- current_orders -->
                 <section id="about" class="three">
                     <div class="container">
+                        <h2>Current Orders</h2>
                         
-                        <header>
-                            <h2>Current Orders</h2>
-                        </header>
+                            <div id= "ordercontainer"> </div>
                         
-                        <a href="#" class="image featured"><img src="images/pic08.jpg" alt="" /></a>
                         
-                        <p>Looks like no orders have been placed yet!</p>
                         
                     </div>
                 </section>
