@@ -56,7 +56,7 @@ Parse.$ = jQuery;
             if (o) { 
                 return o;
             }
-            i = new Item({'menuitem': menuitem, 'quantity': 0, 'itemname': menuitem.get('content')});
+            i = new Item({'menuitem': menuitem, 'quantity': 0})
             this.add(i, {silent: true})
             return i;
         },
@@ -223,8 +223,7 @@ Parse.$ = jQuery;
         },
         
         render: function() {
-       
-        
+        console.log(this.itemcollection);
             $(this.el).html(_.template(this.template, {
             		
             		'customer': Parse.User.current().id,
@@ -234,7 +233,6 @@ Parse.$ = jQuery;
                     'status': this.collection.getTotalStatus(),
 					'thiscart': this.collection.toJSON()
                 })).animate({paddingTop: '30px'}).animate({paddingTop: '10px'});
-    	 
         }
     });
     
@@ -257,11 +255,7 @@ Parse.$ = jQuery;
         //create widget to show cart saved under collection attr
             new CartWidget({collection: this.cart});
 			new Checkout({collection: this.cart});
-<<<<<<< HEAD
 		
-=======
-			var userid=Parse.User.current().id;
->>>>>>> chelsey-dev
 			var ownerid=Parse.User.current();
 			ownerid.id=data;
             this.menuitems = new MenuitemCollection([]);
@@ -269,11 +263,7 @@ Parse.$ = jQuery;
             this.menuitems.query = new Parse.Query(Menuitem);
       		this.menuitems.query.equalTo("user", ownerid);
       		this.menuitems.fetch();
-<<<<<<< HEAD
       		
-=======
-      		Parse.User.current().id=userid;
->>>>>>> chelsey-dev
           this.views = {
                 '_index': new MenuitemListView({collection: this.menuitems})
             };
