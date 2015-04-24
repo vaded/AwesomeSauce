@@ -8,7 +8,6 @@ $(function() {
 	update: function(cancel) {
             this.set({'status': cancel}, {silent: true});
             this.collection.trigger('change', this);
-            rewardDecrease();
         },
 });
 
