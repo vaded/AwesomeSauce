@@ -509,6 +509,23 @@ input[type="info"] {
 					font-size: 1em;
 				}
 
+	/*Rewards counter*/ 
+		.count {
+  			padding: 7px 16px;
+ 			font-size: 30px;
+  			width: 48px;
+  			height: 48px;
+  			font-weight: 600;
+  			font-smoothing: antialiased;
+  			-webkit-font-smoothing: antialiased;
+  			display: block;
+  			background: #2b2b2b;
+		}
+		.count.glow {
+  			text-shadow: 0 0 4px #ffffff;
+		}
+
+
 /*********************************************************************************/
 /* Icons                                                                         */
 /*********************************************************************************/
