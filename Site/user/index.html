@@ -228,6 +228,7 @@
   					success: function(order) {
   						//send order id
 				    	//alert('New object created with objectId: ' + order.id);
+				    	rewardIncrease();
   					},
   					error: function(order, error) {
 					    alert('Failed to create new object, with error code: ' + error.message);
