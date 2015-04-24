@@ -145,16 +145,12 @@
 				  }
 				});
 			}
-<<<<<<< Updated upstream
 			function Cancel(order){
 				order.set("orderstring","Cancelled");}
 				function Working(order){
 				order.set("orderstring","Working");}
 				function Finsihed(order){
 				order.set("orderstring","Finished");}
-=======
-
->>>>>>> Stashed changes
 		</script>
 
 		<noscript>
@@ -179,8 +175,10 @@
             	<div id="orderdate"><%= p.createdAt %></div><br>
             	<label>Order Status: </label>
             	<div id="orderdate"><%= p.status %></div><br>
-            	<button onclick="Cancel(p)"> Cancel this order</button>
-              <%= console.log(p)%>
+            	<button onclick="Finsihed(orderlist)"> Finish this Order</button>
+            	<button onclick="Working(orderlist)"> Change Status to Working Order</button>
+            	<button onclick="Cancel(orderlist)"> Cancel this Order</button>
+              <%= console.log(orderlist)%>
               
             </li>
             <% } %>
