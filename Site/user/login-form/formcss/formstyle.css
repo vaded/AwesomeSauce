@@ -3,27 +3,32 @@
 *{margin:0;padding:0;}
 
 body{
-  background:#567;
+  background: #ddd;
   font-family:'Open Sans',sans-serif;
 }
 
 .button{
-  width:100px;
-  background:#3399cc;
+  position: relative;
+  width: 100px;
+  background: #8ebebc;
   display:block;
-  margin:0 auto;
+  border-radius: 0.35em;
+  margin: 0 auto;
   margin-top:1%;
-  padding:10px;
+  padding: 0.75em 2.5em 0.75em 2.5em;
+  border: 0;
   text-align:center;
   text-decoration:none;
   color:#fff;
   cursor:pointer;
+  background-image: -webkit-linear-gradient(top, rgba(0,0,0,0), rgba(0,0,0,0.15)),
+      url('images/overlay.png');
   transition:background .3s;
   -webkit-transition:background .3s;
 }
 
 .button:hover{
-  background:#2288bb;
+  background:#9ececc;
 }
 
 #login{
@@ -39,14 +44,16 @@ body{
   width:0;
   border-top:12x solid transparent;
   border-right:12px solid transparent;
-  border-bottom:12px solid #3399cc;
+  border-bottom:12px solid #8ebebc;
   border-left:12px solid transparent;
   margin:0 auto;
 }
 
 #login h1{
-  background:#3399cc;
+  background:#8ebebc;
   padding:20px 0;
+  border-top-left-radius: 0.35em;
+  border-top-right-radius:0.35em;
   font-size:140%;
   font-weight:300;
   text-align:center;
@@ -56,6 +63,8 @@ body{
 form{
   background:#f0f0f0;
   padding:6% 4%;
+  border-bottom-left-radius:0.35em;
+  border-bottom-right-radius:0.35em;
 }
 
 input[type="email"],input[type="description"],input[type="name"],input[type="address"],input[type="phone"]{

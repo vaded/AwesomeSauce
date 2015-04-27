@@ -228,7 +228,7 @@
   					success: function(order) {
   						//send order id
 				    	//alert('New object created with objectId: ' + order.id);
-				    	rewardIncrease();
+				    	//rewardIncrease();
   					},
   					error: function(order, error) {
 					    alert('Failed to create new object, with error code: ' + error.message);
@@ -275,7 +275,7 @@
 		
 			function Cancel(order){
 				order.set("orderstring","Cancelled");
-				rewardDecrease();
+				//rewardDecrease();
 			}
 		</script>
 
@@ -382,8 +382,10 @@
           
         </script>
        
-		 <script id="orderlist_index_template" type="text/x-underscore-tmplate">
+		 <script id="orderlist_index_template" type="text/x-underscore-template">
+          
           <ul>
+          <%=countUp(orderlist.length)%>
             <% for(i=0,l=orderlist.length;i<l;++i) { p = orderlist[i]; %>
             <li class="order">
 
