@@ -232,7 +232,7 @@ $(function() {
 
       // Fetch all the menuitem items for this user
       this.menuitems.fetch();
-
+	//console.log(this.menuitems);
       state.on("change", this.filter, this);
     },
     

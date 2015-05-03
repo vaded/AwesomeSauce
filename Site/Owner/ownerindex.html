@@ -21,11 +21,12 @@
 		<script src="js/underscore.js"></script>
 		<script src="http://www.parsecdn.com/js/parse-1.2.13.min.js"></script>
 		<script src="js/orders.js"></script>
-		<!--<script> Parse.initialize("KOUvrLMv1oAp2DFoSJQpvl0VIqQKXOYk9HTtRVII", "xBi5mgy6McXhZtUwJXdyS20uVSl6N555lWJTaDyF"); </script>-->
+		
+		<script> Parse.initialize("KOUvrLMv1oAp2DFoSJQpvl0VIqQKXOYk9HTtRVII", "xBi5mgy6McXhZtUwJXdyS20uVSl6N555lWJTaDyF"); </script>
 
 		<script type="text/javascript">
 			function parsePull(){
-				console.log("made it inside of the pull");
+				
 
 				var currentUser = Parse.User.current();
 				document.getElementById("name").innerHTML = Parse.User.current().get("name"); //users name to appear in toolbar
@@ -49,12 +50,12 @@
 				query.find({
 					success: function(staff){
 						var slist;
-						console.log(staff.length);
+						
 						if(staff.length != 0){
 							holder = staff[0].get("title") + ": " + staff[0].get("name") + ", " + staff[0].get("username") + "<br>";
 							for (var i = 1; i < staff.length; i++) {
 								slist = staff[i].get("title") + ": " + staff[i].get("name") + ", " + staff[i].get("username") + "<br>";
-								console.log(slist);
+								
 								var holder = holder.concat(slist);
 							};
 							console.log(holder);
@@ -63,8 +64,7 @@
 					}
 				});
 
-				console.log(currentUser);
-				console.log(Parse.User.current().get("name"));
+				
 			}
 			function changeInfo(){ //function to change username using info from bottom form
 				console.log("Its getting into change Info");
@@ -145,13 +145,12 @@
 				  }
 				});
 			}
-			function Cancel(order){
-				order.set("orderstring","Cancelled");}
-				function Working(order){
-				order.set("orderstring","Working");}
-				function Finsihed(order){
-				order.set("orderstring","Finished");}
+			
+			
 		</script>
+
+
+
 
 		<noscript>
 			<link href="css/menuObjects.css" media="all" rel="stylesheet" type="text/css"/>
@@ -163,28 +162,8 @@
 		<!--[if lte IE 9]><link rel="stylesheet" href="css/ie/v9.css" /><![endif]-->
 		<!--[if lte IE 8]><link rel="stylesheet" href="css/ie/v8.css" /><![endif]-->
 	</head>
-	<script id="orderlist_index_template" type="text/x-underscore-tmplate">
-          <ul>
-            <% for(i=0,l=orderlist.length;i<l;++i) { p = orderlist[i]; %>
-            <li class="order">
-            	<label>Order Number: </label>
-            	<div id="ordernumber"><%=p.id%></div><br>
-            	<label>Restraunt id: </label>
-            	<div id="orderlistowner"><%= p.owner %></div><br>
-            	<label>Order Date: </label>
-            	<div id="orderdate"><%= p.createdAt %></div><br>
-            	<label>Order Status: </label>
-            	<div id="orderdate"><%= p.status %></div><br>
-            	<button onclick="Finsihed(orderlist)"> Finish this Order</button>
-            	<button onclick="Working(orderlist)"> Change Status to Working Order</button>
-            	<button onclick="Cancel(orderlist)"> Cancel this Order</button>
-              <%= console.log(orderlist)%>
-              
-            </li>
-            <% } %>
-          </ul>
+	
 
-        </script>
 
 	<body onload="parsePull()">
 
@@ -249,21 +228,84 @@
                 
                 <!-- current_orders -->
                 <section id="about" class="three">
+                	
+		<script id="orderlist_index_template" type="text/x-underscore-tmplate">
+             <ul>
+            <% for(i=0,l=orderlist.length;i<l;++i) { p = orderlist[i]; %>
+           
+            <li class="order">
+            	<label>Order Number: </label>
+            	<div class="ordernumber"><%= thisobjectid=p.objectId%></div>
+            	<%=console.log(p)%>
+            	<div class="orderlistowner">Customer id: <%= p.customerid.objectId %></div>
+            	<div class="orderdate">Order Date: <%= p.createdAt %></div>
+            	<label>Items:</label>
+            	<div class="orderstring"><%= p.orderstring %></div>
+            	<div class="orderstatus">Order Status: <%= p.status %></div>
+            	<button onclick="cancelOrder('<%= p.objectId %>','Finished')"> Finish this Order</button>
+            	<button onclick="cancelOrder('<%= p.objectId %>','Working')"> Change to Working Status</button>
+            	<button onclick="cancelOrder('<%= p.objectId %>','Canceled')"> Cancel this Order</button>
+            	<button onclick="payOrder('<%= p.objectId %>','Paid')"> Mark Order as Paid</button>
+            	<br><br>
+            </li>
+            <% } %>
+            </ul>
+            
+            <br>
+        </script>
+        <script	type="text/javascript">		
+        	function cancelOrder(order,status){
+			console.log(order);
+			var Order = Parse.Object.extend("Order");
+			var query = new Parse.Query(Order);
+			query.get(order, {
+  				success: function(orderhere) {
+  						orderhere.save(null, {
+  							success: function(orderhere) {
+   				 			orderhere.set("status", status);
+    		    			orderhere.save();
+  							},
+  							error: function(object, error){
+  							console.log(error);}
+						});
+  				},
+  				error: function(object, error) {
+  				console.log(error);
+   				}
+   			});
+
+			}
+			function payOrder(order,status){
+			console.log(order);
+			var Order = Parse.Object.extend("Order");
+			var query = new Parse.Query(Order);
+			query.get(order, {
+  				success: function(orderhere) {
+  						orderhere.save(null, {
+  							success: function(orderhere) {
+   				 			orderhere.set("paymentstatus", status);
+    		    			orderhere.save();
+  							},
+  							error: function(object, error){
+  							console.log(error);}
+						});
+  				},
+  				error: function(object, error) {
+  				console.log(error);
+   				}
+   			});
+			}
+			</script>
                     <div class="container">
                         <h2>Current Orders</h2>
-                        
                             <div id= "ordercontainer"> </div>
-                        
-                        
-                        
                     </div>
                 </section>
                 
 					
 				<!-- menu -->
-					<section id="portfolio" class="two">
+				<section id="portfolio" class="two">
 						<div class="container">
-					
 							<header>
 								<h2>Menu</h2>
 							</header>
@@ -299,6 +341,7 @@
 								<div class="view">
 								<header><h3>
 							  		<label class="menuitem-content"><%= _.escape(content) %></label>
+							  		<label class="menuitem-id" style="display:none"><%= _.escape(objectId) %></label>
 						            <label class="menuitem-price"><%= _.escape(price) %></label>
 						            <label class="menuitem-descript"><%= _.escape(description) %></label>
 						        </h3> </header>
@@ -309,6 +352,7 @@
 							</div>
 
 						    </script>
+						    
 						    <script type="text/template" id="stats-template">
 						    </script>
 
@@ -354,13 +398,149 @@
                     <!-- Intro -->
                     <section id="top" class="one dark cover">
                         <div class="container">
-                            
                             <header>
                                 <h2>Stats</h2>
                                 <p>Stats for Your menu</p>
+                                <button onclick="getAllOrderStrings()">Try it</button>
                             </header>
-                            
-                            
+               				<script>
+			function getAllOrderStrings(){
+				var totalstring="";
+				var x =document.getElementsByClassName("orderstring");
+				var i;
+				for (i = 0; i < x.length; i++) {
+					
+    				totalstring= totalstring.concat(x[i].innerHTML);
+    				totalstring=totalstring.concat(" ");
+				}
+				totalstring=totalstring.split(" ");
+				totalstring.splice(totalstring.length-1, 1);
+				console.log(totalstring);
+				var allitems="";
+				var y =document.getElementsByClassName("menuitem-id");
+				for (i = 0; i < y.length; i++) {
+    				allitems= allitems.concat(y[i].innerHTML);
+    				allitems=allitems.concat(" ");
+				}
+				allitems=allitems.split(" ");
+				allitems.splice(allitems.length-1, 1);
+				var siz =allitems.length;
+				//initialize to zero
+				var menuArray=new Array();
+				for (var item in allitems)
+					{menuArray[allitems[item]]=0;
+					}
+				for( i=0; i<totalstring.length; i++){
+					for( var mitem in menuArray){
+						if(totalstring[i]==mitem){
+							i=i+1;
+							console.log(totalstring[i]);
+							menuArray[mitem]=menuArray[mitem]+parseInt(totalstring[i]);
+						}
+						//else{console.log("error" ,totalstring[i],mitem);}
+					}
+				}
+				//saves name with their respective id's
+				var Menuitem = Parse.Object.extend("Menuitem");
+				var query = new Parse.Query(Menuitem);
+				//saves query results to local storage
+				for(mitem in menuArray){
+					query.get(mitem, {
+ 						success: function(menuitem) {
+   						  var objectid=menuitem.id;
+						 localStorage.setItem(objectid,menuitem.get("content"));
+  						},
+  						error: function(object, error) {
+   							console.log(error);
+  						}
+					});	
+				}
+				//creates graph info {label,value}
+				var dps=new Array();
+				for( var mitem in menuArray){
+					dps.push({label:localStorage[mitem], y:menuArray[mitem]});
+				}
+				
+				
+				var totalEmployees = "A Complete Summary of Orders Made";
+				var chart = new CanvasJS.Chart("chartContainer",{
+			theme: "theme2",
+			title:{ 
+				text: "Order History"
+			},
+			axisY: {				
+				title: "Times Ordered"
+			},					
+			legend:{
+				verticalAlign: "top",
+				horizontalAlign: "centre",
+				fontSize: 18
+
+			},
+			data : [{
+				type: "column",
+				showInLegend: true,
+				legendMarkerType: "none",				
+				legendText: totalEmployees,
+				indexLabel: "{y}",
+				dataPoints: dps
+			}]
+		});
+				// renders initial chart
+				chart.render();
+				var sum = menuArray.length;	 //initial sum 
+				var stringtext=JSON.stringify(dps);
+				var blob = new Blob([stringtext], {type: "text/plain;charset=utf-8"});
+				saveAs(blob, "OrderSummary.txt");
+			}
+				function formatXml(xml) {
+
+                var formatted = '';
+                var reg = /(>)(<)(\/*)/g;
+                xml = xml.replace(reg, '$1\r\n$2$3');
+                var pad = 0;
+
+                jQuery.each(xml.split('\r\n'), function(index, node)
+                {
+                    var indent = 0;
+                    if (node.match( /.+<\/\w[^>]*>$/ ))
+                    {
+                        indent = 0;
+                    }
+                    else if (node.match( /^<\/\w/ ))
+                    {
+                        if (pad != 0)
+                        {
+                            pad -= 1;
+                        }
+                    }
+                    else if (node.match( /^<\w[^>]*[^\/]>.*$/ ))
+                    {
+                        indent = 1;
+                    }
+                    else
+                    {
+                        indent = 0;
+                    }
+                    var padding = '';
+                    for (var i = 0; i < pad; i++)
+                    {
+                        padding += '  ';
+                    }
+                    formatted += padding + node + '\r\n';
+                    pad += indent;
+                });
+
+                return formatted;
+            }
+			</script>
+           					<script type="text/javascript" src="js/canvasjs.min.js"></script>
+    	    				<script src="js/FileSaver.js"></script>
+    	    				<script src="js/Blob.js"></script>
+
+           					 <div id="chartContainer" style="height:300px; width:100%;">
+							</div>
+ 					
                         </div>
                     </section>
 

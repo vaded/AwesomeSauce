@@ -2,6 +2,7 @@
 #orderlistview ul {
     list-style: none;
 }
+
 .order {
   display: border;
   float:left;
@@ -11,5 +12,8 @@
   padding: 10px;
   border: 1px solid #ccc;
   text-align:center;
-  font-size: 12px;
+  font-size: 10px;
+}
+#ordercontainer li .cancel{
+ text-align: center;
 }
