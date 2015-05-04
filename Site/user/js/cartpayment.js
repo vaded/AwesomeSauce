@@ -159,6 +159,12 @@ $(document).ready(function () {
         return this;
     };
 
+    $('#addcard').click(function(){
+       $('#cardName').clone().appendTo("#cardcontainer");
+       $('#cardNumber').clone().appendTo("#cardcontainer");
+       $('#cardInfo').clone().appendTo("#cardcontainer");
+    });
+
 });
 
 
