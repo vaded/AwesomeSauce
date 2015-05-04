@@ -281,7 +281,7 @@
                <div class="status"><%= p.status %></div>
               <div class="price">$<%= p.price %></div>
               <div class="calories"><%= p.calories %></div>
-              
+               <%= parseInt(p.calories) >= 1000 ?   'Warning Over 1000 Calories' :'This is a Smart Choice' %> 
             </li>
             <% } %>
           </ul>
