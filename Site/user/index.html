@@ -286,6 +286,28 @@
 		 console.log("its in get owner");
 		 StoreView(x);
 		 }
+		 
+		  	
+        	function cancelOrder(order,status){
+			console.log(order);
+			var Order = Parse.Object.extend("Order");
+			var query = new Parse.Query(Order);
+			query.get(order, {
+  				success: function(orderhere) {
+  						orderhere.save(null, {
+  							success: function(orderhere) {
+   				 			orderhere.set("status", status);
+    		    			orderhere.save();
+  							},
+  							error: function(object, error){
+  							console.log(error);}
+						});
+  				},
+  				error: function(object, error) {
+  				console.log(error);
+   				}
+   			});
+   			}
 		</script>
 		
 		
@@ -390,14 +412,14 @@
             <li class="order">
 
             	<label>Order Number: </label>
-            	<div id="ordernumber"><%=p.id%></div><br>
+            	<div id="ordernumber"><%=p.objectId%></div><br>
             	<label>Restraunt id: </label>
             	<div id="orderlistowner"><%= p.owner %></div><br>
             	<label>Order Date: </label>
             	<div id="orderdate"><%= p.createdAt %></div><br>
             	<label>Order Status: </label>
             	<div id="orderdate"><%= p.status %></div><br>
-            	<button onclick="Cancel(p)"> Cancel this order</button>
+            	<button onclick="cancelOrder(p.objectId,'Canceled')"> Cancel this order</button>
               <%= console.log(p)%>
               
             </li>
