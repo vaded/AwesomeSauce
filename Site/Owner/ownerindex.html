@@ -246,6 +246,7 @@
             	<button onclick="cancelOrder('<%= p.objectId %>','Working')"> Change to Working Status</button>
             	<button onclick="cancelOrder('<%= p.objectId %>','Canceled')"> Cancel this Order</button>
             	<button onclick="payOrder('<%= p.objectId %>','Paid')"> Mark Order as Paid</button>
+            	<button onclick="sendMail('<%=p.customerid.objectId%>')">Send Notification</button>
             	<br><br>
             </li>
             <% } %>
@@ -273,8 +274,45 @@
   				console.log(error);
    				}
    			});
-
+   			}
+   			
+			function sendMail(email) {
+			console.log(email);
+				var query = new Parse.Query(Parse.User);
+				query.equalTo("objectId", email);  // find all the women
+				query.first({
+  				success: function(thisemail) {
+    				console.log(thisemail.attributes.username);
+   			 $.ajax({
+      			type: 'POST',
+      			url: 'https://mandrillapp.com/api/1.0/messages/send.json',
+     			 data: {
+        			'key': 'IE51G4RwdI07hi2eykE2qw',
+       				 'message': {
+          			'from_email': 'AwesomeSauce@Saucey.com',
+          			'to': [
+             		 {
+               		 'email': thisemail.attributes.username,
+               		 'name': thisemail.attributes.name,
+               		 'type': 'to'
+             		 }
+           		 	],
+          			'autotext': 'true',
+         			 'subject': 'Your order is ready!',
+         			 'html': 'come and get it'
+        			}
+      			}
+     		}).done(function(response) {
+       			alert("An alert has been attempted")
+       			alert( JSON.stringify(response)); 
+    		 });
+    		 
+    		 }
+			});
+    		 
 			}
+			
+			
 			function payOrder(order,status){
 			console.log(order);
 			var Order = Parse.Object.extend("Order");
