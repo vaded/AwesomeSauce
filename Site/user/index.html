@@ -202,7 +202,7 @@
 				customerOrder.set("customerid",Parse.User.current());
 				console.log(Parse.User.current());
 				
-				customerOrder.set("ownerId",document.getElementById("currentownerId").innerHTML);
+				customerOrder.set("ownerId",document.getElementById("ownerId").innerHTML);
 				
 				customerOrder.set("status","Pending");
 				if (customerOrder.get("radios")=="Split" || customerOrder.get("radios")=="Card" ){
@@ -280,15 +280,7 @@
 			}
 		</script>
 
-		<script>
-		 function getOwner(){
-		 x=document.getElementById("ownerId").innerHTML;
-		 document.getElementById("currentownerId").innerHTML=x;
-		 console.log("its in get owner");
-		 StoreView(x);
-		 }
-		 
-		  	
+		<script>  	
         	function cancelOrder(order,status){
 			console.log(order);
 			var Order = Parse.Object.extend("Order");
@@ -315,13 +307,10 @@
 		<noscript>
 			<link rel="stylesheet" href="css/cartpayment.css">
 			 <link rel="stylesheet" href="css/stylecomment.css">
-<<<<<<< Updated upstream
 			 <link rel="stylesheet" href="css/skel.css" />
 			<link rel="stylesheet" href="css/style.css" />
 			<link rel="stylesheet" href="css/style-wide.css" />
-=======
 			<link rel="stylesheet" href="css/inspector-stylesheet.css" />
->>>>>>> Stashed changes
 		</noscript>
 		<!--[if lte IE 9]><link rel="stylesheet" href="css/ie/v9.css" /><![endif]-->
 		<!--[if lte IE 8]><link rel="stylesheet" href="css/ie/v8.css" /><![endif]-->
@@ -531,7 +520,6 @@
 							</footer>
 							
 						</div>
-						<table id = minesweeper> </table>
 						<div id="gameText" style="visibility:hidden; margin-top:5%">Get 40 clicks in 10 seconds and get 10% off your order!</div>
 						<input id="gameButton" style="visibility:hidden; margin-top:5%" type="button" value="Work Up Your Appetite" >
 						<script>

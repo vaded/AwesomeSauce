@@ -17,7 +17,7 @@
       currentUser.set("address", Parse.User.current().get("address"));
       currentUser.set("name", Parse.User.current().get("name"));
       currentUser.set("phone", Parse.User.current().get("phone"));
-      currentUser.set("title", Parse.User.current().get("title"));
+      currentUser.set("title", "Owner");
       currentUser.set("reviews", Parse.User.current().get("reviews"));
       currentUser.save(null, {
         success:function(user){
