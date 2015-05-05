@@ -34,8 +34,7 @@
 				document.getElementById("restaurantTab").innerHTML = Parse.User.current().get("restaurantname"); //users restaurant name in side bar
 console.log(document.getElementById("title").innerHTML );
 if(document.getElementById("title").innerHTML !="Owner"){
-
-var query = new Parse.Query(Parse.User);
+	var query = new Parse.Query(Parse.User);
 				query.equalTo("objectId", currentUser.get("employee"));
 				query.find({
 					success: function(boss){
@@ -43,6 +42,7 @@ var query = new Parse.Query(Parse.User);
 						
 						document.getElementById("restaurantTab").innerHTML = boss[0].get("restaurantname");
 				}});
+				
 }
 if(document.getElementById("title").innerHTML =="Kitchen Staff")
 	{

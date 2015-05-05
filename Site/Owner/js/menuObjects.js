@@ -224,7 +224,15 @@ $(function() {
 
       // Setup the query for the collection to look for menuitems from the current user
       this.menuitems.query = new Parse.Query(Menuitem);
-      this.menuitems.query.equalTo("user", Parse.User.current());
+      if(Parse.User.current().get("title")=="Owner"){
+      this.menuitems.query.equalTo("user", Parse.User.current());}
+      else{
+      	this.menuitems.query.include("user");
+      	 var user= new Parse.User();
+      	 user.id=Parse.User.current().get("employee");
+      	this.menuitems.query.equalTo("user" ,user);
+      	console.log(this.menuitems);
+      }
         
       this.menuitems.bind('add',     this.addOne);
       this.menuitems.bind('reset',   this.addAll);
