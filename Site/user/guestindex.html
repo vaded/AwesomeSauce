@@ -541,21 +541,26 @@
   					<span id="slideval">0%</span>
 					<form>
 					<div class="row 50%">
-					<div class="6u">				
+					<div class="6u" id="cardName">				
                     <input type="info" id="card_holder" placeholder="Name On Card">
 					</div>
-					<div class="6u">	
+					<div class="6u" id="cardNumber">	
                      <input type="info" id="card_number" data-encrypted-attribute="card_number"  placeholder="Card Number">
                      </div>
-                     <div class="6u">	
+                     <div class="6u" id="cardInfo">	
                      	<input type="info" id="cvv" placeholder="CVV" data-encrypted-attribute="card_cvv" style="width:20%;" placeholder="000">
                     
                      	<input type="info" id="expMM" name="expMM" maxlength="2" style="width:20%;" placeholder="MM">
 
                       	<input type="info" id="expYY" name="expYY"  maxlength="2" style="width:20%;" placeholder="YY">
+
+                      	<input type="info" id="payAmt" name="payAmt" maxlength="4" style="width:20%;" placeholder="$0.00">
                      </div>
                      
+					 <div class="cardContainer" id="cardcontainer"></div>
+
                       <div class="12u" >
+                     <input type="button" id="addcard" value="Add Card"/>
                      <input type="button" id="cardOrder" value="Pay with Card"/>  
                      </div>  
                     </div>
