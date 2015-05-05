@@ -160,13 +160,23 @@ $(document).ready(function () {
     };
 
     $('#addcard').click(function(){
-       $('#cardName').clone().appendTo("#cardcontainer");
-       $('#cardNumber').clone().appendTo("#cardcontainer");
-       $('#cardInfo').clone().appendTo("#cardcontainer");
+       var cloneName = $('#cardName').clone();
+       var cloneNumber = $('#cardNumber').clone();
+       var cloneInfo = $('#cardInfo').clone();
+
+       cloneName.appendTo("#cardcontainer");
+       cloneNumber.appendTo("#cardcontainer");
+       cloneInfo.appendTo("#cardcontainer");
+       //$('#expMM'),clone().appendTo("#cardcontainer");
+       //$('#expYY'),clone().appendTo("#cardcontainer");
+       //$('#payamt'),clone().appendTo("#cardcontainer");
     });
 
 });
 
+function AddCard(){
+
+}
 
 var ccvalid = false;
 var cardholdervalid = false;
