@@ -160,16 +160,29 @@
 								if(document.getElementById("restinfo").innerHTML = result[i].get("reviews") != undefined){
 									document.getElementById("restinfo").innerHTML = result[i].get("reviews") + " -Swoll Santa<br>" + result[i].get("restaurantaddress") + ", " + result[i].get("restaurantphone");}         //  your code here
 								else{
-									document.getElementById("restinfo").innerHTML = result[i].get("restaurantaddress") + ", " + result[i].get("restaurantphone");
-								}
-								document.getElementById("searchbutton").innerHTML = "What sounds good?";
-							      i++;                     //  increment the counter
-							      if (i < result.length) {            //  if the counter < 10, call the loop function
-							         myLoop();             //  ..  again which will trigger another 
-							      }   
-							      else{
-							      	document.getElementById("searchbutton").innerHTML = "Thats all!";
-							      }                     //  ..  setTimeout()
+									var qOrder = Parse.Object.extend("Order");
+									var rev = new Parse.Query(qOrder);
+									var keeprev;
+									rev.equalTo("ownerId", result[i].id);
+									rev.find({ 
+										success: function(frev){
+												var j = 0;
+												console.log(frev[j].get("reviews"));
+											keeprev = frev[j].get("reviews");
+											document.getElementById("restinfo").innerHTML = keeprev + "<br>" + result[i].get("restaurantaddress") + ", " + result[i].get("restaurantphone");
+										}
+										});
+										document.getElementById("restinfo").innerHTML = keeprev + "<br>" + result[i].get("restaurantaddress")+ ", " + result[i].get("restaurantphone");						
+									}
+									document.getElementById("searchbutton").innerHTML = "What sounds good?";
+									i++;
+									if(i<result.length){
+										myLoop();
+									}            
+									else{
+										document.getElementById("searchbutton").innerHTML = "That's all!"
+									}         
+
 							   }, 5000)
 							}
 							myLoop();
@@ -206,9 +219,11 @@
     				}
 				}
 				customerOrder.set("orderstring",orderstring);
+				console.log(orderstring);
 				customerOrder.set("itemcount",document.getElementById("orderItemCount").innerHTML);
 				customerOrder.set("cost",document.getElementById("orderCost").innerHTML);
 				customerOrder.set("calories",document.getElementById("orderCalories").innerHTML);
+				customerOrder.set("reviews", "'" + document.getElementById("reviewing").value + "'" + " -" + Parse.User.current().get("name"));
 				customerOrder.set("customerid",Parse.User.current());
 				console.log(Parse.User.current());
 				
@@ -623,7 +638,7 @@
        					
        					 <div class="container">
        					   	<form onSubmit="JavaScript: saveOrder()">
-       					   	<!--<div class="checkout"></div> -->
+       					   	<div class="checkout"></div>
        					   	
        					    <input type="radio" name="payment" value="Cash" checked onClick="HideContent('card')">Cash
        					    <input type="radio" name="payment" value="Card" onClick="ShowContent('card')">Card
@@ -631,7 +646,7 @@
 						    
 						  
  							<br>                          
-						    <textarea class="12u" rows="2" cols="50" placeholder="Leave A Comment"></textarea>
+						    <textarea id = "reviewing" class="12u" rows="2" cols="50" placeholder="Leave A Comment"></textarea>
        					   <input type="button" class="12u" onclick="saveOrder()" id="orderbutton" style="display:-webkit-inline-box; margin-top:2%; width:25%;"  value="Pay" />
        					   </form>
 						</div>
