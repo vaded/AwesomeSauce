@@ -239,8 +239,9 @@
             	<%=console.log(p)%>
             	<div class="orderlistowner">Customer id: <%= p.customerid.objectId %></div>
             	<div class="orderdate">Order Date: <%= p.createdAt %></div>
+            	<div class="raworderstring" style="display:none"><%= p.orderstring %></div>
             	<label>Items:</label>
-            	<div class="orderstring"><%= p.orderstring %></div>
+            	<div class="orderstring"><%= getThisOrderString(p.orderstring) %></div>
             	<div class="orderstatus">Order Status: <%= p.status %></div>
             	<button onclick="cancelOrder('<%= p.objectId %>','Finished')"> Finish this Order</button>
             	<button onclick="cancelOrder('<%= p.objectId %>','Working')"> Change to Working Status</button>
@@ -254,6 +255,8 @@
             
             <br>
         </script>
+        
+        
         <script	type="text/javascript">		
         	function cancelOrder(order,status){
 			console.log(order);
@@ -442,12 +445,21 @@
                                 <button onclick="getAllOrderStrings()" >Try it</button>
                             </header>
                				<script>
+            function getThisOrderString(orderstring){	
+            console.log(orderstring);	
+               orderstring=orderstring.split(" ");
+			   for( var i=0; i<orderstring.length; i++){
+			   		if( localStorage[orderstring[i]] ){
+			   			orderstring[i]=localStorage[orderstring[i]];
+			   			}
+			  	}
+			  	return orderstring;
+			  }
 			function getAllOrderStrings(){
 				var totalstring="";
-				var x =document.getElementsByClassName("orderstring");
+				var x =document.getElementsByClassName("raworderstring");
 				var i;
 				for (i = 0; i < x.length; i++) {
-					
     				totalstring= totalstring.concat(x[i].innerHTML);
     				totalstring=totalstring.concat(" ");
 				}
