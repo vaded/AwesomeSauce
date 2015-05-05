@@ -157,9 +157,9 @@
 								
 								document.getElementById("firsthead").innerHTML = result[i].get("restaurantname");
 								document.getElementById("subtitle").innerHTML = result[i].get("restaurantdescription");
-								if(document.getElementById("restinfo").innerHTML = result[i].get("reviews") != undefined){
-									document.getElementById("restinfo").innerHTML = result[i].get("reviews") + " -Swoll Santa<br>" + result[i].get("restaurantaddress") + ", " + result[i].get("restaurantphone");}         //  your code here
-								else{
+								document.getElementById("restinfo").innerHTML = result[i].get("restaurantaddress") + ", " + result[i].get("restaurantphone");
+							
+									console.log("not work");       //  your code here
 									var qOrder = Parse.Object.extend("Order");
 									var rev = new Parse.Query(qOrder);
 									var keeprev;
@@ -167,15 +167,19 @@
 									rev.find({ 
 										success: function(frev){
 												var j = 0;
-												console.log(frev[j].get("reviews"));
-											keeprev = frev[j].get("reviews");
-											document.getElementById("restinfo").innerHTML = keeprev + "<br>" + result[i].get("restaurantaddress") + ", " + result[i].get("restaurantphone");
+												keeprev = document.getElementById("restinfo").innerHTML;
+												if(frev[j].get("reviews") != undefined){
+											document.getElementById("restinfo").innerHTML = keeprev + "<br>" + frev[j].get("reviews");
+										}
+										else{
+											document.getElementById("restinfo").innerHTML = keeprev + "<br>" + "No reviews yet!";
+										}
 										}
 										});
-										document.getElementById("restinfo").innerHTML = keeprev + "<br>" + result[i].get("restaurantaddress")+ ", " + result[i].get("restaurantphone");						
-									}
+																
 									document.getElementById("searchbutton").innerHTML = "What sounds good?";
 									i++;
+
 									if(i<result.length){
 										myLoop();
 									}            
