@@ -45,7 +45,7 @@ body {
   font-weight: bold;
 }
 
-
+div:empty { display: none; }
 
 #cartitemlistview ul {
     list-style: none;

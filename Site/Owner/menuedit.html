@@ -218,10 +218,11 @@
 <!------iitem template-->        	
         	<script type="text/template" id="iitem-template">
       			<li class="<%= status ? 'active' : '' %>">
-					<div class="view">
+					<div class="view2">
 	  					<input class="toggle" type="checkbox" <%= status ? 'checked="checked"' : '' %>>
 	  					<label class="ingredient-content"><%= _.escape(content) %></label>
             			<label class="ingredient-price"><%= _.escape(price) %></label>
+            			
             			<button class="ingredient-destroy"></button>
 					</div>
 					<input class="edit" value="<%= _.escape(content) %>">
@@ -229,8 +230,23 @@
     		</script>
 <!------modal footer-->
     		<script type="text/template" id="istats-template">
-      		  
-				
+      		  <footer id="footering">
+				<span id="ingredient-count">
+					<strong><%= activeStatus %></strong>
+					<%= activeStatus == 1 ? 'item' : 'items' %> active
+				</span>
+				<ul id="filters">
+	  				<li>
+	    				<a href="javascript:void(0)" id="all" class="selected">All</a>
+	  				</li>
+	  				<li>
+	   					<a href="javascript:void(0)" id="active">Active</a>
+	  				</li>
+	  				<li>
+	   					<a href="javascript:void(0)" id="inactivated">Inactive</a>
+	  				</li>
+				</ul>
+				<button id="clear-inactive">Clear inactive (<%= status %>)</button>
       		  </footer>
     	</script>
     
