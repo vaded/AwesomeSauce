@@ -27,12 +27,34 @@
 		<script type="text/javascript">
 			function parsePull(){
 				
-
+				
 				var currentUser = Parse.User.current();
 				document.getElementById("name").innerHTML = Parse.User.current().get("name"); //users name to appear in toolbar
 				document.getElementById("title").innerHTML = Parse.User.current().get("title"); // users tile to appear in toolbar
 				document.getElementById("restaurantTab").innerHTML = Parse.User.current().get("restaurantname"); //users restaurant name in side bar
+console.log(document.getElementById("title").innerHTML );
+if(document.getElementById("title").innerHTML !="Owner"){
 
+var query = new Parse.Query(Parse.User);
+				query.equalTo("objectId", currentUser.get("employee"));
+				query.find({
+					success: function(boss){
+						console.log("the boss's name is: " + boss[0].get("restaurantname"));
+						
+						document.getElementById("restaurantTab").innerHTML = boss[0].get("restaurantname");
+				}});
+}
+if(document.getElementById("title").innerHTML =="Kitchen Staff")
+	{
+	HideContent("top");
+	HideContent("employee");
+				  }
+if(document.getElementById("title").innerHTML =="Front Desk Clerk")
+	{
+	HideContent("top");
+	HideContent("employee");
+	HideContent("editmenubutton");
+				  }
 				document.getElementById("namei").placeholder = "Name"; //sets user name in info form at bottom
 				document.getElementById("emaili").placeholder = "E-Mail"; //sets user email in info form at bottom
 				document.getElementById("addressi").placeholder = "Address"; //sets user address in info form at bottom
@@ -66,6 +88,7 @@
 
 				
 			}
+			
 			function changeInfo(){ //function to change username using info from bottom form
 				console.log("Its getting into change Info");
 				var currentUser = Parse.User.current();
@@ -146,6 +169,13 @@
 				});
 			}
 			
+			function HideContent(d) {
+				document.getElementById(d).style.display = "none";
+		}
+			
+			function ShowContent(d) {
+				document.getElementById(d).style.display = "block";
+		}
 			
 		</script>
 
@@ -287,7 +317,6 @@
    				}
    			});
    			}
-   			
 			function sendMail(email) {
 			console.log(email);
 				var query = new Parse.Query(Parse.User);
@@ -323,8 +352,6 @@
 			});
     		 
 			}
-			
-			
 			function payOrder(order,status){
 			console.log(order);
 			var Order = Parse.Object.extend("Order");
@@ -413,7 +440,7 @@
 													}
 							</script>
 							
-							<a href="menuedit.html" class="button special scrolly"> Edit Menu</a>
+							<a href="menuedit.html" class="button special scrolly" id="editmenubutton"> Edit Menu</a>
 							</div>
 					</section>
 
