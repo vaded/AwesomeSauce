@@ -312,11 +312,11 @@
 		
 		
 		<noscript>
-			<link rel="stylesheet" href="css/skel.css" />
-			<link rel="stylesheet" href="css/style.css" />
-			<link rel="stylesheet" href="css/style-wide.css" />
 			<link rel="stylesheet" href="css/cartpayment.css">
 			 <link rel="stylesheet" href="css/stylecomment.css">
+			 <link rel="stylesheet" href="css/skel.css" />
+			<link rel="stylesheet" href="css/style.css" />
+			<link rel="stylesheet" href="css/style-wide.css" />
 		</noscript>
 		<!--[if lte IE 9]><link rel="stylesheet" href="css/ie/v9.css" /><![endif]-->
 		<!--[if lte IE 8]><link rel="stylesheet" href="css/ie/v8.css" /><![endif]-->
@@ -542,7 +542,10 @@
        				 	</div>
        				
 				</section>
-
+				<script type="text/javascript">
+				$('.checkout:empty').hide();
+				$('.cart-info:empty').hide();
+				</script>
 				<!-- Shopping cart  -->
 					<section id="about" class="three">
 						<div class="container">
@@ -555,7 +558,7 @@
 								<input type="text" id="pickupTime" name="pickupTime" placeholder="Enter Pickup Time">
 								
 							</form>
-       					   	<div class="checkout"></div> 
+       					   
        					</div>
        					
        					 <div class="container">

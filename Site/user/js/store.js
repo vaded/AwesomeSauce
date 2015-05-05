@@ -1,6 +1,6 @@
 function StoreView(owner) {
 Parse.$ = jQuery;
-
+	
   // Initialize Parse with your Parse application javascript keys
   	Parse.initialize("KOUvrLMv1oAp2DFoSJQpvl0VIqQKXOYk9HTtRVII",
                    "xBi5mgy6McXhZtUwJXdyS20uVSl6N555lWJTaDyF");
