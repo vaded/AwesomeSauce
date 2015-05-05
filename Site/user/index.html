@@ -142,16 +142,26 @@
 							document.getElementById("searchbutton").innerHTML = "Loading the list of restaurants...";
 							document.getElementById("getmenubutton").style.display="inline-block";
 							function myLoop () {           //  create a loop function
-							   setTimeout(function () {    //  call a 3s setTimeout when 
+							   searchHandle = setTimeout(function () {    //  call a 3s setTimeout when 
 								//console.log("found the restaurant" + result.length);
 								var storefront;
+
+								document.getElementById("getmenubutton").addEventListener("click",function(){
+									console.log("it read the thing");
+									clearTimeout(searchHandle);
+									console.log("it read past the thing");
+									return;
+								});
 								
 								document.getElementById("ownerId").innerHTML= result[i].id;
 								
 								document.getElementById("firsthead").innerHTML = result[i].get("restaurantname");
 								document.getElementById("subtitle").innerHTML = result[i].get("restaurantdescription");
-								document.getElementById("restinfo").innerHTML = result[i].get("reviews") + " -Swoll Santa<br>" + result[i].get("restaurantaddress") + ", " + result[i].get("restaurantphone");         //  your code here
-								
+								if(document.getElementById("restinfo").innerHTML = result[i].get("reviews") != undefined){
+									document.getElementById("restinfo").innerHTML = result[i].get("reviews") + " -Swoll Santa<br>" + result[i].get("restaurantaddress") + ", " + result[i].get("restaurantphone");}         //  your code here
+								else{
+									document.getElementById("restinfo").innerHTML = result[i].get("restaurantaddress") + ", " + result[i].get("restaurantphone");
+								}
 								document.getElementById("searchbutton").innerHTML = "What sounds good?";
 							      i++;                     //  increment the counter
 							      if (i < result.length) {            //  if the counter < 10, call the loop function
@@ -605,7 +615,7 @@
 							<form action="">
 								<input type="radio" id="pickup" name="deliveryPickup" value="pickup" checked onClick="ShowContent('pickupTime')">Pickup
 								<input type="radio" id="delivery" name="deliveryPickup" value="delivery" onClick="HideContent('pickupTime')">Delivery<br>
-								<input type="text" id="pickupTime" name="pickupTime" placeholder="Enter Pickup Time">
+								<input type="text" id="pickupTime" name="pickupTime" placeholder="Enter Pickup Time" style="width:50%; display:-webkit-inline-box">
 								
 							</form>
        					   
@@ -622,7 +632,7 @@
 						  
  							<br>                          
 						    <textarea class="12u" rows="2" cols="50" placeholder="Leave A Comment"></textarea>
-       					   <input type="button" class="12u" onclick="saveOrder()" id="orderbutton" style="display:block;" value="Pay"/>
+       					   <input type="button" class="12u" onclick="saveOrder()" id="orderbutton" style="display:-webkit-inline-box; margin-top:2%; width:25%;"  value="Pay" />
        					   </form>
 						</div>
 					</section>
